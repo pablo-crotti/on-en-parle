@@ -21,6 +21,9 @@
     align-items: center;
     gap: 1rem;
     padding: 2rem;
+    overflow: scroll;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 /* ################################################# ===== MESSAGE ITEM */
 .message-item {
