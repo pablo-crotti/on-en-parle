@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chat_rooms', function (Blueprint $table) {
+        Schema::create('voice_messages', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->string('image');
-            $table->date('broadcast_date');
             $table->string('audio_file');
-            $table->boolean('on_air')->default(false);
-            $table->boolean('closed')->default(false);
+            $table->foreignId('chat_message_id')->constrained()->onDelete('cascade'); 
         });
     }
 
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('chat_rooms');
+        Schema::dropIfExists('voice_messages');
     }
 };

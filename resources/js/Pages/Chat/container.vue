@@ -1,5 +1,5 @@
 <script>
-import AppLayout from '@/Layouts/AppLayout.vue';
+import AppLayout from '@/Layouts/AppLayoutUser.vue';
 import MessageContainer from '@/Pages/Chat/MessageContainer.vue';
 import InputMessage from '@/Pages/Chat/InputMessage.vue';
 import ChatRoomSelection from '@/Pages/Chat/ChatRoomSelection.vue';
@@ -14,28 +14,20 @@ export default {
     },
     data: function ()  {                
         return {
-            chatRooms: [],
-            currentRoom: [],
-            messages: []
+            messages: [],
+            roomIdLink: window.location.href.split('/').pop(),
+            room: {}
         }
     },
     methods: {
-        getRooms() {
-            axios.get('/chat/rooms')
+        getRoom() {
+            axios.get('/chat/room/' + this.roomIdLink)
                 .then(response => {
-                    this.chatRooms = response.data
-                    this.setRoom(response.data[0])
+                    this.room = response.data
                 })
-                .catch(error => {
-                    console.log(error)
-                })
-        },
-        setRoom (room) {
-            this.currentRoom = room
-            this.getMessages()
         },
         getMessages() {
-            axios.get('/chat/room/' + this.currentRoom.id + '/messages')
+            axios.get('/chat/room/' + this.roomIdLink + '/messages')
                 .then(response => {
                     this.messages = response.data
                 })
@@ -45,32 +37,21 @@ export default {
         }
     },
     created() {
-        this.getRooms()
+        this.getRoom()
+        this.getMessages()
     },
 };
 </script>
 
 <template>
-    <AppLayout title="Dashboard">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                <chat-room-selection
-                    v-if="currentRoom.id"
-                    :rooms="chatRooms"
-                    :currentRoom="currentRoom"
-                    v-on:roomchanged="setRoom($event)"
-                />
-            </h2>
-        </template>
+    <AppLayout :title="`On en parle | Questions ${room.name}`">
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <message-container :messages="messages"/>
-                    <input-message 
-                        :room="currentRoom" 
-                        v-on:messagesent="getMessages"/>
-                </div>
+        <div class="chat-wrapper">
+            <div class="chat-container">
+                <message-container :messages="messages"/>
+                <input-message 
+                    :room="roomIdLink" 
+                    v-on:messagesent="getMessages"/>
             </div>
         </div>
     </AppLayout>

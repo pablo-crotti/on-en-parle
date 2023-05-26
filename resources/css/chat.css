@@ -1,0 +1,175 @@
+/* ################################################# ===== CONTAINER */
+.chat-container {
+    background-color: var(--black);
+    border-radius: 5px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/* ################################################# ===== MESSAGE CONTAINER */
+.message-container {
+    width: 100%;
+    /* height: 24rem; */
+    height: 100%;
+    margin-bottom: 1rem;
+    overflow: scroll;
+    border-bottom: solid 1px var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+}
+/* ################################################# ===== MESSAGE ITEM */
+.message-item {
+    width: 80%;
+    padding: 1rem;
+    background-color: var(--light-gray);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.message-item h2 {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+.text-message {
+    color: var(--primary-color);
+}
+.transcription-message {
+    color: var(--secondary-color);
+}
+.message-item p {
+    color: var(--black);
+}
+.message-item .left {
+    width: 70%;
+    padding-right: 1rem; 
+}
+.message-item .right p {
+    text-align: right;
+    width: 100%;
+}
+.message-item .right {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+.message-item button  {
+    text-align: right;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+.message-item span {
+    color: var(--gray);
+    font-size: 1em;
+    font-weight: bold;
+}
+.message-item .liked span {
+    color: var(--primary-color);
+    font-size: 1em;
+    font-weight: bold;
+}
+/* ################################################# ===== INPUT MESSAGE */
+.input-message-container {
+    padding: 1rem 3rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: var(--black);
+}
+.input-message-container input {
+    width: calc(100% - 100px);
+    height: 40px;
+    margin-right: 10px;
+    background-color: var(--light-black);
+    border-radius: 5px;
+    padding-left: 30px;
+    border: none;
+    outline: none;
+    color: var(--light-gray);
+}
+.input-message-container input::placeholder {
+    color: var(--gray);
+}
+.input-message-container input:focus, 
+.input-message-container input:active, 
+.input-message-container input:focus-visible {
+   outline: none;
+   border: none;
+}
+input[type="text"] {
+    outline: none;
+    border: none;
+  }
+.input-message-button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.input-message-button button{
+    width: 90%;
+    height: 90%;
+    background-color: var(--light-black);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+}
+.input-message-button button span {
+    font-size: 25px;
+    color: var(--primary-color);
+}
+#call {
+    margin-left: 10px;
+}
+[data-display="false"] {
+    display: none;
+}
+[data-display="true"] {
+    display: block;
+}
+.audio-recorder {
+    width: calc(100% - 100px);
+    height: 40px;
+    background-color: var(--light-black);
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    /* ################################################# ===== CONTAINER */
+    .chat-wrapper {
+        padding: 1rem;
+    }
+    .chat-container {
+        padding: 0.5rem;
+    }
+    /* ################################################# ===== MESSAGE CONTAINER */
+    .message-container {
+        padding: 1rem;
+    }
+    /* ################################################# ===== MESSAGE ITEM */
+    .message-item {
+        width: 100%;
+    }
+    /* ################################################# ===== INPUT MESSAGE */
+    .input-message-container{
+        padding: 1rem;
+    }
+}

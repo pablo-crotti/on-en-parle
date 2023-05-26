@@ -1,0 +1,88 @@
+.transmissions-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.transmission-card-container {
+    background-color: var(--light-black);
+    margin-bottom: 40px;
+    width: 70%;
+    border-radius: 20px;
+}
+.transmission-card-container .on-air {
+    border-color: var(--primary-color);
+}
+.transmission-card-container a {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    border-radius: 20px;
+    border: solid 1px var(--light-black);
+}
+.transmission-card-container:hover {
+    scale: 1.01;
+}
+.transmission-card-container .img-container {
+    width: 200px;
+    height: 250px;
+    /* background-color: red; */
+}
+.transmission-card-container .img-container img {
+    width: 100%;
+    height: 200px;
+    background-color: var(--primary-color);
+    object-fit: cover;
+}
+.transmission-card-container .img-container .likes {
+    width: 100%;
+    height: calc(100% - 200px);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+.transmission-card-container .img-container .likes p,
+.transmission-card-container .img-container .likes span {
+    color: var(--light-gray);
+}
+.transmission-card-container .infos {
+    width: calc(100% - 250px);
+    margin-left: 50px;
+}
+.transmission-card-container .infos h1 {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: var(--primary-color);
+}
+.transmission-card-container .infos p {
+    color: var(--light-gray);
+}
+@media screen and (max-width: 768px) {
+    .transmission-card-container {
+        width: 100%;
+    }
+    .transmission-card-container .img-container {
+        width: 80px;
+        height: 100px;
+    }
+    .transmission-card-container .img-container img {
+        height: 70px;
+        width: 70px;
+    }
+    .transmission-card-container .img-container .likes {
+        height: calc(100% - 70px);
+    }
+    .transmission-card-container .infos {
+        width: calc(100% - 80px);
+        margin-left: 20px;
+    }
+    .transmission-card-container .infos h1 {
+        font-size: 1.1em;
+    }
+
+
+}
