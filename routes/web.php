@@ -36,18 +36,18 @@ Route::middleware([
 });
 
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/questions/{id}', function ($id) {
+Route::get('/questions/{id}', function ($id) {
     return  Inertia::render('Chat/container')->with('id', $id);
 });
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/transmissions', function () {
+Route::get('/transmissions', function () {
     return  Inertia::render('Transmissions/container');
 })->name('transmissions');
 
-Route::middleware('auth:sanctum')->get('/chat/rooms', [ChatController::class, 'rooms']);
-Route::middleware('auth:sanctum')->get('/chat/room/{roomId}', [ChatController::class, 'room']);
-Route::middleware('auth:sanctum')->get('/chat/room/{roomId}/messages', [ChatController::class, 'messages']);
-Route::middleware('auth:sanctum')->post('/chat/room/{roomId}/message', [ChatController::class, 'newMessage']);
-Route::middleware('auth:sanctum')->post('/chat/like/{messageId}', [LikesController::class, 'like']);
-Route::middleware('auth:sanctum')->post('/chat/unlike/{messageId}', [LikesController::class, 'unlike']);
-Route::middleware('auth:sanctum')->get('/chat/room/{chatId}/likes', [LikesController::class, 'sumChatLikes']);
+Route::get('/chat/rooms', [ChatController::class, 'rooms']);
+Route::get('/chat/room/{roomId}', [ChatController::class, 'room']);
+Route::get('/chat/room/{roomId}/messages', [ChatController::class, 'messages']);
+Route::post('/chat/room/{roomId}/message', [ChatController::class, 'newMessage']);
+Route::post('/chat/like/{messageId}', [LikesController::class, 'like']);
+Route::post('/chat/unlike/{messageId}', [LikesController::class, 'unlike']);
+Route::get('/chat/room/{chatId}/likes', [LikesController::class, 'sumChatLikes']);
