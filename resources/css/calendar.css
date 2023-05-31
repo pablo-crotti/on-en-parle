@@ -2,6 +2,8 @@
     width: 100%;
     height: 100%;
     background-color: var(--black);
+    
+    padding: 3rem;
 }
 .calendar-wrapper .head {
     width: 100%;
@@ -60,4 +62,9 @@
 }
 .day-item p {
     color: var(--dark-gray);
+}
+@media screen and (max-width: 768px) {
+    .calendar-wrapper {       
+        padding: 1rem;
+    }
 }
