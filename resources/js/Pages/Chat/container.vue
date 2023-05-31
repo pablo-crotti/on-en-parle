@@ -3,6 +3,7 @@ import AppLayout from '@/Layouts/AppLayoutUser.vue';
 import MessageContainer from '@/Pages/Chat/MessageContainer.vue';
 import InputMessage from '@/Pages/Chat/InputMessage.vue';
 import ChatRoomSelection from '@/Pages/Chat/ChatRoomSelection.vue';
+import TransmissionCard from '@/Pages/MyComponents/transmission-card.vue'; 
 import axios from 'axios';
 
 export default {
@@ -10,13 +11,14 @@ export default {
         AppLayout,
         MessageContainer,
         InputMessage,
-        ChatRoomSelection
+        ChatRoomSelection,
+        TransmissionCard
     },
     data: function ()  {                
         return {
             messages: [],
             roomIdLink: window.location.href.split('/').pop(),
-            room: {}
+            room: null
         }
     },
     methods: {
@@ -36,17 +38,29 @@ export default {
                 })
         }
     },
+    watch: {
+        room() {
+            this.getMessages(); 
+        },
+    },
     created() {
         this.getRoom()
-        this.getMessages()
     },
 };
 </script>
 
 <template>
-    <AppLayout :title="`On en parle | Questions ${room.name}`">
+    <AppLayout :title="room ? `On en parle | Questions ${room.name}` : 'On en parle'">
 
-        <div class="chat-wrapper">
+        <div v-if="room" class="chat-wrapper">
+            <div class="chat-transmission">
+                <div class="transmission-card-container">
+                    <div class="card">
+                        <transmission-card :room="room"/>
+                    </div>
+                </div>
+            </div>
+            
             <div class="chat-container">
                 <message-container :messages="messages"/>
                 <input-message 

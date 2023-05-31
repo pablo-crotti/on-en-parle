@@ -20,7 +20,7 @@ class CalendarController extends Controller
         }
     }
     public function getBroadcasteDates() {
-        $rooms = ChatRoom::pluck('broadcast_date')->all();
+        $rooms = ChatRoom::pluck('broadcast_date', 'id')->all();
         return $rooms;
     }
 }

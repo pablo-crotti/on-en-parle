@@ -31,6 +31,7 @@ export default {
       year: new Date().getFullYear(),
       startOffset: '',
       totalDays: 0,
+      displayTransmissionId: ''
     };
   },
   methods: {
@@ -76,5 +77,6 @@ export default {
     <div class="calendar-wrapper">
       <CalendarContainer :year="year" :clDays="calendarDays" :month="month" @update-month="updateMonth" />
     </div>
+      
   </AppLayout>
 </template>

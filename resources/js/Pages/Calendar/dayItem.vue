@@ -1,13 +1,10 @@
 <template>
     <div class="day-container" :class="{ current: current }">
-        <p>{{ hasTransmission }}</p>
-        <p :class="{ hasTransmission: hasTransmission }">{{day}}</p>
-        <!-- <p>{{  day }}</p> -->
-        
+        <button v-if="hasTransmission" :id="'transmission-'+ hasTransmission" @click="showTransmission(hasTransmission)">
+            <p class="hasTransmission">{{day}}</p>
+        </button>
+        <p v-else >{{day}}</p>
     </div>
-
-    
-
 </template>
 
 <script>
@@ -15,14 +12,10 @@
     export default {
         props: ['day', 'current', 'month', 'year', 'hasTransmission' ],
         methods: {
-        
-            
-        },
-        created() {
-            
-            // this.hasTransmission(this.day)
+            showTransmission(transmissionId) {
+                this.$emit('transmission-click', transmissionId);
+            }
         }
-        
     }
 
 </script>
