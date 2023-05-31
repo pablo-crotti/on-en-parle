@@ -1,0 +1,46 @@
+.message-header {
+    border-radius: 20px 20px 0 0;
+}
+.symbol-header {
+    color: black;
+    padding: 5px 0 5px 10px;
+}
+.message-wrapper {
+    /*fais moi un border noir épais*/
+    border: 3px solid black;
+
+    /* arrondi moi le border en bas à gauche et à droite */
+    border-radius: 20px 20px 20px 20px;
+}
+
+.message-body {
+    padding-left: 20px;
+
+}
+
+.message-date {
+    color: #616061;
+}
+
+.message-like-symbol {
+    color: #B2171B;
+}
+.message-content {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+.message-text {
+    word-wrap: break-word;
+    width: 80%;
+}
+.message-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 10px;
+}
+.message-like-symbol {
+    font-size: 15px;
+    padding-left: 3px;
+}
