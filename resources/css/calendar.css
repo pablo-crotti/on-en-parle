@@ -1,0 +1,63 @@
+.calendar-wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: var(--black);
+}
+.calendar-wrapper .head {
+    width: 100%;
+}
+.next:hover, .prev:hover {
+    cursor: pointer;
+}
+.calendar-wrapper .month {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+} 
+.calendar-wrapper .month p {
+    color: var(--white);
+}
+.days-container, .weekdays {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.day-item, .week-day {
+    width: calc(100% / 7);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.week-day {
+    height: 50px;
+    background-color: var(--black);
+}
+.week-day p {
+    color: var(--white);
+}
+.day-container {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px var(--transparent);
+    border-radius: 50px;
+}
+.day-item .current p {
+    /* border-color: var(--primary-color); */
+    color: var(--primary-color);
+}
+.day-item .hasTransmission {
+    color: var(--white);
+}
+.day-item p {
+    color: var(--dark-gray);
+}

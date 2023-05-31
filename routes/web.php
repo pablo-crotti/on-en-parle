@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LikesController;
+use App\Http\Controllers\CalendarController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,6 +45,10 @@ Route::get('/transmissions', function () {
     return  Inertia::render('Transmissions/container');
 })->name('transmissions');
 
+Route::get('/calendar', function () {
+    return  Inertia::render('Calendar/container');
+})->name('calendar');
+
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
 Route::get('/chat/room/{roomId}', [ChatController::class, 'room']);
 Route::get('/chat/room/{roomId}/messages', [ChatController::class, 'messages']);
@@ -51,3 +56,5 @@ Route::post('/chat/room/{roomId}/message', [ChatController::class, 'newMessage']
 Route::post('/chat/like/{messageId}', [LikesController::class, 'like']);
 Route::post('/chat/unlike/{messageId}', [LikesController::class, 'unlike']);
 Route::get('/chat/room/{chatId}/likes', [LikesController::class, 'sumChatLikes']);
+Route::get('/transmissions/dates', [CalendarController::class, 'getBroadcasteDates']);
+Route::get('/calendar/{year}/{month}/{day}', [CalendarController::class, 'hasTransmission']);
