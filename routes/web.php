@@ -6,6 +6,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\IndexRoomController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,14 +19,8 @@ use App\Http\Controllers\CalendarController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Route::get('/', [IndexController::class, 'redirectToQuestion'])->name('index');
+
 
 Route::middleware([
     'auth:sanctum',
@@ -39,7 +35,11 @@ Route::middleware([
 
 Route::get('/questions/{id}', function ($id) {
     return  Inertia::render('Chat/container')->with('id', $id);
-});
+})->name('questions');
+
+Route::get('/', function () {
+    return  Inertia::render('Index/container');
+})->name('index');
 
 Route::get('/transmissions', function () {
     return  Inertia::render('Transmissions/container');
@@ -49,6 +49,7 @@ Route::get('/calendar', function () {
     return  Inertia::render('Calendar/container');
 })->name('calendar');
 
+Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
 Route::get('/chat/room/{roomId}', [ChatController::class, 'room']);
 Route::get('/chat/room/{roomId}/messages', [ChatController::class, 'messages']);
