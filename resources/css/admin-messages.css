@@ -13,6 +13,7 @@
 
     /* arrondi moi le border en bas à gauche et à droite */
     border-radius: 20px 20px 20px 20px;
+    background-color: var(--white);
 }
 
 .message-body {
