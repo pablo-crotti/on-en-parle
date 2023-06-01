@@ -111,7 +111,7 @@ export default {
 
 
 <template>
-    <div class="message-wrapper">
+    <div class="message-wrapper" :id="`message-${message.id}`" draggable="true" @dragstart="$emit('dragstart', $event, message.id)">
 
         <div class="message-header" :style="{ backgroundColor: headerColor }">
             <div>
@@ -145,13 +145,13 @@ export default {
 
                 
 
-                <div v-if="message.status !== 5" class="message-actions">
+                <div v-if="message.status !== 10 && message.status !== 5" class="message-actions">
                     <span class="material-symbols-outlined" @click="editing = !editing">edit</span>
                     <span class="material-symbols-outlined" @click="$emit('delete', message)">delete</span>
                 </div>
 
                 <div v-else-if="message.status === 10">
-                    <span class="material-symbols-outlined">archive</span>
+                    <span class="material-symbols-outlined" @click="$emit('archive', message)">archive</span>
                 </div>
                 
             </div>
