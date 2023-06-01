@@ -1,5 +1,7 @@
 .message-header {
     border-radius: 20px 20px 0 0;
+    display: flex;
+    justify-content: space-between;
 }
 .symbol-header {
     color: black;
@@ -43,4 +45,12 @@
 .message-like-symbol {
     font-size: 15px;
     padding-left: 3px;
+}
+.aired-status {
+    /* fait une border arrondi en blanc */
+    border: 2px solid white;
+    /* arrondi que les coins sur les côtés */
+    border-radius: 20px 20px 20px 20px;
+    padding: 5px 10px 5px 10px;
+    color: var(--white);
 }
