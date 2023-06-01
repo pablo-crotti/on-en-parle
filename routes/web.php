@@ -5,15 +5,12 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LikesController;
-<<<<<<< HEAD
 use App\Http\Controllers\ChatAdminController;
 use App\Http\Controllers\PhoneCallController;
-
-=======
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\IndexRoomController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
->>>>>>> 7c26c1ac94b5d86bbc9a302251b26211cd10874a
+
 
 /*
 |--------------------------------------------------------------------------
@@ -67,24 +64,11 @@ Route::post('/chat/room/{roomId}/message', [ChatController::class, 'newMessage']
 Route::post('/chat/like/{messageId}', [LikesController::class, 'like']);
 Route::post('/chat/unlike/{messageId}', [LikesController::class, 'unlike']);
 Route::get('/chat/room/{chatId}/likes', [LikesController::class, 'sumChatLikes']);
-<<<<<<< HEAD
-
-
-
-
-
 Route::get('/AdminInbox/{id}', [ChatAdminController::class, 'showChatRoom'])->name('chatroom.show');
 Route::post('/AdminInbox/message/{id}/update', [ChatAdminController::class, 'updateMessageStatus']);
 Route::post('/AdminInbox/message/{id}/content', [ChatAdminController::class, 'updateMessageContent']);
 Route::post('/AdminInbox/message/{id}/delete', [ChatAdminController::class, 'deleteMessage']);
-
 Route::post('/phone-calls', [PhoneCallController::class, 'store']);
-
-
-
-
-
-=======
 Route::get('/transmissions/dates', [CalendarController::class, 'getBroadcasteDates']);
 Route::get('/calendar/{year}/{month}/{day}', [CalendarController::class, 'hasTransmission']);
->>>>>>> 7c26c1ac94b5d86bbc9a302251b26211cd10874a
+
