@@ -5,6 +5,18 @@ import InputMessage from '@/Pages/Chat/InputMessage.vue';
 import ChatRoomSelection from '@/Pages/Chat/ChatRoomSelection.vue';
 import TransmissionCard from '@/Pages/MyComponents/transmission-card.vue'; 
 import axios from 'axios';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+
+window.Pusher = Pusher;
+
+const echo = new Echo({
+    broadcaster: 'pusher',
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    forceTLS: true,
+});
+
 
 export default {
     components: {
@@ -36,7 +48,7 @@ export default {
                 .catch(error => {
                     console.log(error)
                 })
-        }
+        },
     },
     watch: {
         room() {
@@ -45,6 +57,13 @@ export default {
     },
     created() {
         this.getRoom()
+
+        echo.channel('chat.' + this.roomIdLink)
+            .listen('.message.new', (event) => {
+                // console.log('Nouveau message reçu:', event);
+                // Mettez à jour l'affichage ou effectuez d'autres actions ici
+                this.getMessages();
+        });
     },
 };
 </script>

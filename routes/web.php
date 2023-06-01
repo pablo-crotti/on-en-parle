@@ -56,6 +56,10 @@ Route::get('/calendar', function () {
     return  Inertia::render('Calendar/container');
 })->name('calendar');
 
+Route::get('/Admin/Programs', function () {
+    return  Inertia::render('Admin/Programs/container');
+})->name('calendar');
+
 Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
 Route::get('/chat/room/{roomId}', [ChatController::class, 'room']);

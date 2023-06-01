@@ -6,6 +6,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use App\Events\NewChatMessage;
+use App\Listeners\NewMessageListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,8 +20,8 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        'App\Events\NewChatMessage' => [
-            'App\Listeners\SendChatMessageNotification'
+        NewChatMessage::class => [
+            NewMessageListener::class,
         ],
     ];
 
