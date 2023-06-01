@@ -1,0 +1,46 @@
+.admin-messages-title-container {
+    border-radius: 20px 20px 0px 0px;
+    border: 2px solid var(--white);
+    padding: 10px;
+    background-color: var(--primary-color);
+}
+
+.admin-messages-title {
+    color: var(--white);
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.admin-messages-container {
+    height: 95%;
+    width: 15%;
+    flex-grow: 1;
+}
+
+.admin-messages-list {
+    overflow-y: auto;
+    height: 90%;
+    padding: 10px;
+    border-left: 2px solid var(--white);
+    border-right: 2px solid var(--white);
+    border-bottom: 2px solid var(--white);
+    border-radius: 0px 0px 20px 20px;
+}
+
+.admin-messages-item {
+    margin-top: 20px;
+}
+
+.inbox-wrapper, .management-wrapper{
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    align-items: center;
+    height: 65vh;
+    padding: 20px;
+}
+
+.bg-gray-100 {
+    --tw-bg-opacity: 0;
+}

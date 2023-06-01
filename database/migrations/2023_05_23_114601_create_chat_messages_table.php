@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('chat_messages', function (Blueprint $table) {
             $table->id();
             $table->text('content')->nullable();
-            $table->timestamps('timestamp');
+            $table->timestamps();
             $table->unsignedInteger('nb_likes')->default(0);
             $table->unsignedInteger('status')->default(0);
             $table->foreignId('chat_room_id')->constrained()->onDelete('cascade');            

@@ -1,15 +1,19 @@
 <script>
 import DayItem from '@/Pages/Calendar/dayItem.vue';
+import TransmissionCard from '@/Pages/MyComponents/transmission-card.vue';
 import axios from 'axios';
 
 export default {
   components: {
-    DayItem
+    DayItem,
+    TransmissionCard
   },
   data() {
     return {
         months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-        transmissions: []
+        transmissions: [],
+        selectedTransmission: null,
+        selectedRoom: null,
     };
   },
   emits: ['updateMonth', 'update-month'],
@@ -32,6 +36,16 @@ export default {
       const newYear = this.month === 12 ? this.year + 1 : this.year;
       this.$emit('update-month', newMonth, newYear);
     },
+    getRoom(id) {
+      // alert(id)
+      axios.get('/chat/room/' + id)
+          .then(response => {
+              this.selectedRoom = response.data
+          })
+          .catch(error => {
+              console.log(error)
+          })
+    },
     getRooms() {
             axios.get('/transmissions/dates')
                 .then(response => {
@@ -42,15 +56,23 @@ export default {
                 })
         },
     hasTransmission(day) {
+      // alert(this.transmissions)
         if (day) {
           const date = this.year + '-' + this.month + '-' + day
           const formattedDate = new Date(date).toISOString().split('T')[0];
-          const foundTransmission = this.transmissions.find(transmission => transmission.startsWith(formattedDate));
-        
-          return foundTransmission ? true : false;
+          const foundTransmissionId = Object.entries(this.transmissions).find(([id, transmission]) => transmission.startsWith(formattedDate))?.[0];
+
+          
+          // alert(foundTransmission)
+
+          return foundTransmissionId || false;
         } else {
           return false;
         }
+    },
+    handleTransmissionClick(transmissionId) {
+      this.getRoom(transmissionId)
+      this.selectedTransmission = transmissionId;
     }
     },
     
@@ -81,8 +103,16 @@ export default {
     <!-- <p style="color:white;">{{ transmissions }}</p> -->
     <!-- <p style="color:white;" v-for="(t, i) in transmissions" :key="i">{{ t }}</p> -->
     <div class="day-item" v-for="(day, index) in clDays" :key="index">
-      <DayItem :day="day" :month="month" :year="year" :current="isCurrentDay(day)" :hasTransmission="hasTransmission(day)"/>
+      <DayItem :day="day" :month="month" :year="year" :current="isCurrentDay(day)" :hasTransmission="hasTransmission(day)" @transmission-click="handleTransmissionClick"/>
     </div>
   </div>
+  <div class="calendar-transmission-wrapper">
+    <div class="transmission-card-container" v-if="selectedRoom">
+      <a :href="'questions/' + selectedRoom.id">
+        <TransmissionCard :room="selectedRoom" />
+      </a>
+    </div>
+  </div>
+  
   
 </template>
