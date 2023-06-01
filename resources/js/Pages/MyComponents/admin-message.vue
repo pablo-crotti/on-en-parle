@@ -29,7 +29,7 @@ export default {
 
         const message = props.message;
 
-        console.log(message);
+        // console.log(message);
 
         let headerColor = "";
         let headerSymbol = "";
@@ -75,7 +75,7 @@ export default {
 
                 
                  <p class="message-text" v-if="message.text.length > 0">
-                    {{ 'dsadqsdqsdqswdqwdqdwqdqwqqddwdqdqwwqdaqdwqdqdwdqwdwdwdqw' }}
+                    {{ message.content }}
                 </p>
 
                 <div v-if="message.audio.length > 0">

@@ -10,7 +10,7 @@
 </script>
 
 <template>
-    <AppLayout :title="'On en parle | Réception (Archives)'">
+    <AppLayout title="On en parle | Réception (Archives)">
         <div class="archives-wrapper">
 
         </div>
