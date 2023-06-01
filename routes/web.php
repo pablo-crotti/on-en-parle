@@ -73,7 +73,12 @@ Route::get('/chat/room/{chatId}/likes', [LikesController::class, 'sumChatLikes']
 
 
 
+Route::get('/AdminInbox/{id}', [ChatAdminController::class, 'showChatRoom'])->name('chatroom.show');
+Route::post('/AdminInbox/message/{id}/update', [ChatAdminController::class, 'updateMessageStatus']);
+Route::post('/AdminInbox/message/{id}/content', [ChatAdminController::class, 'updateMessageContent']);
+Route::post('/AdminInbox/message/{id}/delete', [ChatAdminController::class, 'deleteMessage']);
 
+Route::post('/phone-calls', [PhoneCallController::class, 'store']);
 
 
 
