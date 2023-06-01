@@ -131,10 +131,3 @@ const logout = () => {
         </div>
     </div>
 </template>
-<style>
-    .test {
-    /* background-image: url(https://www.rts.ch/2021/01/05/11/09/10321771.image?&amp;w=100&amp;h=10&quot;);
-    width: 100%;
-    height: 400px; */
-    }
-</style>
