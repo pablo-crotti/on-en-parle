@@ -7,6 +7,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\IndexRoomController;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,9 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
+    ->get('/register', [RegisteredUserController::class, 'create'])
+    ->name('register');
 
 Route::get('/questions/{id}', function ($id) {
     return  Inertia::render('Chat/container')->with('id', $id);

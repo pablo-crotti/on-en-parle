@@ -63,7 +63,8 @@ class ChatController extends Controller
         $newMessage->chat_message_id = $newChatMessage->id;
         $newMessage->save();
 
-        // broadcast(new NewChatMessage($newMessage))->toOthers();
+        broadcast(new NewChatMessage($newChatMessage))->toOthers();
+
         return $newMessage;
        
     }

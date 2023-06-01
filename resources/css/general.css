@@ -60,6 +60,9 @@ select:focus {
 .text-white, .text-white span {
     color: var(--white);
 }
+.user-name {
+    color: var(--gray);
+}
 .text-white:hover {
     color: var(--white);
     border-color: var(--white);
