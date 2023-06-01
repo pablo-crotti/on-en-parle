@@ -14,6 +14,7 @@
 <template>
     <AppLayout title="On en parle | Réception (Inbox)">
         <div class="inbox-wrapper">
+            <adminMessageContainer :no="1" :id="0"></adminMessageContainer>
             <adminMessageContainer :no="1" :id="1"></adminMessageContainer>
         </div>
     </AppLayout>

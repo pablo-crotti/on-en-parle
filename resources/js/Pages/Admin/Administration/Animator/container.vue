@@ -10,7 +10,7 @@
 </script>
 
 <template>
-    <AppLayout :title="'On en parle | Administration (Animateur)'">
+    <AppLayout title="On en parle | Administration (Animateur)">
         <div class="animator-wrapper">
 
         </div>
