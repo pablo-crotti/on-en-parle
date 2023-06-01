@@ -5,9 +5,15 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LikesController;
+<<<<<<< HEAD
 use App\Http\Controllers\ChatAdminController;
 use App\Http\Controllers\PhoneCallController;
 
+=======
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\IndexRoomController;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
+>>>>>>> 7c26c1ac94b5d86bbc9a302251b26211cd10874a
 
 /*
 |--------------------------------------------------------------------------
@@ -20,14 +26,8 @@ use App\Http\Controllers\PhoneCallController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Route::get('/', [IndexController::class, 'redirectToQuestion'])->name('index');
+
 
 Route::middleware([
     'auth:sanctum',
@@ -39,15 +39,27 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
+    ->get('/register', [RegisteredUserController::class, 'create'])
+    ->name('register');
 
 Route::get('/questions/{id}', function ($id) {
     return  Inertia::render('Chat/container')->with('id', $id);
-});
+})->name('questions');
+
+Route::get('/', function () {
+    return  Inertia::render('Index/container');
+})->name('index');
 
 Route::get('/transmissions', function () {
     return  Inertia::render('Transmissions/container');
 })->name('transmissions');
 
+Route::get('/calendar', function () {
+    return  Inertia::render('Calendar/container');
+})->name('calendar');
+
+Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
 Route::get('/chat/room/{roomId}', [ChatController::class, 'room']);
 Route::get('/chat/room/{roomId}/messages', [ChatController::class, 'messages']);
@@ -55,19 +67,19 @@ Route::post('/chat/room/{roomId}/message', [ChatController::class, 'newMessage']
 Route::post('/chat/like/{messageId}', [LikesController::class, 'like']);
 Route::post('/chat/unlike/{messageId}', [LikesController::class, 'unlike']);
 Route::get('/chat/room/{chatId}/likes', [LikesController::class, 'sumChatLikes']);
-
-
-
-
-Route::get('/AdminInbox/{id}', [ChatAdminController::class, 'showChatRoom'])->name('chatroom.show');
-Route::post('/AdminInbox/message/{id}/update', [ChatAdminController::class, 'updateMessageStatus']);
-Route::post('/AdminInbox/message/{id}/content', [ChatAdminController::class, 'updateMessageContent']);
-Route::post('/AdminInbox/message/{id}/delete', [ChatAdminController::class, 'deleteMessage']);
-
-Route::post('/phone-calls', [PhoneCallController::class, 'store']);
+<<<<<<< HEAD
 
 
 
 
 
 
+
+
+
+
+
+=======
+Route::get('/transmissions/dates', [CalendarController::class, 'getBroadcasteDates']);
+Route::get('/calendar/{year}/{month}/{day}', [CalendarController::class, 'hasTransmission']);
+>>>>>>> 7c26c1ac94b5d86bbc9a302251b26211cd10874a

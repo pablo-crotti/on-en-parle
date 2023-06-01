@@ -10,7 +10,7 @@
 </script>
 
 <template>
-    <AppLayout :title="'On en parle | Émissions (Liste)'">
+    <AppLayout title="On en parle | Émissions (Liste)">
         <div class="programs-wrapper">
 
         </div>

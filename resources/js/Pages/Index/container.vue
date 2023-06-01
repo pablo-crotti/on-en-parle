@@ -17,19 +17,21 @@ export default {
     data: function ()  {                
         return {
             messages: [],
-            roomIdLink: window.location.href.split('/').pop(),
-            room: null
+            // roomIdLink: window.location.href.split('/').pop(),
+            room: null,
+            // roomIdLink: '',
         }
     },
     methods: {
         getRoom() {
-            axios.get('/chat/room/' + this.roomIdLink)
+            axios.get('/index/room')
                 .then(response => {
                     this.room = response.data
+                    // this.roomIdLink = response.data.id
                 })
         },
         getMessages() {
-            axios.get('/chat/room/' + this.roomIdLink + '/messages')
+            axios.get('/chat/room/' + this.room.id + '/messages')
                 .then(response => {
                     this.messages = response.data
                 })
@@ -64,7 +66,7 @@ export default {
             <div class="chat-container">
                 <message-container :messages="messages"/>
                 <input-message 
-                    :room="roomIdLink" 
+                    :room="room.id" 
                     v-on:messagesent="getMessages"/>
             </div>
         </div>

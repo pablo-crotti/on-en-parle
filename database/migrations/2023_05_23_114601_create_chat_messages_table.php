@@ -15,7 +15,7 @@ return new class extends Migration
             //créer un ligne id dans la table chat_messages qui est unique
             $table->id()->unique();
             $table->text('content')->nullable();
-            $table->timestamps('timestamp');
+            $table->timestamps();
             $table->unsignedInteger('nb_likes')->default(0);
             $table->unsignedInteger('status')->default(0);
             $table->foreignId('chat_room_id')->constrained()->onDelete('cascade');            
