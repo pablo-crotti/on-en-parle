@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LikesController;
+use App\Http\Controllers\ChatAdminController;
+use App\Http\Controllers\PhoneCallController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,3 +55,19 @@ Route::post('/chat/room/{roomId}/message', [ChatController::class, 'newMessage']
 Route::post('/chat/like/{messageId}', [LikesController::class, 'like']);
 Route::post('/chat/unlike/{messageId}', [LikesController::class, 'unlike']);
 Route::get('/chat/room/{chatId}/likes', [LikesController::class, 'sumChatLikes']);
+
+
+
+
+Route::get('/AdminInbox/{id}', [ChatAdminController::class, 'showChatRoom'])->name('chatroom.show');
+Route::post('/AdminInbox/message/{id}/update', [ChatAdminController::class, 'updateMessageStatus']);
+Route::post('/AdminInbox/message/{id}/content', [ChatAdminController::class, 'updateMessageContent']);
+Route::post('/AdminInbox/message/{id}/delete', [ChatAdminController::class, 'deleteMessage']);
+
+Route::post('/phone-calls', [PhoneCallController::class, 'store']);
+
+
+
+
+
+

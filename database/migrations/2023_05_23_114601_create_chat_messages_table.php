@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('chat_messages', function (Blueprint $table) {
-            $table->id();
+            //créer un ligne id dans la table chat_messages qui est unique
+            $table->id()->unique();
             $table->text('content')->nullable();
             $table->timestamps('timestamp');
             $table->unsignedInteger('nb_likes')->default(0);
