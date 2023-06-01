@@ -40,6 +40,7 @@ class ChatController extends Controller
     {
         $messages = ChatMessage::where('chat_room_id', $roomId)
             ->with(['text', 'audio'])
+            ->whereIn('status', [0, 1, 2, 3, 4, 5])
             ->orderBy('created_at', 'DESC')
             ->get();
 
@@ -65,7 +66,7 @@ class ChatController extends Controller
 
         broadcast(new NewChatMessage($newChatMessage))->toOthers();
 
-        return $newMessage;
+        return $newMessage; 
        
     }
 }
