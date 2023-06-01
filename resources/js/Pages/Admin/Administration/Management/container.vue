@@ -1,6 +1,6 @@
 <script>
     import AppLayout from '@/Layouts/AppLayoutUser.vue';
-    import adminMessageContainer from '@/Pages/Admin/Reception/Inbox/adminMessageContainer.vue';
+    import adminMessageContainer from '@/Pages/MyComponents/adminMessageContainer.vue';
     import axios from 'axios';
 
     export default {
