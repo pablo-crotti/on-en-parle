@@ -1,6 +1,6 @@
 <script>
     import axios from 'axios';
-    import AdminMessage from '@/Pages/MyComponents/admin-message.vue';
+    import AdminMessage from './admin-message.vue';
 
     export default {
         props: ['no', 'id'],
