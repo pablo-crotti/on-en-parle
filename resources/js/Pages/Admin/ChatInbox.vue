@@ -20,7 +20,7 @@
   
 <script>
 import axios from 'axios';
-import ChatMessage from '@/Components/ChatMessages.vue';
+import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
 
 export default {
   components: {
