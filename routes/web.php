@@ -87,3 +87,4 @@ Route::get('/calendar/{year}/{month}/{day}', [CalendarController::class, 'hasTra
 Route::get('/prochaine-emission', [LiveController::class, 'getNearestBroadcast']);
 Route::post('/emission/{roomId}/live', [LiveController::class, 'setLive']);
 Route::post('/chat/room/new', [ChatController::class, 'newRoom']);
+//test
