@@ -1,7 +1,7 @@
-<template>
+<!-- <template>
   <div>
     <div
-      v-for="message in messages"
+      v-for="message in this.message"
       :key="message.id"
       class="message"
       :id="`message-${message.id}`"
@@ -9,7 +9,8 @@
       @dragstart="$emit('dragstart', $event, message.id)"
       v-if="message && !audioIds.includes(message.id)"
     >
-   
+   v-if="message && !audioIds.includes(message.id)" 
+
       <div class="message-header" :style="{ backgroundColor: headerColor }">
         <span class="symbol-header material-symbols-outlined">{{ headerSymbol }}</span>
       </div>
@@ -51,7 +52,7 @@
       </div>
     </div>
   </div>
-</template>
+</template> -->
 
 <script>
 export default {
@@ -87,7 +88,7 @@ export default {
   created(){
     console.log("messages")
 
-    console.log(this.messages)
+    console.log(this.message)
   }
 };
 
