@@ -13,6 +13,7 @@ use App\Http\Controllers\IndexRoomController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use PHPUnit\Framework\Attributes\Test;
 use App\Http\Controllers\LiveController;
+use App\Http\Controllers\ProgramController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,5 +108,5 @@ Route::get('/transmissions/dates', [CalendarController::class, 'getBroadcasteDat
 Route::get('/calendar/{year}/{month}/{day}', [CalendarController::class, 'hasTransmission']);
 Route::get('/prochaine-emission', [LiveController::class, 'getNearestBroadcast']);
 Route::post('/emission/{roomId}/live', [LiveController::class, 'setLive']);
-Route::post('/chat/room/new', [ChatController::class, 'newRoom']);
+Route::post('/chat/room/new', [ProgramController::class, 'newRoom']);
 Route::get('/emission/{no}/status/{id}', [AdminChatController::class, 'getElementsByStatus']);
