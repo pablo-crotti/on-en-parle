@@ -1,6 +1,7 @@
 <script>
     import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
     import axios from 'axios';
+    import Modal from '@/Pages/MyComponents/modal.vue';
 
 
 
@@ -11,7 +12,8 @@
         data() {
             return {
                 program: null,
-                background: ''
+                background: '',
+                btnCaption: ''
             }
         },
         methods : {
@@ -26,8 +28,12 @@
             
                 if (this.program.on_air) {
                     this.background = '#838383';
+                    this.btnCaption = 'Arrêter le live';
+                    return true;
                 } else {
                     this.background = '#f1f1f1';
+                    this.btnCaption = 'Démarrer le live';
+                    return false;
                 }
             }
         },
@@ -45,6 +51,7 @@
 
 <template>
     <AppLayout title="On en parle | Émissions (Live)">
+        <Modal></Modal>
         <div class="live-wrapper">
             <div class="live-content-wrapper">
                 <h1 class="live-title">Émissions (Live)</h1>
@@ -61,7 +68,7 @@
                     <div class="golive-buttons">
                     <div class="golive-button" :style="{ backgroundColor: this.background }" @click="goLive()">
                         <div class="golive-rec-symbol"></div>
-                        Démarrer le live
+                            {{ this.btnCaption }}
                         </div>
                     </div> 
                 </div>

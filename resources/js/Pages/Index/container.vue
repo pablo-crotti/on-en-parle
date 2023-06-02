@@ -57,6 +57,11 @@ export default {
     },
     created() {
         this.getRoom()
+
+        const liveChannel = Echo.channel('live.status');
+        liveChannel.listen('.live.status.new', (e) => {
+            this.getRoom();
+        });
     },
 };
 </script>
@@ -66,8 +71,11 @@ export default {
 
         <div v-if="room" class="chat-wrapper">
             <div class="chat-transmission">
-                <div class="transmission-card-container">
-                    <div class="card">
+                 <div class="transmission-card-container">
+                    <div class="on-air card " v-if="room.on_air" >
+                        <transmission-card :room="room"/>
+                    </div>
+                    <div class="card " v-else >
                         <transmission-card :room="room"/>
                     </div>
                 </div>

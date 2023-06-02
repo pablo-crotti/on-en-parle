@@ -13,9 +13,6 @@
     width: 70%;
     border-radius: 20px;
 }
-.transmission-card-container .on-air {
-    border-color: var(--primary-color);
-}
 .transmission-card-container a, .transmission-card-container .card {
     width: 100%;
     padding: 1rem;
@@ -24,6 +21,9 @@
     justify-content: flex-start;
     border-radius: 20px;
     border: solid 1px var(--light-black);
+}
+.transmission-card-container .on-air {
+    border-color: var(--primary-color);
 }
 .transmission-card-container:hover {
     scale: 1.01;

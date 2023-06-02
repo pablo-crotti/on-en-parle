@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Events\NewLiveStatus;
 
 class LiveController extends Controller
 {
@@ -36,6 +37,9 @@ class LiveController extends Controller
             $updatedChatRoom = DB::table('chat_rooms')
                 ->where('id', $roomId)
                 ->first();
+
+            event(new NewLiveStatus());
+            
 
             return response()->json(['success' => true, 'chatRoom' => $updatedChatRoom]);
         }
