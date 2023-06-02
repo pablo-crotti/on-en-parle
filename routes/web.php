@@ -10,6 +10,7 @@ use App\Http\Controllers\PhoneCallController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\IndexRoomController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\LiveController;
 
 
 /*
@@ -75,4 +76,5 @@ Route::post('/AdminInbox/message/{id}/delete', [ChatAdminController::class, 'del
 Route::post('/phone-calls', [PhoneCallController::class, 'store']);
 Route::get('/transmissions/dates', [CalendarController::class, 'getBroadcasteDates']);
 Route::get('/calendar/{year}/{month}/{day}', [CalendarController::class, 'hasTransmission']);
-
+Route::get('/prochaine-emission', [LiveController::class, 'getNearestBroadcast']);
+Route::post('/emission/{roomId}/live', [LiveController::class, 'setLive']);
