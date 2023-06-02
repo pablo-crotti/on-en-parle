@@ -10,7 +10,7 @@ use App\Events\NewChatMessage;
 use App\Models\Message;
 
 class ChatController extends Controller
-{   
+{
     /**
      * Retrieve all chat rooms.
      *
@@ -66,7 +66,21 @@ class ChatController extends Controller
 
         broadcast(new NewChatMessage($newChatMessage))->toOthers();
 
-        return $newMessage; 
-       
+        return $newMessage;
+
+    }
+
+    //nouvelle émission
+    public function newRoom(Request $request)
+    {
+         $newChatRoom = new ChatRoom();
+         $newChatRoom->title = $request->input('title');
+         $newChatRoom->description = $request->input('description');
+         $newChatRoom->image = $request->input('banner');
+         $newChatRoom->broadcast_date = $request->input('date');
+         $newChatRoom->audio_file = $request->input('audio');
+         $newChatRoom->save();
+
+         return response()->json($newChatRoom, 201);
     }
 }
