@@ -1,0 +1,63 @@
+.live-wrapper {
+    background-color: var(--white);
+    padding-top: 30px;
+}
+
+.live-content-wrapper {
+    margin-left: 5%;   
+}
+.live-title {
+    font-size: 35px;
+    font-weight: bold;
+    color: var(--black);
+}
+.live-subtitle {
+    font-size: 25px;
+    font-weight: bold;
+    color: var(--black);
+}
+.live-date {
+    font-size: 17px;
+    color: var(--black);
+}
+.golive-wrapper {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+.golive-header {
+    background-color: var(--dark-gray);
+    border-radius: 40px 40px 0 0;
+    height: 60px;
+}
+.golive-button {
+    width: 320px;
+    height: 90px;
+    border: 1px solid var(--black);
+    border-radius: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.golive-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 100px 0;
+}
+.golive-rec-symbol {
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    border-radius: 100%;
+}
+.golive-symbol {
+    padding: 20px 0px 20px 40px;
+}
+.golive-body {
+    border: 3px solid var(--black);
+    border-top: none;
+    border-radius: 0 0 40px 40px;
+}
