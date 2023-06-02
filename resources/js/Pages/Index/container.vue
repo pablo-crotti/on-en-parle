@@ -43,6 +43,16 @@ export default {
     watch: {
         room() {
             this.getMessages(); 
+
+            const likesChannel = Echo.channel('like.' + this.room.id);
+            likesChannel.listen('.like.new', (e) => {
+                this.getMessages();
+            });
+
+            const chatChannel = Echo.channel('chat.' + this.room.id);
+            chatChannel.listen('.message.new', (e) => {
+                this.getMessages();
+            });
         },
     },
     created() {

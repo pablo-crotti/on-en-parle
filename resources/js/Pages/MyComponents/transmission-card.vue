@@ -27,7 +27,6 @@
             getLikes() {
                 axios.get('/chat/room/' + this.room.id + '/likes')
                     .then(response => {
-                        // console.log(response.data)
                         this.likes = response.data
                     })
                     .catch(error => {
@@ -37,6 +36,11 @@
         },
         created() {
             this.getLikes()
+
+            const likesChannelTransmission = Echo.channel('like.rooms');
+            likesChannelTransmission.listen('.like.rooms.new', (e) => {
+                this.getLikes();
+            });
         },
         
     }

@@ -10,7 +10,7 @@ use App\Http\Controllers\PhoneCallController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\IndexRoomController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
-
+use PHPUnit\Framework\Attributes\Test;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,9 +56,9 @@ Route::get('/calendar', function () {
     return  Inertia::render('Calendar/container');
 })->name('calendar');
 
-Route::get('/Admin/Programs', function () {
-    return  Inertia::render('Admin/Programs/container');
-})->name('calendar');
+// Route::get('/Admin/Programs', function () {
+//     return  Inertia::render('Admin/Programs/container');
+// })->name('calendar');
 
 Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
@@ -75,4 +75,3 @@ Route::post('/AdminInbox/message/{id}/delete', [ChatAdminController::class, 'del
 Route::post('/phone-calls', [PhoneCallController::class, 'store']);
 Route::get('/transmissions/dates', [CalendarController::class, 'getBroadcasteDates']);
 Route::get('/calendar/{year}/{month}/{day}', [CalendarController::class, 'hasTransmission']);
-

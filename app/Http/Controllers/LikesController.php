@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ChatMessage;
+use App\Events\NewLike;
+use App\Events\NewLikeForRooms;
 
 class LikesController extends Controller
 {
@@ -12,6 +14,10 @@ class LikesController extends Controller
         $message->nb_likes++;
         $message->save();
 
+        event(new NewLike($message->chat_room_id));
+        event(new NewLikeForRooms());
+
+
         return $message;
     }
 
@@ -19,6 +25,9 @@ class LikesController extends Controller
         $message = ChatMessage::find($messageId);
         $message->nb_likes--;
         $message->save();
+
+        event(new NewLike($message->chat_room_id));
+        event(new NewLikeForRooms());
 
         return $message;
     }
