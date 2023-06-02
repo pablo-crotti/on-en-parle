@@ -10,8 +10,8 @@ use App\Http\Controllers\PhoneCallController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\IndexRoomController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
+use PHPUnit\Framework\Attributes\Test;
 use App\Http\Controllers\LiveController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -57,9 +57,9 @@ Route::get('/calendar', function () {
     return  Inertia::render('Calendar/container');
 })->name('calendar');
 
-Route::get('/admin/programs/list', function () {
+Route::get('/Admin/Programs', function () {
     return  Inertia::render('Admin/Programs/container');
-})->name('listPrograms');
+})->name('calendar');
 
 Route::get('/admin/programs/live', function () {
     return  Inertia::render('Admin/Programs/Live/container');
