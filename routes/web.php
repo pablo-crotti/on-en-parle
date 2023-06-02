@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminChatController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -57,9 +58,9 @@ Route::get('/calendar', function () {
     return  Inertia::render('Calendar/container');
 })->name('calendar');
 
-Route::get('/Admin/Programs', function () {
-    return  Inertia::render('Admin/Programs/container');
-})->name('calendar');
+Route::get('/admin/programs/list', function () {
+    return  Inertia::render('Admin/Programs/Programs/container');
+})->name('listPrograms');
 
 Route::get('/admin/programs/live', function () {
     return  Inertia::render('Admin/Programs/Live/container');
@@ -68,6 +69,26 @@ Route::get('/admin/programs/live', function () {
 Route::get('/admin/programs/new', function () {
     return  Inertia::render('Admin/Programs/NewProgram/container');
 })->name('newProgramm');
+
+Route::get('/admin/reception/inbox', function () {
+    return  Inertia::render('Admin/Reception/Inbox/container');
+})->name('inbox');
+
+Route::get('/admin/reception/archives', function () {
+    return  Inertia::render('Admin/Reception/Archives/container');
+})->name('archives');
+
+Route::get('/admin/administration/animator', function () {
+    return  Inertia::render('Admin/Administration/Animator/container');
+})->name('animator');
+
+Route::get('/admin/administration/control', function () {
+    return  Inertia::render('Admin/Administration/Control/container');
+})->name('control');
+
+Route::get('/admin/administration/management', function () {
+    return  Inertia::render('Admin/Administration/Management/container');
+})->name('management');
 
 Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
@@ -87,3 +108,4 @@ Route::get('/calendar/{year}/{month}/{day}', [CalendarController::class, 'hasTra
 Route::get('/prochaine-emission', [LiveController::class, 'getNearestBroadcast']);
 Route::post('/emission/{roomId}/live', [LiveController::class, 'setLive']);
 Route::post('/chat/room/new', [ChatController::class, 'newRoom']);
+Route::get('/emission/{no}/status/{id}', [AdminChatController::class, 'getElementsByStatus']);

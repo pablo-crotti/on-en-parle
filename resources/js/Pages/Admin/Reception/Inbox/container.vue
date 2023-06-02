@@ -1,5 +1,5 @@
 <script>
-    import AppLayout from '@/Layouts/AppLayoutUser.vue';
+    import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
     import adminMessageContainer from '@/Pages/MyComponents/adminMessageContainer.vue';
     import axios from 'axios';
 
