@@ -70,7 +70,7 @@ class ChatController extends Controller
 
     }
 
-    //nouvelle émission
+    //nouvelle émission dans la liste
     public function newRoom(Request $request)
     {
          $newChatRoom = new ChatRoom();
