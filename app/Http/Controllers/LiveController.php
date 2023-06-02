@@ -20,25 +20,26 @@ class LiveController extends Controller
         return response()->json($nearestBroadcast);
     }
 
-    // public function setLive($roomId) 
-    // {
-    //     $chatRoom = DB::table('chat_rooms')
-    //         ->where('id', $roomId)
-    //         ->first();
+    public function setLive($roomId)
+    {
+        $chatRoom = DB::table('chat_rooms')
+            ->where('id', $roomId)
+            ->first();
 
-    //     if ($chatRoom) {
-    //         $newOnAirStatus = 0;
-    //         if($chatRoom->on_air == 0){
-    //             $newOnAirStatus = 1;
-    //         }
+        if ($chatRoom) {
+            $newOnAirStatus = !$chatRoom->on_air;
 
-    //         DB::table('chat_rooms')
-    //             ->where('id', $roomId)
-    //             ->update(['on_air' => $newOnAirStatus]);
+            DB::table('chat_rooms')
+                ->where('id', $roomId)
+                ->update(['on_air' => $newOnAirStatus]);
 
-    //         return response()->json(['success' => true]);
-    //     }
+            $updatedChatRoom = DB::table('chat_rooms')
+                ->where('id', $roomId)
+                ->first();
 
-    //     return response()->json(['success' => false]);
-    // }
+            return response()->json(['success' => true, 'chatRoom' => $updatedChatRoom]);
+        }
+
+        return response()->json(['success' => false]);
+    }
 }
