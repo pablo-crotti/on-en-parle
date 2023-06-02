@@ -159,7 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Illuminate\Broadcasting\BroadcastServiceProvider::class,
         /*
          * Application Service Providers...
          */

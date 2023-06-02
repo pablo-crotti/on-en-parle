@@ -60,14 +60,14 @@ class ChatController extends Controller
         $newChatMessage->chat_room_id = $roomId;
         $newChatMessage->save();
 
+        event(new NewChatMessage($newChatMessage));
+
         $newMessage = new Message();
         $newMessage->chat_message_id = $newChatMessage->id;
         $newMessage->save();
 
-        broadcast(new NewChatMessage($newChatMessage))->toOthers();
-
-        return $newMessage;
-
+        return $newMessage; 
+       
     }
 
     //nouvelle émission dans la liste

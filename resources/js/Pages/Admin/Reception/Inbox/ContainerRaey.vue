@@ -14,16 +14,27 @@
     initialMessages:{
       type: Array,
       required: true
-    } 
+    },
+    audioChatroom:{
+        type: Array,
+        required: true
+    },
+    audioId: {
+      type: Array,
+      required: true
+    }
+
   },
 
   data() {
     return {
-      messages: this.initialMessages
+      messages: this.initialMessages,
+      audiofiles: this.audioChatroom
     };
   },
 
   methods: {
+    
     drag(event, messageId) {
       event.dataTransfer.setData('text', messageId);
     },
@@ -48,9 +59,19 @@ async deleteMessage(message) {
         } catch (error) {
             console.error(error);
         }
-    }
+    },
 
-    }}
+
+
+    },
+    computed: {
+  
+    },
+  
+  created() {
+ }
+
+}
 
 </script>
 
@@ -65,14 +86,15 @@ async deleteMessage(message) {
             @dragover.prevent
         >
         <chat-message
-        v-for="message in messages.filter(m => m.status === status)"
-        :key="message.id"
-        :message="message"
-        @dragstart="drag($event, message.id)"
-        @modify="modifier"
-        @delete="deleteMessage"
+  v-for="message in messages.filter(m => m.status === status)"
+  :key="message.id"
+  :message="message"
+    :audiofiles="audiofiles"
+  @dragstart="drag($event, message.id)"
+  @modify="modifier"
+  @delete="deleteMessage"
+/>
 
-        />
         </div>
       </div>
       <div id="app">
@@ -89,7 +111,7 @@ h1 {
 }
 .container {
     width: 100%;
-    height: 900px;
+    height: 100%;
     display: flex;
     flex-direction: row;
     padding: 20px;
@@ -145,5 +167,13 @@ h1 {
     padding: 20px;
     color: white;
     width: 100%;
+}
+.dropzone {
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: white;
 }
 </style>

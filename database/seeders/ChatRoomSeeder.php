@@ -39,5 +39,14 @@ class ChatRoomSeeder extends Seeder
             'broadcast_date' => '2023-05-22 09:07:00',
             'audio_file' => 'https://rts-aod-dd.akamaized.net/ww/14008725/cd93330a-b850-3c18-83c0-62a47f0c5312.mp3',     
         ]);
+        DB::table('chat_rooms')->insert([
+            'title' => 'Wanted: le moustique tigre',
+            'description' => "Après Genève et le Valais, le moustique tigre s’est installé dans le canton de Vaud. Pour limiter son expansion, les autorités appellent le public à signaler sa présence et à éliminer les lieux de ponte potentiels à domicile. 
+            Quels sont les gestes les plus efficaces?
+            ",
+            'image' => 'https://www.rts.ch/2023/05/31/10/51/14063700.image?&w=1413&h=650',
+            'broadcast_date' => '2023-06-01 09:07:00',
+            'audio_file' => 'https://rts-aod-dd.akamaized.net/ww/14033607/b2751e58-842e-3953-a029-325f0f6dd589.mp3',     
+        ]);
     }
 }

@@ -5,18 +5,6 @@ import InputMessage from '@/Pages/Chat/InputMessage.vue';
 import ChatRoomSelection from '@/Pages/Chat/ChatRoomSelection.vue';
 import TransmissionCard from '@/Pages/MyComponents/transmission-card.vue'; 
 import axios from 'axios';
-import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
-
-window.Pusher = Pusher;
-
-const echo = new Echo({
-    broadcaster: 'pusher',
-    key: process.env.MIX_PUSHER_APP_KEY,
-    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    forceTLS: true,
-});
-
 
 export default {
     components: {
@@ -57,13 +45,18 @@ export default {
     },
     created() {
         this.getRoom()
+        this.getMessages()
 
-        echo.channel('chat.' + this.roomIdLink)
-            .listen('.message.new', (event) => {
-                // console.log('Nouveau message reçu:', event);
-                // Mettez à jour l'affichage ou effectuez d'autres actions ici
-                this.getMessages();
+        const likesChannel = Echo.channel('like.' + this.roomIdLink);
+        likesChannel.listen('.like.new', (e) => {
+            this.getMessages();
         });
+
+        const chatChannel = Echo.channel('chat.' + this.roomIdLink);
+        chatChannel.listen('.message.new', (e) => {
+            this.getMessages();
+        });
+
     },
 };
 </script>
