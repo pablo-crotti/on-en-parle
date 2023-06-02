@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="form--field">
-                    <label class="form--label">Banière</label>
+                    <label class="form--label">Bannière</label>
                     <input type="text" class="form--element" v-model="banner" placeholder="Entrez l'URL de la bannière">
                 </div>
 
@@ -65,7 +65,7 @@ export default {
         submitForm() {
             console.log("test", this.title, this.date, this.description, this.banner, this.audio)
 
-            axios.post('/chat/rooms/new', {
+            axios.post('/chat/room/new', {
                 title: this.title,
                 date: this.date,
                 description: this.description,
@@ -73,7 +73,14 @@ export default {
                 audio: this.audio
             })
                 .then(response => {
-                    console.log(response);
+                    if (response.status == 201) {
+                        this.title = '';
+                        this.date = '';
+                        this.description = '';
+                        this.banner = '';
+                        this.audio = '';
+                        this.$emit('messagesent')
+                    }
                 })
                 .catch(error => {
                     console.error(error);

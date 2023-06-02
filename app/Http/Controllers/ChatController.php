@@ -72,9 +72,7 @@ class ChatController extends Controller
 
     //nouvelle émission
     public function newRoom(Request $request)
-
     {
-
          $newChatRoom = new ChatRoom();
          $newChatRoom->title = $request->input('title');
          $newChatRoom->description = $request->input('description');

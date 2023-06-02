@@ -66,7 +66,7 @@ Route::get('/admin/programs/live', function () {
 })->name('live');
 
 Route::get('/admin/programs/new', function () {
-    return  Inertia::render('Admin/Programs/New/container');
+    return  Inertia::render('Admin/Programs/NewProgram/container');
 })->name('newProgramm');
 
 Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
