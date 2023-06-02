@@ -10,6 +10,7 @@ use App\Http\Controllers\PhoneCallController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\IndexRoomController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\LiveController;
 
 
 /*
@@ -56,9 +57,17 @@ Route::get('/calendar', function () {
     return  Inertia::render('Calendar/container');
 })->name('calendar');
 
-Route::get('/Admin/Programs', function () {
+Route::get('/admin/programs/list', function () {
     return  Inertia::render('Admin/Programs/container');
-})->name('calendar');
+})->name('listPrograms');
+
+Route::get('/admin/programs/live', function () {
+    return  Inertia::render('Admin/Programs/Live/container');
+})->name('live');
+
+Route::get('/admin/programs/new', function () {
+    return  Inertia::render('Admin/Programs/NewProgram/container');
+})->name('newProgramm');
 
 Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
@@ -75,4 +84,6 @@ Route::post('/AdminInbox/message/{id}/delete', [ChatAdminController::class, 'del
 Route::post('/phone-calls', [PhoneCallController::class, 'store']);
 Route::get('/transmissions/dates', [CalendarController::class, 'getBroadcasteDates']);
 Route::get('/calendar/{year}/{month}/{day}', [CalendarController::class, 'hasTransmission']);
-
+Route::get('/prochaine-emission', [LiveController::class, 'getNearestBroadcast']);
+Route::post('/emission/{roomId}/live', [LiveController::class, 'setLive']);
+Route::post('/chat/room/new', [ChatController::class, 'newRoom']);

@@ -9,6 +9,9 @@ use App\Models\ChatMessage;
 class ChatRoom extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+
     public function messages()
     {
         return $this->hasMany(ChatMessage::class);

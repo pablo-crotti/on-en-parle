@@ -30,6 +30,7 @@
 
 .admin-messages-item {
     margin-top: 20px;
+
 }
 
 .inbox-wrapper, .management-wrapper{
@@ -43,4 +44,13 @@
 
 .bg-gray-100 {
     --tw-bg-opacity: 0;
+}
+
+.admin-archives-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    padding: 20px;
+    overflow-y: auto;
+    height: 65vh;
 }
