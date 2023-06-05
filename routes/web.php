@@ -94,7 +94,7 @@ Route::get('/admin/administration/management', function () {
 
 Route::post('/chat/room/edit/{roomId}', [ProgramController::class, 'updateRoom']);
 
-Route::post('/store-audio', [AudioController::class, 'store']);
+Route::post('/store-audio/{roomId}', [AudioController::class, 'store']);
 
 Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
