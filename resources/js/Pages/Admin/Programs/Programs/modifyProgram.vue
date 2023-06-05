@@ -1,32 +1,32 @@
 <template>
     <div class="container">
-        <form @submit.prevent="cancel" id="formulaire-emission">
+        <form @submit.prevent="submitForm" id="formulaire-emission">
             <div id="conteneurTitre"> <h2 class="form--title">Modifier une émission</h2> </div>
 
             <div id="conteneurformulaire">
                 <div class="form--field">
                     <label class="form--label">Titre</label>
-                    <input type="text" class="form--element" name="title" v-model.trim="formData.title" placeholder="Ex : Raconter des histoires aux enfants: amusant et… utile!">
+                    <input type="text" class="form--element" name="title" v-model.trim="program.title" placeholder="Ex : Raconter des histoires aux enfants: amusant et… utile!">
                 </div>
 
                 <div class="form--field">
                     <label class="form--label">Date</label>
-                    <input type="date" class="form--element" v-model.trim="formData.date">
+                    <input type="date" class="form--element" v-model.trim="program.date">
                 </div>
 
                 <div class="form--field">
                     <label class="form--label">Description</label>
-                    <textarea class="form--element textarea" v-model.trim="formData.description" placeholder="Description ..."></textarea>
+                    <textarea class="form--element textarea" v-model.trim="program.description" placeholder="Description ..."></textarea>
                 </div>
 
                 <div class="form--field">
                     <label class="form--label">Banière</label>
-                    <input type="text" class="form--element" v-model.trim="formData.banner" placeholder="Entrez l'URL de la bannière">
+                    <input type="text" class="form--element" v-model.trim="program.image" placeholder="Entrez l'URL de la bannière">
                 </div>
 
                 <div class="form--field">
                     <label class="form--label">Fichier audio</label>
-                    <input type="text" class="form--element" v-model.trim="formData.audio" placeholder="Entrez l'URL du fichier audio">
+                    <input type="text" class="form--element" v-model.trim="program.audio_file" placeholder="Entrez l'URL du fichier audio">
                 </div>
 
                 <div class="form--actions">
@@ -39,30 +39,73 @@
 </template>
 
 <script>
+import axios from 'axios';
+import moment from 'moment';
 export default {
     name: 'ModifyChatRoomForm', // Changement du nom du composant
-    data() {
+    data: function () {
         return {
-            formData: {
+            program: {
                 title: '',
                 date: '',
                 description: '',
-                banner: '',
-                audio: '',
+                image: '',
+                audio_file: ''
             }
+
+
         }
     },
+
     methods: {
         cancel() {
-            this.formData = {
+            this.program = {
                 title: '',
                 date: '',
                 description: '',
                 banner: '',
                 audio: '',
             };
+        },
+        fetchEmission(roomId) {
+            axios.get('/chat/room/'+ roomId)
+                .then(response => {
+                    this.program = response.data;
+                    this.program.date = moment(this.program.date).format('YYYY-MM-DD');
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+    },
+        submitForm() {
+            axios.post('/chat/room/edit/' + this.program.id, {
+                title: this.program.title,
+                date: this.program.date,
+                description: this.program.description,
+                banner: this.program.image,
+                audio: this.program.audio_file
+            })
+                .then(response => {
+                    if (response.status == 200) {
+                        this.program = {
+                            title: '',
+                            date: '',
+                            description: '',
+                            image: '',
+                            audio_file: ''
+                        };
+                        this.$emit('messagesent');
+                        console.log("c'est modifié chef!")
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         }
-    }
+    },
+created() {
+    this.fetchEmission(2) // La valeur devra changer en fonction de l'émission sur laquel se trouve le bouton
+}
 }
 </script>
 

@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ChatRoom;
+use Illuminate\Support\Facades\DB;
 
 class ProgramController extends Controller
 {
+       public function room(Request $request, $roomId)
+        {
+            return ChatRoom::where('id', $roomId)->first();
+        }
+
     //nouvelle émission dans la liste
     public function newRoom(Request $request)
     {
@@ -19,5 +25,18 @@ class ProgramController extends Controller
         $newChatRoom->save();
 
         return response()->json($newChatRoom, 201);
+    }
+
+    //update une émission
+    public function updateRoom(Request $request, $roomId,)
+    {
+        DB::table('chat_rooms')
+                        ->where('id', $roomId)
+                        ->update(['title' => $request->input('title'),
+                                  'description' => $request->input('description'),
+                                  'image' => $request->input('banner'),
+                                  'broadcast_date' => $request->input('date'),
+                                  'audio_file' => $request->input('audio')
+                                ]);
     }
 }
