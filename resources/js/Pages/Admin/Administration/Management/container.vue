@@ -112,7 +112,8 @@ async deleteMessage(message) {
   
     },
     created() {
-    this.getMessages();
+        this.messages = this.initialMessages;
+    // this.getMessages();
 } 
 }
 
@@ -120,23 +121,23 @@ async deleteMessage(message) {
 
 <template>
   <div class="containerManagement">
+
         <h1>ChatRecu</h1>
 
   <div class="columns">
 
       <div class="column" v-for="status in [0,1,2,3,5]" :key="status">
-          <div class="admin-messages-container">
+          <div class="admin-messages-container-" >
               <div class="admin-messages-title-container">
                   <div class="admin-messages-title">{{ statu[status] }}</div>
               </div>
-          <div class="admin-messages-list "
+          <div class="admin-messages-list"
            :id="`column-${status}`"
                   @drop="drop($event, status)"
                   @dragover.prevent>
             
-                <div class="admin-messages-item" v-for="message in messages[0].filter(m => m.status === status)">
-                <!-- <p>fjkdsalbfasl</p> -->
-                        <chat-message
+                <div class="admin-messages-item" v-for="message in messages.filter(m => m.status === status)">
+                    <chat-message
                       :key="message.id"
                       :message="message"
                       :audiofiles="audiofiles"
@@ -148,8 +149,8 @@ async deleteMessage(message) {
         
             </div>
           </div>
-        </div>
-      </div>
+         </div>
+    </div>
 
   </div> 
               <div id="creernouveaumsg">
@@ -177,7 +178,7 @@ h1 {
 }
 
 .containerManagement{
-margin-right:0;
+    margin-right:0;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -188,28 +189,24 @@ margin-right:0;
     width:auto;
 }
 .columns {
-    width: 100%;
+    width: 80vw;
     height: 100%;
     display: flex;
     flex-direction: row;
     padding: 20px;
+     align-items: top;
     justify-content: center;
-    align-items: center;
-    align-content: center;
-    width: 80vw;
-    align-items: center;
 }
 .column {
-    width: 100%;
+    width: auto;
     height: 80%;
     border: solid 1px black;
     display: flex;
     flex-direction: column;
-    gap: 20px;
     justify-content: center;
     align-items: center;
     align-content: center;
-    padding: 15px;
+    padding: 0px;
 }
 
 
@@ -233,8 +230,8 @@ margin-right:0;
 }
 .input{
 
-    width:80%;
-    height: 40px;
+    width:auto;
+    height: auto;
 }
 
 .button {

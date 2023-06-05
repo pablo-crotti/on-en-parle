@@ -25,6 +25,7 @@
 }
 
 .admin-messages-list {
+    width:auto;
     overflow-y: auto;
     height: 90%;
     padding: 10px;
@@ -36,7 +37,7 @@
 
 .admin-messages-item {
     margin-top: 20px;
-    width: 700px;
+    width: auto;
 
 }
 

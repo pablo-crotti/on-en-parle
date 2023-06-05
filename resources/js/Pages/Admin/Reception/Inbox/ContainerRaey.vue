@@ -156,10 +156,9 @@ margin-right:0;
     flex-direction: row;
     padding: 20px;
     justify-content: center;
-    align-items: center;
+    align-items: top;
     align-content: center;
     width: 80vw;
-    align-items: center;
 }
 .column {
     width: 100%;
