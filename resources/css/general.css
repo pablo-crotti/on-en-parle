@@ -98,6 +98,25 @@ select:focus {
     align-items: center;
     width: calc(100vw - 2rem);
 }
+.adMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.adMenu .link {
+    padding: 10px 20px;
+    border: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: var(--white);
+    color: var(--black);
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.adMenu .link:hover, .adMenu .sel {
+    background-color: var(--black);
+    color: var(--white);
+}
 @media screen and (max-width: 768px) {
     /* ################################################# ===== CONTAINER */
     .chat-wrapper, 
