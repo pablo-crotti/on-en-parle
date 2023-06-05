@@ -1,18 +1,17 @@
 <script>
     import axios from 'axios';
-    import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
-
+    import AdminMessage from './admin-message.vue';
 
     export default {
         props: ['no', 'id'],
         data() {
             return {
-                // messages: [],
+                messages: [],
                 status: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "Prêt à diffuser"]
             };
         },
         components: {
-          ChatMessage
+            AdminMessage
         },
         setup(props) {
             const no = props.no;
@@ -23,7 +22,6 @@
                 id
             };
         },
-
         methods: {
             getMessages() {
                 axios.get(`/emission/${this.no}/status/${this.id}`)
@@ -46,15 +44,10 @@
 <template>
     <div class="admin-messages-container">
         <div class="admin-messages-title-container">
-            <div class="admin-messages-title"></div>
+            <div class="admin-messages-title">{{status[id]}}</div>
         </div>
         <div class="admin-messages-list">
-            <div class="admin-messages-item" >
-            <chat-message>
-
-            </chat-message>
-
-            </div>
+            <div class="admin-messages-item" v-for="(content, index) in messages[id]" :key="index"><AdminMessage :message="content"/></div>
         </div>
     </div>
 </template>

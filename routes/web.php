@@ -87,9 +87,7 @@ Route::get('/admin/administration/control', function () {
     return  Inertia::render('Admin/Administration/Control/container');
 })->name('control');
 
-Route::get('/admin/administration/management', function () {
-    return  Inertia::render('Admin/Administration/Management/container');
-})->name('management');
+Route::get('/admin/administration/management/{id}', [ChatAdminController::class, 'showChatRoom'])->name('management');
 
 Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);

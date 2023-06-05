@@ -13,15 +13,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-<<<<<<< HEAD
-            ChatRoomSeeder::class,
-        ]);
-        $this->call([
-            ChatMessageSeeder::class,
-=======
-          
-            VoiceMessageSeeder::class,
->>>>>>> e1b469554c89e19001a58f3b4eabca75e5ad1050
+
+            ArchiveSeeder::class,
+            // ChatMessageSeeder::class,
+            // VoiceMessageSeeder::class,
         ]);
     }
 }

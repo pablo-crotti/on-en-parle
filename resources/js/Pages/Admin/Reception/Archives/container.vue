@@ -13,9 +13,9 @@
 </script>
 
 <template>
-    <AppLayout title="On en parle | Réception (Archives)">
+    <app-layout title="On en parle | Réception (Archives)">
         <div class="archives-wrapper">
             <archiveList :no="1" :id="10"></archiveList>
         </div>
-    </AppLayout>
+    </app-layout>
 </template>
