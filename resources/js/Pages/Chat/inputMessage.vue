@@ -10,11 +10,14 @@
                 @keyup="handleKeyUp()"
                 placeholder="Taper un message...">
             <div class="audio-recorder" id="audio-recorder" data-display="false">
-                <p>Test</p>
+                <div class="recording-infos-container">
+                    <p>00 / 60 sec.</p>
+                </div>
             </div>
             <div id="delete" data-display="false" class="input-message-button">
                 <button
-                    class="">
+                    class=""
+                    @click="deleteRecord()">
                     <span class="material-symbols-outlined">delete</span>
                 </button>
             </div>
@@ -28,6 +31,13 @@
             <div id="send-message" data-display="false" class="input-message-button">
                 <button
                     @click="sendMessage()"
+                    class="">
+                    <span class="material-symbols-outlined">send</span>
+                </button>
+            </div>
+            <div id="send-record" data-display="false" class="input-message-button">
+                <button
+                    @click="sendRecord()"
                     class="">
                     <span class="material-symbols-outlined">send</span>
                 </button>
@@ -49,7 +59,9 @@
         props: ['room'],
         data: function () {
             return {
-                message: ''
+                message: '',
+                mediaRecorder: null,
+                chunks: [],
             }
         },
         methods: {
@@ -67,7 +79,7 @@
                 }
             },
             sendMessage() {
-                if( this.message == ' ') {
+                if( this.message == ' ' || this.message == '') {
                     return
                 }
                 axios.post('/chat/room/' + this.room + '/message', {
@@ -83,10 +95,12 @@
                     console.log(error)
                 })
             },
-            recordMessage() {
+            async recordMessage() {
                 const call = document.getElementById('call')
                     .dataset.display = 'false'
                 const sendMessage = document.getElementById('send-message')
+                    .dataset.display = 'false'
+                const sendRecord = document.getElementById('send-record')
                     .dataset.display = 'true'
                 const input = document.getElementById('input-message')
                     .dataset.display = 'false'
@@ -96,8 +110,67 @@
                     .dataset.display = 'false'
                 const del = document.getElementById('delete')
                     .dataset.display = 'true'
+
+                try {
+                    const audioOptions = { audio: true };
+                    const stream = await navigator.mediaDevices.getUserMedia(audioOptions);
+                    this.mediaRecorder = new MediaRecorder(stream);
+                    this.mediaRecorder.addEventListener('dataavailable', (event) => {
+                    this.chunks.push(event.data);
+                    });
+                    this.mediaRecorder.start();
+                    console.log('Recording audio...');
+                } catch (error) {
+                    console.error('Error accessing microphone:', error);
+                }
+            },
+            deleteRecord() {
+                const call = document.getElementById('call')
+                    .dataset.display = 'true'
+                const sendMessage = document.getElementById('send-message')
+                    .dataset.display = 'false'
+                const sendRecord = document.getElementById('send-record')
+                    .dataset.display = 'false'
+                const input = document.getElementById('input-message')
+                    .dataset.display = 'true'
+                const recorder = document.getElementById('audio-recorder')
+                    .dataset.display = 'false'
+                const recordMessage = document.getElementById('record-message')
+                    .dataset.display = 'true'
+                const del = document.getElementById('delete')
+                    .dataset.display = 'false'
+                
+                this.chunks = [];
+                console.log('Recording deleted');
+            },
+            sendRecord() {
+                if (this.chunks.length === 0) {
+                    console.log('No recording to send');
+                    return;
+                }
+            
+                const audioBlob = new Blob(this.chunks, { type: 'audio/webm' });
+            
+                // Création d'un objet FormData pour l'envoi
+                const formData = new FormData();
+                formData.append('audio', audioBlob, 'recording.webm');
+
+                // Envoi du fichier audio à l'URL spécifiée
+                axios.post('/store-audio', formData)
+                    .then(() => {
+                    console.log('Recording sent successfully');
+                    })
+                    .catch((error) => {
+                    console.error('Error sending recording:', error);
+                    });
+                },
+            deleteRecording() {
+                if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
+                    this.mediaRecorder.stop();
+                    console.log('Audio recording stopped');
+                }
             }
-        }  
+        } 
     }
 
     
