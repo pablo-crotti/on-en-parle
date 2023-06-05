@@ -3,6 +3,7 @@
     border: 2px solid var(--white);
     padding: 10px;
     background-color: var(--primary-color);
+  
 }
 
 .admin-messages-title {
@@ -13,9 +14,14 @@
 }
 
 .admin-messages-container {
+    border-radius: 20px 20px 0px 0px;
+
+    overflow-y: auto;
     height: 95%;
-    width: 15%;
+    width: auto;
     flex-grow: 1;
+    background-color: aliceblue;
+    height:65vh;
 }
 
 .admin-messages-list {
@@ -30,6 +36,7 @@
 
 .admin-messages-item {
     margin-top: 20px;
+    width: 700px;
 
 }
 

@@ -15,10 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ChatRoomSeeder::class,
         ]);
-        $this->call([
-            ChatMessageSeeder::class,
-          
-            VoiceMessageSeeder::class,
-        ]);
+       
     }
 }

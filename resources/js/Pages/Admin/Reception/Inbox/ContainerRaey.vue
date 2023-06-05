@@ -1,13 +1,15 @@
 <script>
     import axios from 'axios';
     import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
-    import CallForm from '@/Pages/MyComponents/CallForm.vue'
+    import CallForm from '@/Pages/MyComponents/CallForm.vue';
+  //  import ChatContainer from '@/Pages/MyComponents/admin-message.vue';
 
 
     export default {
         components: {
             CallForm,
-            ChatMessage
+             ChatMessage,
+          //  ChatContainer
         },
     
     props: {
@@ -19,28 +21,27 @@
         type: Array,
         required: true
     },
-    audioId: {
-      type: Array,
-      required: true
-    }
-
+   
   },
 
   data() {
     return {
       messages: this.initialMessages,
-      audiofiles: this.audioChatroom
+      audiofiles: this.audioChatroom,
+      filteredMessages: [],
+      statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "Prêt à diffuser"]
+           
     };
   },
 
   methods: {
     
     drag(event, messageId) {
-      event.dataTransfer.setData('text', messageId);
-    },
+    event.dataTransfer.setData('text', messageId);
+  },
 
-    async drop(event, status) {
-      const messageId = parseInt(event.dataTransfer.getData('text'));
+  async drop(event, status) {
+    const messageId = parseInt(event.dataTransfer.getData('text'));
       const message = this.messages.find(m => m.id === messageId);
 
       if (message) {
@@ -60,56 +61,95 @@ async deleteMessage(message) {
             console.error(error);
         }
     },
-
+    filterMessages() {  // Nouvelle fonction pour filtrer les messages
+                this.filteredMessages = this.messages.filter(message => {
+                    return !this.audiofiles.some(audiofile => audiofile.id === message.id);
+                });
+            }
 
 
     },
     computed: {
   
     },
-  
-  created() {
- }
+    created() {
+       console.log(this.initialMessages) 
+    },
 
 }
 
 </script>
 
 <template>
+  <div class="containerInbox">
         <h1>ChatRecu</h1>
-  <div class="container">
-  
-      <div class="column" v-for="status in [0, 1]" :key="status">
-        <div 
-            class="dropzone" :id="`column-${status}`"
-            @drop="drop($event, status)"
-            @dragover.prevent
-        >
-        <chat-message
-  v-for="message in messages.filter(m => m.status === status)"
-  :key="message.id"
-  :message="message"
-    :audiofiles="audiofiles"
-  @dragstart="drag($event, message.id)"
-  @modify="modifier"
-  @delete="deleteMessage"
-/>
 
+  <div class="columns">
+
+      <div class="column" v-for="status in [0, 1]" :key="status">
+          <div class="admin-messages-container">
+              <div class="admin-messages-title-container">
+                  <div class="admin-messages-title">{{ statu[status] }}</div>
+              </div>
+          <div class="admin-messages-list "
+           :id="`column-${status}`"
+                  @drop="drop($event, status)"
+                  @dragover.prevent
+          >
+            
+                <div class="admin-messages-item" v-for="message in messages.filter(m => m.status === status)">
+                
+                        <chat-message
+                      :key="message.id"
+                      :message="message"
+                      :audiofiles="audiofiles"
+                      @dragstart="drag($event, message.id)"
+                      @modify="modifier"
+                      @delete="deleteMessage"
+                    /> 
+                </div>
+        
+            </div>
+          </div>
         </div>
       </div>
-      <div id="app">
-      <call-form></call-form>
-    </div>
-    </div>
+
+  </div> 
+              <div id="creernouveaumsg">
+                <call-form></call-form>
+              </div>
 </template>
 
+
+
 <style>
+#creernouveaumsg{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+   }
+
 h1 {
     font-size: 40px;
     text-align: center;
     color: white;
 }
-.container {
+
+.containerInbox{
+margin-right:0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width:auto;
+}
+.columns {
     width: 100%;
     height: 100%;
     display: flex;
@@ -118,12 +158,11 @@ h1 {
     justify-content: center;
     align-items: center;
     align-content: center;
-
+    width: 80vw;
     align-items: center;
-    background-color: aliceblue;
 }
 .column {
-    width: 50%;
+    width: 100%;
     height: 80%;
     border: solid 1px black;
     display: flex;
@@ -134,6 +173,8 @@ h1 {
     align-content: center;
     padding: 15px;
 }
+
+
 .message{
     display: flex;
     flex-direction: row;
@@ -175,5 +216,6 @@ h1 {
     border-radius: 5px;
     padding: 10px;
     background-color: white;
+    margin:0;
 }
 </style>

@@ -12,22 +12,10 @@ class ChatAdminController extends Controller
 {
     public function showChatRoom($id)
     {
-        $audio = [
-            [
-                'id' => 1,
-                'audio_file' => 'song1.mp3',
-                'chat_message_id' => 1,
-            ],
-            [
-                'id' => 2,
-                'audio_file' => 'song2.mp3',
-                'chat_message_id' => 1,
-            ],
-        ];
 
         $messagesWithAudio = ChatMessage::where('chat_room_id', $id)
         ->has('audio')
-        ->with('audio')
+        ->with(['text', 'audio', 'call'])
         ->get()
         ->map(function ($message) {
             $audioFiles = $message->audio->map(function ($audio) {
@@ -45,11 +33,11 @@ class ChatAdminController extends Controller
         });
     
         
-        $messages = ChatMessage::where('chat_room_id', $id)->get();
+        $messages = ChatMessage::where('chat_room_id', $id) ->with(['text', 'audio', 'call'])->get();
       //  $audio = VoiceMessage::where('chat_room_id', $id)->get();
         error_log("dasdgfds"); // imprime le contenu de $audio dans le log d'erreurs
 
-   return Inertia::render('Admin/Reception/Inbox/ContainerRaey', [
+   return Inertia::render('Admin/Administration/Management/container', [
             'initialMessages' => $messages,
             'audioChatroom' => $messagesWithAudio,
         ]);    /* 
@@ -57,6 +45,44 @@ class ChatAdminController extends Controller
        //return view('Affichecontenu', ['contenu' => $messages]); */
         
     }
+
+    // Récupéré élément pour partie management
+    public function showManagementChatRoom($id)
+    {
+
+        $messagesWithAudio = ChatMessage::where('chat_room_id', $id)
+        ->has('audio')
+        ->with(['text', 'audio', 'call'])
+        ->get()
+        ->map(function ($message) {
+            $audioFiles = $message->audio->map(function ($audio) {
+                return $audio->audio_file;
+            });
+    
+            return [
+                'id' => $message->id,
+                'content' => $message->content,
+                'nb_likes' => $message->nb_likes,
+                'status' => $message->status,
+                'chat_room_id' => $message->chat_room_id,
+                'audio_files' => $audioFiles,  // this will be an array of audio files
+            ];
+        });
+    
+        
+        $messages = ChatMessage::where('chat_room_id', $id) ->with(['text', 'audio', 'call'])->get();
+      //  $audio = VoiceMessage::where('chat_room_id', $id)->get();
+        error_log("dasdgfds"); // imprime le contenu de $audio dans le log d'erreurs
+
+   return Inertia::render('Admin/Reception/Inbox/ContainerRaey', [
+            'initialMessages' => $messages,
+            'audioChatroom' => $messagesWithAudio,
+        ]);
+    }
+
+
+
+
 
     public function updateMessageStatus(Request $request, $id)
     {
