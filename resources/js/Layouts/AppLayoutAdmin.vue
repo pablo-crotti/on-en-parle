@@ -34,7 +34,7 @@ const logout = () => {
         <Banner />
 
         <div class="header-logo">
-                <img src="https://www.rts.ch/2021/01/05/11/09/10321771.image?&w=6000&h=600" alt="">   
+                <img src="https://www.rts.ch/2021/01/05/11/09/10321771.image?&w=6000&h=600" alt="">
         </div>
 
         <div class="bg-gray-100">
@@ -43,16 +43,18 @@ const logout = () => {
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
-
-                            <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                <NavLink :href="route('inbox')" :active="route().current('inbox')">
+                                    Réception
                                 </NavLink>
-                                <NavLink :href="route('transmissions')" :active="route().current('transmissions')">
-                                    test
+                                <NavLink :href="route('management')" :active="route().current('management')">
+                                    Administration
                                 </NavLink>
-                            </div>
+                                <NavLink :href="route('newProgramm')" :active="route().current('newProgramm')">
+                                    Émissions
+                                </NavLink>
+                            </div>  
+                            
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 
                             </div>
