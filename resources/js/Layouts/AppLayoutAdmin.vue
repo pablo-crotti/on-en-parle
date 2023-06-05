@@ -33,12 +33,10 @@ export default {
         setMenu(){
             if (this.currentURL.includes('admin/reception')) {
                 this.menuList = [["inbox", "Inbox"], ["archives", "Archives"]];
-                this.menuNames = ["Inbox", "Archives"];
             } else if (this.currentURL.includes('admin/administration')) {
-                this.menuList = [["management", "Gestion"], ["control", "Régie"], ["animator", "Animateur"]];
+                this.menuList = [["manage", "Gestion"], ["control", "Régie"], ["animator", "Animateur"]];
             } else if (this.currentURL.includes('admin/programs')) {
                 this.menuList = [["newProgramm", "Nouvelle émission"], ["live", "Live"], ["listPrograms", "Émissions"]];
-                this.menuNames = ["Nouvelle émission", "Live", "Émissions"];
             }
         },
         isNavLinkActive(url) {
@@ -86,10 +84,10 @@ const logout = () => {
                                 <NavLink :href="route('inbox')" :active="isNavLinkActive('admin/reception')">
                                     Réception
                                 </NavLink>
-                                <NavLink :href="route('management')" :active="isNavLinkActive('admin/administration')" exact>
+                                <NavLink :href="route('manage')" :active="isNavLinkActive('admin/administration')">
                                     Administration
                                 </NavLink>
-                                <NavLink :href="route('newProgramm')" :active="isNavLinkActive('admin/programs')" exact>
+                                <NavLink :href="route('newProgramm')" :active="isNavLinkActive('admin/programs')">
                                     Émissions
                                 </NavLink>
                             </div> 
