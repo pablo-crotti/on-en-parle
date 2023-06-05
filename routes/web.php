@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminChatController;
+use App\Http\Controllers\AudioController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -88,6 +89,10 @@ Route::get('/admin/administration/control', function () {
 })->name('control');
 
 Route::get('/admin/administration/management/{id}', [ChatAdminController::class, 'showChatRoom'])->name('management');
+
+Route::post('/chat/room/edit/{roomId}', [ProgramController::class, 'updateRoom']);
+
+Route::post('/store-audio/{roomId}', [AudioController::class, 'store']);
 
 Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
