@@ -29,14 +29,21 @@
 <script>
 import axios from 'axios';
 export default {
+  props: {
+   room:{
+        type: Number,
+        required: true
+    },
+   
+  },
   data() {
     return {
       formOpen: false,
       formData: {
         caller: '',
         message: '',
-        status:2,
-        chat_room_id: 1,
+        status: 3,
+        chat_room_id:this.room,
 
       }
     }

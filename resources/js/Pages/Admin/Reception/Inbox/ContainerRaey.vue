@@ -21,6 +21,14 @@
         type: Array,
         required: true
     },
+    idroom:{
+        type: Number,
+        required: true
+    },
+    callChatroom:{
+        type: Array,
+        required: true
+    },
    
   },
 
@@ -29,8 +37,9 @@
       messages: this.initialMessages,
       audiofiles: this.audioChatroom,
       filteredMessages: [],
-      statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "Prêt à diffuser"]
-           
+      statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "Prêt à diffuser"],
+      calls: this.callChatroom,
+
     };
   },
 
@@ -116,7 +125,8 @@ async deleteMessage(message) {
 
   </div> 
               <div id="creernouveaumsg">
-                <call-form></call-form>
+                <call-form
+                :room="idroom"></call-form>
               </div>
 </template>
 

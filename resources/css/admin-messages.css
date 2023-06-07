@@ -1,7 +1,13 @@
 .message-header {
     border-radius: 20px 20px 0 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
+}
+.message-header span{
+   margin-right:10px;
+   justify-content: center;
+   align-items: center;
+   align-content: center;
 }
 .symbol-header {
     color: black;
@@ -10,17 +16,27 @@
 .message-wrapper {
     /*fais moi un border noir épais*/
     border: 3px solid black;
-
+    
     /* arrondi moi le border en bas à gauche et à droite */
     border-radius: 20px 20px 20px 20px;
     background-color: var(--white);
 }
 
 .message-body {
-    padding-left: 20px;
-
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-content: center;
+    max-width: 280px;
+    padding:10px;
 }
 
+audio {
+    width: 85%;
+    height: 30px;
+    margin: 10px 0 10px 0;
+}
 .message-date {
     color: #616061;
 }

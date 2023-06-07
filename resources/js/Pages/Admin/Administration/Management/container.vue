@@ -1,19 +1,3 @@
-<!-- methods: {
-    getMessages() {
-        axios.get(`/emission/${this.no}/status/${this.id}`)
-            .then(response => {
-                this.messages = response.data;
-                console.log(this.messages);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    },
-},
-created() {
-    this.getMessages();
-} -->
-
 <script>
     import axios from 'axios';
     import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
@@ -37,6 +21,14 @@ created() {
         type: Array,
         required: true
     },
+    idroom:{
+        type: String,
+        required: true
+    },
+    callChatroom:{
+        type: Array,
+        required: true
+    },
    
   },
 
@@ -45,21 +37,10 @@ created() {
       messages: [],
       audiofiles: this.audioChatroom,
       filteredMessages: [],
-      statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "Prêt à diffuser"],
-    exemplemsg:[{
-            id: 1,
-            content: "Salut",
-            created_at: "2023-05-31T11:13:07.000000Z",
-            nb_likes: 0,
-            status: 1,
-            updated_at: "2023-06-05T07:28:33.000000Z"}
-            ,{
-                id: 2,
-                content: "Salut",
-                created_at: "2023-05-31T11:13:07.000000Z",
-                nb_likes: 54,
-                status: 0,
-                updated_at: "2023-06-05T07:28:33.000000Z"}]
+      statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "","Prêt à diffuser"],
+    chatroomId:null,
+    calls: this.callChatroom,
+
     };
   },
 
@@ -68,7 +49,6 @@ created() {
         axios.get(`/emission/1/status/5`)
             .then(response => {
                 this.messages = response.data;
-                console.log(this.messages);
             })
             .catch(error => {
                 console.log(error);
@@ -109,12 +89,27 @@ async deleteMessage(message) {
 
     },
     computed: {
-  
+        affichedon(){
+        }
     },
     created() {
         this.messages = this.initialMessages;
-    // this.getMessages();
-} 
+        let convertedId = null;
+
+            if (typeof this.idroom === 'string') {
+            const trimmedId = this.idroom.trim();
+            if (trimmedId !== '') {
+                convertedId = parseInt(trimmedId);
+            }
+            }
+
+            // Utilisez la variable convertie dans votre code plutôt que this.idroom
+            if (convertedId !== null) {
+            this.chatroomId = convertedId;
+            } else {
+console.log("pas d'id recu")            }
+},
+  
 }
 
 </script>
@@ -140,6 +135,8 @@ async deleteMessage(message) {
                     <chat-message
                       :key="message.id"
                       :message="message"
+                      :calls="calls"
+                    
                       :audiofiles="audiofiles"
                       @dragstart="drag($event, message.id)"
                       @modify="modifier"
@@ -153,9 +150,10 @@ async deleteMessage(message) {
     </div>
 
   </div> 
-              <div id="creernouveaumsg">
-                <call-form></call-form>
-              </div>
+        <div id="creernouveaumsg">
+            <call-form
+            :room="chatroomId"></call-form>
+        </div>
 </template>
 
 
