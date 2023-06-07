@@ -102,6 +102,16 @@ Route::get('/admin/administration/management/{id}', [ChatAdminController::class,
 Route::post('/chat/room/edit/{roomId}', [ProgramController::class, 'updateRoom']);
 
 Route::post('/store-audio/{roomId}', [AudioController::class, 'store']);
+//Emission détaillée
+Route::get('/questions/{id}', function ($id) {
+    return  Inertia::render('Admin/Programs/Programs/programDetail')->with('id', $id);
+})->name('questions');
+
+//Page de modification d'une émission
+Route::get('/admin/programs/modify/{id}', function ($id) {
+    return  Inertia::render('Admin/Programs/Programs/modifyProgram-container')->with('id', $id);
+})->name('modify');
+
 
 Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
