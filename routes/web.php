@@ -101,6 +101,16 @@ Route::get('/admin/administration/management/{id}', [ChatAdminController::class,
 Route::post('/chat/room/edit/{roomId}', [ProgramController::class, 'updateRoom']);
 
 Route::post('/store-audio/{roomId}', [AudioController::class, 'store']);
+//Emission détaillée
+Route::get('/admin/programs/program/{id}', function ($id) {
+    return  Inertia::render('Admin/Programs/Programs/programDetail')->with('id', $id);
+})->name('program-detail');
+
+//Page de modification d'une émission
+Route::get('/admin/programs/modify/{id}', function ($id) {
+    return  Inertia::render('Admin/Programs/Programs/modifyProgram-container')->with('id', $id);
+})->name('modify');
+
 
 Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
@@ -152,4 +162,17 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 })->name('users');
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/admin/users', [UserController::class, 'getUsers']);
+<<<<<<< HEAD
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->post('/admin/users/delete/{id}', [UserController::class, 'destroy']);
+=======
+
+
+
+////////// CONTACT FORM
+
+Route::get('/contact', function () {
+    return  Inertia::render('Contact/container');
+})->name('contact');
+
+Route::post('/contact/send', [ContactFormController::class, 'sendMail'])->name('contact.send');
+>>>>>>> cdbbd49d951d66159f8b9fc5968461c21f6bace2

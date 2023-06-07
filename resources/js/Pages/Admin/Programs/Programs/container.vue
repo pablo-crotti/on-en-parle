@@ -18,7 +18,7 @@
         },
         methods: {
             toggleSelect() {
-      this.isSelectOpen = !this.isSelectOpen;
+            this.isSelectOpen = !this.isSelectOpen;
     },  
             handleFilterChange(event) {
                 this.filterBy = event.target.value;

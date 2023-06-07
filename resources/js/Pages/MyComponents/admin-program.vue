@@ -23,9 +23,10 @@
 
                 <span class="program-date">{{ formattedDate() }}</span>
                 
-                <span id="play-circle" class="material-symbols-outlined">
+                <a :href="route('program-detail', { id: this.program.id })"><span @click="modifyProgram()" id="play-circle" class="material-symbols-outlined">
                         play_circle
-                 </span>
+                 </span></a>
+                
             </div>
         </div>
     </div>  
@@ -48,6 +49,7 @@ import axios from 'axios';
             }
         },
         methods: {
+
             truncateParagraph(paragraph, wordCount) {
   // Sépare le paragraphe en mots individuels
   const words = paragraph.split(' ');
