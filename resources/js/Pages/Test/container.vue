@@ -8,9 +8,11 @@ export default {
         AppLayout,
         adminChatContainer
     },
+    props: ['userId'],
     data: function () {
         return {
             roomIdLink: window.location.href.split("/").pop(),
+            
         };
     },
     methods: {
@@ -32,6 +34,9 @@ export default {
         //         });
         // },
     },
+    mounted() {
+        
+    },
     created() {
         // this.getAdminMessages();
         // this.getRoom();
@@ -43,6 +48,6 @@ export default {
     <AppLayout
         :title="'Test'">
     <!-- <p v-if="adminMessages">{{ adminMessages }}</p> -->
-        <adminChatContainer v-if="roomIdLink" :room="roomIdLink"/>
+        <adminChatContainer v-if="roomIdLink" :room="roomIdLink" :user="userId"/>
     </AppLayout>
 </template>

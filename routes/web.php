@@ -122,7 +122,6 @@ Route::get('/prochaine-emission', [LiveController::class, 'getNearestBroadcast']
 Route::post('/emission/{roomId}/live', [LiveController::class, 'setLive']);
 Route::post('/chat/room/new', [ProgramController::class, 'newRoom']);
 Route::get('/emission/{no}/status/{id}', [AdminChatController::class, 'getElementsByStatus']);
-// Adddddddeeeeeeeddddd
 Route::get('/audio/{filename}', function ($filename) {
     $path = storage_path('app/public/rec/' . $filename);
 

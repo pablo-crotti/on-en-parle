@@ -1,6 +1,6 @@
 <template>
     <div class="admin-chat-wrapper" data-closed="true">
-        <adminChat />
+        <adminChat :room="room" :user="user"/>
     </div>
     <button class="admin-chat-button" @click="toggleChat">
         <span class="material-symbols-outlined">
@@ -20,7 +20,7 @@ import adminChat from "@/Pages/MyComponents/adminChat.vue";
         components: {
             adminChat
         },
-        props: ['room'],
+        props: ['room', 'user'],
         methods: {
             toggleChat() {
                 const wrapper = document.querySelector('.admin-chat-wrapper');
