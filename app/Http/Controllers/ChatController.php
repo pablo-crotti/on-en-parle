@@ -17,10 +17,18 @@ class ChatController extends Controller
      * @param Request $request The incoming request.
      * @return Illuminate\Database\Eloquent\Collection
      */
+    public function roomsList(Request $request)
+    {
+        return ChatRoom::orderBy('broadcast_date', 'ASC')
+            ->withCount('messages')
+            ->get();
+    }
+
     public function rooms(Request $request)
     {
         return ChatRoom::orderBy('on_air', 'DESC')
             ->orderBy('closed', 'ASC')
+            ->withCount('messages')
             ->get();
     }
 

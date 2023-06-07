@@ -92,6 +92,26 @@ async deleteMessage(message) {
 <template>
   <div class="containerInbox">
         <h1>ChatRecu</h1>
+<<<<<<< HEAD
+  <div class="container">
+  
+      <div class="column" v-for="status in [0, 1]" :key="status">
+        <div 
+            class="dropzone" :id="`column-${status}`"
+            @drop="drop($event, status)"
+            @dragover.prevent
+        >
+        <chat-message
+            v-for="message in messages.filter(m => m.status === status)"
+            :key="message.id"
+            :message="message"
+              :audiofiles="audiofiles"
+            @dragstart="drag($event, message.id)"
+            @modify="modifier"
+            @delete="deleteMessage"
+        />
+=======
+>>>>>>> fe7f1ac005b7d0d3f72a38a2f205cfdfb79d72d3
 
   <div class="columns">
 

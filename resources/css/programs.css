@@ -1,0 +1,30 @@
+.programs-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+.row-program {
+    width: 26%;
+    margin-bottom: 80px;
+}   
+  
+#dropdown-filter label, #dropdown-filter span {
+    color: var(--white);
+}
+  
+
+#programs-title {
+    font-size: 35px;
+    font-weight: bold;
+    color: var(--white);
+}
+.programs-header {
+    display: flex;
+    justify-content:  space-between;
+    align-items: center;
+    padding: 0 5%;
+}
+
+

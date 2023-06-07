@@ -1,0 +1,41 @@
+.program-wrapper {
+    background-color: var(--white);
+    border-radius: 25px;
+    padding: 15px;
+
+    height: 100%;  
+    width: 100%;
+}
+
+.program-img {
+  object-fit: cover;
+  width: 150px;
+  height: 150px;
+  border-radius: 15px;
+}
+.program-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.program-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.program-title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-left: 30px;
+
+}
+
+.program-desc {
+   flex-shrink: 0;
+   padding: 6% 0;
+}
+
+#play-circle {
+  font-size: 50px;
+}

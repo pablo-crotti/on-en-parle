@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminChatController;
+use App\Http\Controllers\AdminMessagesController;
 use App\Http\Controllers\AudioController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,9 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use PHPUnit\Framework\Attributes\Test;
 use App\Http\Controllers\LiveController;
 use App\Http\Controllers\ProgramController;
+
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,6 +102,7 @@ Route::post('/store-audio/{roomId}', [AudioController::class, 'store']);
 
 Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
+Route::get('/chat/rooms-list', [ChatController::class, 'roomsList']);
 Route::get('/chat/room/{roomId}', [ChatController::class, 'room']);
 Route::get('/chat/room/{roomId}/messages', [ChatController::class, 'messages']);
 Route::post('/chat/room/{roomId}/message', [ChatController::class, 'newMessage']);
@@ -115,3 +120,26 @@ Route::get('/prochaine-emission', [LiveController::class, 'getNearestBroadcast']
 Route::post('/emission/{roomId}/live', [LiveController::class, 'setLive']);
 Route::post('/chat/room/new', [ProgramController::class, 'newRoom']);
 Route::get('/emission/{no}/status/{id}', [AdminChatController::class, 'getElementsByStatus']);
+Route::get('/audio/{filename}', function ($filename) {
+    $path = storage_path('app/public/rec/' . $filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    return response()->file($path, [
+        'Content-Type' => 'audio/webm',
+    ]);
+});
+
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('test/{id}', function ($id) {
+    $userId = auth()->user()->id;
+
+    return Inertia::render('Test/container', [
+        'userId' => $userId,
+    ]);
+});
+
+Route::get('/chat/room/{roomId}/admin-messages', [AdminMessagesController::class, 'getAdminMessages']);
+Route::post('/chat/room/{roomId}/admin-message', [AdminMessagesController::class, 'newMessage']);

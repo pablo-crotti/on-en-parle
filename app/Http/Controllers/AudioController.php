@@ -30,13 +30,13 @@ class AudioController extends Controller
             $newMessage->audio_file = $fileName;
             $newMessage->save();
 
-            return $newMessage; 
+            return $newMessage;
 
             return response()->json(['path' => $path]);
         }
 
 
-        
+
         return response()->json(['error' => 'No audio file received'], 400);
     }
 }
