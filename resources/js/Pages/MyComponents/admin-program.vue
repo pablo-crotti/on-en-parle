@@ -21,9 +21,9 @@
                    <span>{{ room.length }}</span>   
                 </div>
 
-                <span class="program-date">{{ program.broadcast_date }}</span>
+                <span class="program-date">{{ formattedDate() }}</span>
                 
-                <span class="material-symbols-outlined">
+                <span id="play-circle" class="material-symbols-outlined">
                         play_circle
                  </span>
             </div>
@@ -67,7 +67,16 @@ import axios from 'axios';
   const finalParagraph = truncatedParagraph + '...';
 
   return finalParagraph;
-}
+},
+formattedDate() {
+      const [year, month, day] = this.program.broadcast_date.split('-');
+      const monthNames = [
+        'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+        'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
+      ];
+      const formattedMonth = monthNames[Number(month) - 1];
+      return `${Number(day)} ${formattedMonth} ${year}`;
+    }
         },
         created() {
             axios.get(`/chat/room/${this.program.id}/messages`).then(response => {

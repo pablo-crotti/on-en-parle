@@ -1,9 +1,20 @@
 .programs-wrapper {
     display: flex;
-    justify-content: space-around;
-    padding: 0 5%;
-    gap: 100px;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-top: 50px;
 }
+.row-program {
+    width: 26%;
+    margin-bottom: 80px;
+}   
+  
+#dropdown-filter label, #dropdown-filter span {
+    color: var(--white);
+}
+  
+
 #programs-title {
     font-size: 35px;
     font-weight: bold;
@@ -16,16 +27,4 @@
     padding: 0 5%;
 }
 
-/* supprime le style de select */
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    outline: none;
-    border: none;
-    background: transparent;
-    color: var(--white);
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-}
+

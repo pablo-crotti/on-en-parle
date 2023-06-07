@@ -104,6 +104,7 @@ Route::post('/store-audio/{roomId}', [AudioController::class, 'store']);
 
 Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
+Route::get('/chat/rooms-list', [ChatController::class, 'roomsList']);
 Route::get('/chat/room/{roomId}', [ChatController::class, 'room']);
 Route::get('/chat/room/{roomId}/messages', [ChatController::class, 'messages']);
 Route::post('/chat/room/{roomId}/message', [ChatController::class, 'newMessage']);
