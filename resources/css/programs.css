@@ -1,0 +1,31 @@
+.programs-wrapper {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 5%;
+    gap: 100px;
+}
+#programs-title {
+    font-size: 35px;
+    font-weight: bold;
+    color: var(--white);
+}
+.programs-header {
+    display: flex;
+    justify-content:  space-between;
+    align-items: center;
+    padding: 0 5%;
+}
+
+/* supprime le style de select */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+    background: transparent;
+    color: var(--white);
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}

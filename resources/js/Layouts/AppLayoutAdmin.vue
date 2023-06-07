@@ -1,4 +1,4 @@
-<script setup>
+<script>
 import { ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
@@ -8,9 +8,46 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
-defineProps({
-    title: String,
-});
+export default {
+    props: {
+        title: String,
+    },
+    components: {
+        Head,
+        Link,
+        ApplicationMark,
+        Banner,
+        Dropdown,
+        DropdownLink,
+        NavLink,
+        ResponsiveNavLink,
+    },
+    data() {
+        return {
+            showingNavigationDropdown: false,
+            menuList: [],
+            currentURL: window.location.href,
+        }
+    },
+    methods: {
+        setMenu(){
+            if (this.currentURL.includes('admin/reception')) {
+                this.menuList = [["inbox", "Inbox"], ["archives", "Archives"]];
+            } else if (this.currentURL.includes('admin/administration')) {
+                this.menuList = [["manage", "Gestion"], ["control", "Régie"], ["animator", "Animateur"]];
+            } else if (this.currentURL.includes('admin/programs')) {
+                this.menuList = [["newProgramm", "Nouvelle émission"], ["live", "Live"], ["listPrograms", "Émissions"]];
+            }
+        },
+        isNavLinkActive(url) {
+            return this.currentURL.includes(url);
+        },
+    },
+    created() {
+        this.setMenu();
+    },
+}
+
 
 const showingNavigationDropdown = ref(false);
 
@@ -34,7 +71,7 @@ const logout = () => {
         <Banner />
 
         <div class="header-logo">
-                <img src="https://www.rts.ch/2021/01/05/11/09/10321771.image?&w=6000&h=600" alt="">   
+                <img src="https://www.rts.ch/2021/01/05/11/09/10321771.image?&w=6000&h=600" alt="">
         </div>
 
         <div class="bg-gray-100">
@@ -43,16 +80,25 @@ const logout = () => {
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
+                            <div class="hidden adMenu space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink :href="route('inbox')" :active="isNavLinkActive('admin/reception')">
+                                    Réception
+                                </NavLink>
+                                <NavLink :href="route('manage')" :active="isNavLinkActive('admin/administration')">
+                                    Administration
+                                </NavLink>
+                                <NavLink :href="route('newProgramm')" :active="isNavLinkActive('admin/programs')">
+                                    Émissions
+                                </NavLink>
+                            </div> 
 
-                            <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                <NavLink v-for="item in menuList" :key="item" :href="route(item[0])" :active="route().current(item[0])">
+                                    {{ item[1] }}
                                 </NavLink>
-                                <NavLink :href="route('transmissions')" :active="route().current('transmissions')">
-                                    test
-                                </NavLink>
-                            </div>
+                            </div> 
+                        
+                            
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 
                             </div>

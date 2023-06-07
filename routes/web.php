@@ -94,7 +94,9 @@ Route::get('/admin/administration/control', function () {
 
 Route::get('/admin/administration/management', function () {
     return  Inertia::render('Admin/Administration/Management/container');
-})->name('management');
+})->name('manage');
+
+Route::get('/admin/administration/management/{id}', [ChatAdminController::class, 'showManagementChatRoom'])->name('management');
 
 Route::post('/chat/room/edit/{roomId}', [ProgramController::class, 'updateRoom']);
 

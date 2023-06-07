@@ -11,7 +11,7 @@
         },
         data() {
             return {
-                program: null,
+                program: {},
                 background: '',
                 btnCaption: ''
             }
@@ -39,22 +39,22 @@
         },
         created() {
             axios.get('/prochaine-emission').then(response => {
-                
                 this.program = response.data;
-                this.isLive(this.program);
+                if (this.program !== null) {
+                    this.isLive(this.program);
+                }
             });
-
-            
         }
+
     }
 </script>
 
 <template>
     <AppLayout title="On en parle | Émissions (Live)">
-        <Modal></Modal>
+        <!-- <Modal></Modal> -->
         <div class="live-wrapper">
             <div class="live-content-wrapper">
-                <h1 class="live-title">Émissions (Live)</h1>
+                <h1 class="live-title">Émission (Live)</h1>
                 <h2 class="live-subtitle">{{ this.program.title }} </h2>
                 <span class="live-date">Emission du {{ this.program.broadcast_date }}</span>
             </div>
@@ -78,7 +78,3 @@
         </div>
     </AppLayout>
 </template>
-
-<style>
-
-</style>

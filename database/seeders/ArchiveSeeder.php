@@ -9,23 +9,26 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Faker\Factory as Faker;
 
-class ChatMessageSeeder extends Seeder
+class ArchiveSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
         $faker = Faker::create();
         
-        
-        for($i = 1; $i <= 20; $i++)
+        for ($i = 1; $i <= 30; $i++)
         {
             DB::table('chat_messages')->insert([
                 'content' => $faker->text(200),
                 'nb_likes' => $faker->numberBetween(0, 100),
-                'status' => $faker->boolean(),
+                'status' =>10,
                 'chat_room_id' => $faker->numberBetween(1, 5),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
         }
+    
     }
 }

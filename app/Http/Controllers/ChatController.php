@@ -21,6 +21,7 @@ class ChatController extends Controller
     {
         return ChatRoom::orderBy('on_air', 'DESC')
             ->orderBy('closed', 'ASC')
+            ->withCount('messages')
             ->get();
     }
 
@@ -41,7 +42,7 @@ class ChatController extends Controller
         $messages = ChatMessage::where('chat_room_id', $roomId)
             ->with(['text', 'audio'])
             ->whereIn('status', [0, 1, 2, 3, 4, 5])
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('broadcast_date', 'DESC')
             ->get();
 
         return $messages;

@@ -29,6 +29,9 @@
     color: #B2171B;
 }
 .message-content {
+    min-width: 250px;
+    width: 100%;
+    height: fit-content;
     display: flex;
     justify-content: space-between;
     padding-bottom: 20px;
