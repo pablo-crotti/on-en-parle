@@ -33,7 +33,6 @@ import adminChat from "@/Pages/MyComponents/adminChat.vue";
         methods: {
             toggleChat() {
                 const wrapper = document.querySelector('.admin-chat-wrapper');
-                const button = document.querySelector('.admin-chat-button');
                 const buttonClosed = document.querySelector('.admin-chat-button-close');
                 const closed = wrapper.getAttribute('data-closed');
                 if (closed === 'true') {

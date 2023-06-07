@@ -14,6 +14,7 @@
 <script>
     import adminMessageInput from "@/Pages/MyComponents/adminMessageInput.vue";
     import adminMessageItem from "@/Pages/MyComponents/adminMessageItem.vue";
+
     export default {
         components: {
             adminMessageInput,
