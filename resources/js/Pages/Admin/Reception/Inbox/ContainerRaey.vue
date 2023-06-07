@@ -86,14 +86,14 @@ async deleteMessage(message) {
             @dragover.prevent
         >
         <chat-message
-  v-for="message in messages.filter(m => m.status === status)"
-  :key="message.id"
-  :message="message"
-    :audiofiles="audiofiles"
-  @dragstart="drag($event, message.id)"
-  @modify="modifier"
-  @delete="deleteMessage"
-/>
+            v-for="message in messages.filter(m => m.status === status)"
+            :key="message.id"
+            :message="message"
+              :audiofiles="audiofiles"
+            @dragstart="drag($event, message.id)"
+            @modify="modifier"
+            @delete="deleteMessage"
+        />
 
         </div>
       </div>

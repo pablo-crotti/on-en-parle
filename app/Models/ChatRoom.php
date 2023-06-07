@@ -16,4 +16,9 @@ class ChatRoom extends Model
     {
         return $this->hasMany(ChatMessage::class);
     }
+
+    public function messagesAdmin()
+    {
+        return $this->hasMany(AdminMessage::class);
+    }
 }
