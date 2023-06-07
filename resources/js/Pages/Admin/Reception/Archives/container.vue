@@ -8,6 +8,11 @@
             AppLayout,
             archiveList
         },
+        data: function ()  {                
+            return {
+                idProgram: window.location.href.split('/').pop(),
+            }
+        },
     }
     
 </script>
@@ -15,7 +20,7 @@
 <template>
     <app-layout title="On en parle | Réception (Archives)">
         <div class="archives-wrapper">
-            <archiveList :no="1" :id="10"></archiveList>
+            <archiveList :no="idProgram" :id="10"></archiveList>
         </div>
     </app-layout>
 </template>
