@@ -51,7 +51,7 @@ export default {
     <div className="img-container">
         <img :src="room.image" alt="">
         <div className="likes">
-            <span class="material-symbols-outlined" @click="openEditPage">edit</span>
+            <a :href="route('modify', {id: this.roomIdForEdit})"><span class="material-symbols-outlined" @click="openEditPage">edit</span></a>
             <span className="material-symbols-outlined">favorite</span>
             <p>{{ likes }}</p>
         </div>

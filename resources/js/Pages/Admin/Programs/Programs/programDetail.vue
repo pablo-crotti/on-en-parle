@@ -1,5 +1,5 @@
 <script>
-import AppLayout from '@/Layouts/AppLayoutUser.vue';
+import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
 import MessageContainer from '@/Pages/Chat/MessageContainer.vue';
 import InputMessage from '@/Pages/Chat/InputMessage.vue';
 import ChatRoomSelection from '@/Pages/Chat/ChatRoomSelection.vue';

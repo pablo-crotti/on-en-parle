@@ -103,9 +103,9 @@ Route::post('/chat/room/edit/{roomId}', [ProgramController::class, 'updateRoom']
 
 Route::post('/store-audio/{roomId}', [AudioController::class, 'store']);
 //Emission détaillée
-Route::get('/questions/{id}', function ($id) {
+Route::get('/admin/programs/program/{id}', function ($id) {
     return  Inertia::render('Admin/Programs/Programs/programDetail')->with('id', $id);
-})->name('questions');
+})->name('program-detail');
 
 //Page de modification d'une émission
 Route::get('/admin/programs/modify/{id}', function ($id) {
@@ -164,3 +164,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/admin/users', [UserController::class, 'getUsers']);
 
+
+
+////////// CONTACT FORM
+
+Route::get('/contact', function () {
+    return  Inertia::render('Contact/container');
+})->name('contact');
+
+Route::post('/contact/send', [ContactFormController::class, 'sendMail'])->name('contact.send');

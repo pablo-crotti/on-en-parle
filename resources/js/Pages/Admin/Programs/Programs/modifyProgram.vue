@@ -111,7 +111,7 @@ export default {
                                 audio_file: ''
                             };
                             this.$emit('messagesent');
-                            console.log("c'est modifié chef!")
+                            window.history.back();
                         }
                     })
                     .catch(error => {
