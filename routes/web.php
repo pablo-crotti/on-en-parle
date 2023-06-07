@@ -16,6 +16,7 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use PHPUnit\Framework\Attributes\Test;
 use App\Http\Controllers\LiveController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\UserController;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
@@ -145,3 +146,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
 Route::get('/chat/room/{roomId}/admin-messages', [AdminMessagesController::class, 'getAdminMessages']);
 Route::post('/chat/room/{roomId}/admin-message', [AdminMessagesController::class, 'newMessage']);
+
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/users', function () {
+    $userId = auth()->user()->id;
+    return  Inertia::render('Users/container')->with('id', $userId);
+})->name('users');
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/admin/users', [UserController::class, 'getUsers']);
+
