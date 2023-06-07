@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <form @submit.prevent="submitForm" id="formulaire-emission">
-            <div id="conteneurTitre"> <h2 class="form--title">Modifier une émission</h2> </div>
+            <div id="conteneurTitre"> <h2 class="form--title">Modifier une émission </h2> </div>
 
             <div id="conteneurformulaire">
                 <div class="form--field">
@@ -41,8 +41,9 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+
 export default {
-    name: 'ModifyChatRoomForm', // Changement du nom du composant
+    name: 'ModifyChatRoomForm',
     data: function () {
         return {
             program: {
@@ -51,23 +52,15 @@ export default {
                 description: '',
                 image: '',
                 audio_file: ''
-            }
-
-
+            },
+            roomIdForEdit: window.location.href.split('/').pop()
         }
     },
-
     methods: {
         cancel() {
-            this.program = {
-                title: '',
-                date: '',
-                description: '',
-                banner: '',
-                audio: '',
-            };
+            window.history.back()
         },
-        fetchEmission(roomId) {
+        fetchEmission(roomId) { //roomId
             axios.get('/chat/room/'+ roomId)
                 .then(response => {
                     this.program = response.data;
@@ -76,7 +69,7 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
-    },
+        },
         submitForm() {
             axios.post('/chat/room/edit/' + this.program.id, {
                 title: this.program.title,
@@ -103,9 +96,9 @@ export default {
                 });
         }
     },
-created() {
-    this.fetchEmission(2) // La valeur devra changer en fonction de l'émission sur laquel se trouve le bouton
-}
+    created() {
+        this.fetchEmission(this.roomIdForEdit)
+    }
 }
 </script>
 
@@ -278,4 +271,3 @@ created() {
 }
 
 </style>
-
