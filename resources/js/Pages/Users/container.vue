@@ -20,7 +20,12 @@
                     .catch(error => {
                         console.log(error);
                     });
-            }
+            },
+            askConfirm(id) {
+                if (confirm('Voulez-vous vraiment supprimer cet utilisateur ?')) {
+                    this.deleteUser(id);
+                }
+            },
         },
         created() {
             this.getUsers();
@@ -32,10 +37,12 @@
     <AppLayout title="On en parle | Administration (Animateur)">
         <div class="users-container">
             <div class="user" v-for="user in users">
-                <p style="color: white;"> {{ user.name }}</p>
-                <p style="color: white;">{{ user.email }}</p>
-                <button>
-                    Supprimer
+                <p> {{ user.name }}</p>
+                <p>{{ user.email }}</p>
+                <button @click="askConfirm(user.id)">
+                    <span class="material-symbols-outlined">
+                        delete
+                    </span>
                 </button>
             </div>
         </div>

@@ -1,0 +1,24 @@
+.users-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+}
+.user {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--light-black);
+    padding: 20px 40px;
+    border-radius: 20px;
+}
+.user p {
+    width: 45%;
+    color: var(--white);
+}
+.user button span{
+    color: var(--white);
+}

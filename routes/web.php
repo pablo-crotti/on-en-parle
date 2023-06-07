@@ -149,8 +149,7 @@ Route::post('/chat/room/{roomId}/admin-message', [AdminMessagesController::class
 
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/users', function () {
-    $userId = auth()->user()->id;
-    return  Inertia::render('Users/container')->with('id', $userId);
+    return  Inertia::render('Users/container');
 })->name('users');
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/admin/users', [UserController::class, 'getUsers']);
