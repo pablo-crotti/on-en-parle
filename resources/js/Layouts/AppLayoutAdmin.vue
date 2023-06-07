@@ -27,6 +27,7 @@ export default {
             showingNavigationDropdown: false,
             menuList: [],
             currentURL: window.location.href,
+            upcomingPrograms: [],
         }
     },
     methods: {
@@ -39,12 +40,34 @@ export default {
                 this.menuList = [["newProgramm", "Nouvelle émission"], ["live", "Live"], ["listPrograms", "Émissions"]];
             }
         },
+        getUpcomingPrograms(){
+            axios.get('/prochaines-emissions')
+                .then(response => {
+                    this.upcomingPrograms = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        setCurrentProgram(newId){
+            let regex = /\d+$/;
+            let newURL = this.currentURL.replace(regex, newId);
+            window.location.replace(newURL);
+        },
         isNavLinkActive(url) {
             return this.currentURL.includes(url);
         },
+        getRoute(routeName){
+            if(routeName === "archives"){
+                return route(routeName, { id: 1 });
+            } else {
+                return route(routeName);
+            }
+        }
     },
     created() {
         this.setMenu();
+        this.getUpcomingPrograms();
     },
 }
 
@@ -93,11 +116,13 @@ const logout = () => {
                             </div> 
 
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink v-for="item in menuList" :key="item" :href="route(item[0])" :active="route().current(item[0])">
+                                <NavLink v-for="item in menuList" :key="item" :href="getRoute(item[0])" :active="route().current(item[0])">
                                     {{ item[1] }}
                                 </NavLink>
-                            </div> 
-                        
+                            </div>
+                            <div class="program-selection">
+                                <div class="program-item" v-for="(program, index) in upcomingPrograms" :key="index" @click="setCurrentProgram(program.id)">{{ program.title }}</div>
+                            </div>
                             
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 
@@ -239,3 +264,16 @@ const logout = () => {
         </div>
     </div>
 </template>
+
+<style>
+    .program-selection {
+        display: none;
+        /* display: flex;
+        background-color: white;
+        height: 500px;
+        z-index: 2; */
+    }
+    /* .program-item {
+
+    } */
+</style>

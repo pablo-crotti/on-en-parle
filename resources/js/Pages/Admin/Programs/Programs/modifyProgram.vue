@@ -56,19 +56,14 @@ export default {
                 image: '',
                 audio_file: '',
             },
+            roomIdForEdit: window.location.href.split('/').pop(),
             formErrors: {}
         }
     },
 
     methods: {
         cancel() {
-            this.program = {
-                title: '',
-                date: '',
-                description: '',
-                banner: '',
-                audio: '',
-            };
+            window.history.back();
         },
         fetchEmission(roomId) {
             axios.get('/chat/room/'+ roomId)
@@ -126,7 +121,7 @@ export default {
         }
     },
 created() {
-    this.fetchEmission(2) // La valeur devra changer en fonction de l'émission sur laquelle se trouve le bouton
+    this.fetchEmission(this.roomIdForEdit) // La valeur devra changer en fonction de l'émission sur laquelle se trouve le bouton
 }
 }
 </script>
