@@ -2,9 +2,9 @@
     background-color: var(--white);
     border-radius: 25px;
     padding: 15px;
-    margin: 5px; /* Ajoutez des marges entre les éléments si nécessaire */
-    /* Autres styles personnalisés pour les éléments */
+
     height: 100%;  
+    width: 100%;
 }
 
 .program-img {
@@ -16,7 +16,7 @@
 .program-bottom {
   display: flex;
   justify-content: space-between;
-  margin: 5% 0 1% 0;
+  align-items: center;
 }
 .program-header {
   display: flex;
@@ -33,5 +33,9 @@
 
 .program-desc {
    flex-shrink: 0;
-   padding-top: 8%;
+   padding: 6% 0;
+}
+
+#play-circle {
+  font-size: 50px;
 }

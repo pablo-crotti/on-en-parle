@@ -12,10 +12,14 @@
             return {
                 programs: [],
                 filteredPrograms: [], 
-                filterBy: '', 
+                filterBy: 'date', 
+                isSelectOpen: false
             }
         },
         methods: {
+            toggleSelect() {
+      this.isSelectOpen = !this.isSelectOpen;
+    },  
             handleFilterChange(event) {
                 this.filterBy = event.target.value;
                 
@@ -29,7 +33,6 @@
                         (a, b) => b.messages_count - a.messages_count
                     );
 
-                    console.log(this.filteredPrograms);
                 } else if (this.filterBy === 'date') {
                     this.filteredPrograms = [...this.programs]
 
@@ -44,7 +47,7 @@
             }
         },
         created() {
-            axios.get('/chat/rooms').then(response => {
+            axios.get('/chat/rooms-list').then(response => {
 
                 this.programs = response.data;
 
@@ -64,12 +67,12 @@
             <h1 id="programs-title">Émissions</h1>
 
             <div id="dropdown-filter">
-              <label for="filter">Trier par 
-                    <span class="material-symbols-outlined">arrow_drop_down</span>
+              <label for="filter" @click="toggleSelect">Trier par 
+                    <!-- <span class="material-symbols-outlined" :class="{'rotate': isSelectOpen}">arrow_drop_down</span> -->
               </label>
-                <select v-model="selectedFilter" id="filter" @change="handleFilterChange">
-                <option value="date">Date</option>
-                <option  value="interactions">Interactions</option>
+                <select v-model="filterBy" id="filter" @change="handleFilterChange">
+                    <option value="date" >Date</option>
+                    <option value="interactions">Interactions</option>
                 </select>  
             </div>
             
@@ -80,12 +83,18 @@
 
             
 
-            <div v-for="program in filteredPrograms" :key="program.id">
+            <div class="row-program" v-for="program in filteredPrograms" :key="program.id">
                 
-                <AdminProgram :program="program"/>
+                <AdminProgram class="item-program" :program="program"/>
 
 
             </div>
         </div>
     </AppLayout>
 </template>
+
+<style>
+.rotate {
+  transform: rotate(180deg);
+}
+</style>
