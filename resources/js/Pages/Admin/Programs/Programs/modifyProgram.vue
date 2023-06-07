@@ -45,8 +45,9 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+
 export default {
-    name: 'ModifyChatRoomForm', // Changement du nom du composant
+    name: 'ModifyChatRoomForm',
     data: function () {
         return {
             program: {
@@ -60,12 +61,11 @@ export default {
             formErrors: {}
         }
     },
-
     methods: {
         cancel() {
             window.history.back();
         },
-        fetchEmission(roomId) {
+        fetchEmission(roomId) { //roomId
             axios.get('/chat/room/'+ roomId)
                 .then(response => {
                     this.program = response.data;
