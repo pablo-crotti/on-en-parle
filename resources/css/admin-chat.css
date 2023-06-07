@@ -5,6 +5,7 @@
     position: fixed;
     bottom: 25px;
     right: 25px;
+    z-index: 101;
 }
 .admin-chat-button span{
     font-size: 2em;
@@ -21,6 +22,7 @@
     position: fixed;
     bottom: 640px;
     right: 45px;
+    z-index: 101;
 }
 .admin-chat-button-close span{
     font-size: 2em;
@@ -39,6 +41,7 @@
     background-color: var(--black);
     border: solid 1px var(--light-gray);
     border-radius: 20px;
+    z-index: 100;
 }
 [data-closed="true"] {
     width: 0;
@@ -112,4 +115,22 @@
 .admin-message-input-container button span {
     font-size: 25px;
     color: var(--primary-color);
+}
+.notifications-container {
+    width: 25px;
+    height: 25px;
+    background-color: var(--primary-color);
+    position: fixed;
+    bottom: 70px;
+    right: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    z-index: 102;
+}
+.notifications-container p {
+    color: var(--white);
+    font-weight: bold;
 }
