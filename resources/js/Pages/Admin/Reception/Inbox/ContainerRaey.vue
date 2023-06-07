@@ -92,7 +92,6 @@ async deleteMessage(message) {
 <template>
   <div class="containerInbox">
         <h1>ChatRecu</h1>
-<<<<<<< HEAD
   <div class="container">
   
       <div class="column" v-for="status in [0, 1]" :key="status">
@@ -110,8 +109,6 @@ async deleteMessage(message) {
             @modify="modifier"
             @delete="deleteMessage"
         />
-=======
->>>>>>> fe7f1ac005b7d0d3f72a38a2f205cfdfb79d72d3
 
   <div class="columns">
 
@@ -142,7 +139,9 @@ async deleteMessage(message) {
           </div>
         </div>
       </div>
-
+        </div>
+      </div>
+  </div>
   </div> 
               <div id="creernouveaumsg">
                 <call-form
