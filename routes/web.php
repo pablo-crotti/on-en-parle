@@ -90,6 +90,8 @@ Route::get('/admin/administration/animator', function () {
 
 Route::get('/admin/administration/control/{id}', [ChatAdminController::class, 'showControlChatRoom'])->name('control');
 
+Route::get('/admin/administration/animator/{id}', [ChatAdminController::class, 'showAnimatorChatRoom'])->name('animator');
+
 Route::get('/admin/administration/management', function () {
     return  Inertia::render('Admin/Administration/Management/container');
 })->name('manage');
