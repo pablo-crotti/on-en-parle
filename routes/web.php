@@ -45,8 +45,7 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
-    ->get('/register', [RegisteredUserController::class, 'create'])
+Route::get('/register', [RegisteredUserController::class, 'create'])
     ->name('register');
 
 Route::get('/questions/{id}', function ($id) {
@@ -163,6 +162,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 })->name('users');
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/admin/users', [UserController::class, 'getUsers']);
+<<<<<<< HEAD
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->post('/admin/users/delete/{id}', [UserController::class, 'destroy']);
+=======
 
 
 
@@ -173,3 +175,4 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::post('/contact/send', [ContactFormController::class, 'sendMail'])->name('contact.send');
+>>>>>>> cdbbd49d951d66159f8b9fc5968461c21f6bace2

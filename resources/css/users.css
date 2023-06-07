@@ -22,3 +22,55 @@
 .user button span{
     color: var(--white);
 }
+.user-delete-confirmation-wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--cover-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+[data-display-confirm="true"]  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+[data-display-confirm="false"] {
+    display: none;
+}
+.user-delete-confirmation-container {
+    padding: 50px 70px;
+    background-color: var(--light-black);
+    border-radius: 20px;
+}
+.user-delete-confirmation-container p {
+    color: var(--white);
+    margin-bottom: 50px;
+    width: 100%;
+}
+.user-delete-confirmation-container p span {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+.user-delete-confirmation-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+}
+.user-delete-confirmation-container button {
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 10px
+}
+.user-delete-cancel-button {
+    background-color: var(--green);
+    color: var(--white);
+}
+.user-delete-confirmation-button {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
