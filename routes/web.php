@@ -134,8 +134,14 @@ Route::get('/audio/{filename}', function ($filename) {
     ]);
 });
 
-Route::get('test/{id}', function ($id) {
-    return  Inertia::render('Test/container');
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('test/{id}', function ($id) {
+    $userId = auth()->user()->id;
+
+    return Inertia::render('Test/container', [
+        'userId' => $userId,
+    ]);
 });
 
-Route::get('/chat/room/{roomid}/admin-messages', [AdminMessagesController::class, 'getAdminMessages']);
+Route::get('/chat/room/{roomId}/admin-messages', [AdminMessagesController::class, 'getAdminMessages']);
+Route::post('/chat/room/{roomId}/admin-message', [AdminMessagesController::class, 'newMessage']);
