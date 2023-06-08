@@ -1,0 +1,33 @@
+.contactform-container {
+    display: flex;
+    flex-direction: column;
+    margin: 5%;
+}
+
+#form-contact {
+    display: flex;
+    flex-direction: column;
+}
+
+.contactform-container h1 {
+    color: var(--white);
+}
+
+.contactform-container p {
+    color: var(--white);
+}
+
+.contactform-container label {
+    color: var(--white);
+}
+
+.contactform-container input {
+    border-radius: 10px;
+    border: none;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.submit-btn {
+    background-color: var(--primary-color);
+}
