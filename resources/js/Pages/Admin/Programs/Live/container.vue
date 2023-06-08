@@ -1,13 +1,12 @@
 <script>
     import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
     import axios from 'axios';
-    import Modal from '@/Pages/MyComponents/modal.vue';
-
-
+    import modalConfirmation from '@/Pages/MyComponents/modalConfirmation.vue';
 
     export default {
         components: {
-            AppLayout
+            AppLayout,
+            modalConfirmation
         },
         data() {
             return {
