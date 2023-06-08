@@ -69,6 +69,12 @@ export default {
     <AppLayout
         :title="room ? `On en parle | Questions ${room.name}` : 'On en parle'"
     >
+    <audio controls autoplay>
+        <source src="blob:https://www.rts.ch/2d57b973-4dcb-4b77-8079-30401cd7752b" type="audio/mp3">
+        Votre navigateur ne prend pas en charge l'élément audio.
+    </audio>
+
+
         <div v-if="room" class="chat-wrapper">
             <div class="chat-transmission">
                 <div class="transmission-card-container">
