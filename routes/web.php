@@ -17,6 +17,7 @@ use PHPUnit\Framework\Attributes\Test;
 use App\Http\Controllers\LiveController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ContactFormController;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
