@@ -14,6 +14,7 @@
 <script>
     import adminMessageInput from "@/Pages/MyComponents/adminMessageInput.vue";
     import adminMessageItem from "@/Pages/MyComponents/adminMessageItem.vue";
+
     export default {
         components: {
             adminMessageInput,
@@ -43,9 +44,9 @@
             this.getAdminMessages();
 
             const adminMessages = Echo.channel("chat.admin." + this.room);
-                adminMessages.listen("admin.message.new", (e) => {
+                adminMessages.listen(".admin.message.new", (e) => {
                 this.getAdminMessages();
-                // console.log('Ok?')
+                this.$emit("adminMessageReceived");
             });
         },
     }

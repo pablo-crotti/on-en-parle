@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ChatRoom;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ProgramController extends Controller
 {
@@ -38,5 +39,16 @@ class ProgramController extends Controller
                                   'broadcast_date' => $request->input('date'),
                                   'audio_file' => $request->input('audio')
                                 ]);
+    }
+
+    public function getUpcomingBroadcasts()
+    {
+        $currentDate = Carbon::now();
+
+        $broadcasts = ChatRoom::where('broadcast_date', '>=', $currentDate)
+            ->orderBy('broadcast_date', 'asc')
+            ->get();
+
+        return $broadcasts;
     }
 }

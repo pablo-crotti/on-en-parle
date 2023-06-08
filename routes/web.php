@@ -16,6 +16,8 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use PHPUnit\Framework\Attributes\Test;
 use App\Http\Controllers\LiveController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ContactFormController;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
@@ -44,8 +46,7 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
-    ->get('/register', [RegisteredUserController::class, 'create'])
+Route::get('/register', [RegisteredUserController::class, 'create'])
     ->name('register');
 
 Route::get('/questions/{id}', function ($id) {
@@ -101,6 +102,16 @@ Route::get('/admin/administration/management/{id}', [ChatAdminController::class,
 Route::post('/chat/room/edit/{roomId}', [ProgramController::class, 'updateRoom']);
 
 Route::post('/store-audio/{roomId}', [AudioController::class, 'store']);
+//Emission détaillée
+Route::get('/admin/programs/program/{id}', function ($id) {
+    return  Inertia::render('Admin/Programs/Programs/programDetail')->with('id', $id);
+})->name('program-detail');
+
+//Page de modification d'une émission
+Route::get('/admin/programs/modify/{id}', function ($id) {
+    return  Inertia::render('Admin/Programs/Programs/modifyProgram-container')->with('id', $id);
+})->name('modify');
+
 
 Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
@@ -145,3 +156,23 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
 Route::get('/chat/room/{roomId}/admin-messages', [AdminMessagesController::class, 'getAdminMessages']);
 Route::post('/chat/room/{roomId}/admin-message', [AdminMessagesController::class, 'newMessage']);
+
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/users', function () {
+    return  Inertia::render('Users/container');
+})->name('users');
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/admin/users', [UserController::class, 'getUsers']);
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->post('/admin/users/delete/{id}', [UserController::class, 'destroy']);
+
+Route::post('/create-user', [UserController::class, 'create']);
+
+
+////////// CONTACT FORM
+
+Route::get('/contact', function () {
+    return  Inertia::render('Contact/container');
+})->name('contact');
+
+Route::post('/contact/send', [ContactFormController::class, 'sendMail'])->name('contact.send');

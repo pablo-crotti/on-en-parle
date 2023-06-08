@@ -45,8 +45,9 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+
 export default {
-    name: 'ModifyChatRoomForm', // Changement du nom du composant
+    name: 'ModifyChatRoomForm',
     data: function () {
         return {
             program: {
@@ -56,21 +57,15 @@ export default {
                 image: '',
                 audio_file: '',
             },
+            roomIdForEdit: window.location.href.split('/').pop(),
             formErrors: {}
         }
     },
-
     methods: {
         cancel() {
-            this.program = {
-                title: '',
-                date: '',
-                description: '',
-                banner: '',
-                audio: '',
-            };
+            window.history.back();
         },
-        fetchEmission(roomId) {
+        fetchEmission(roomId) { //roomId
             axios.get('/chat/room/'+ roomId)
                 .then(response => {
                     this.program = response.data;
@@ -116,7 +111,7 @@ export default {
                                 audio_file: ''
                             };
                             this.$emit('messagesent');
-                            console.log("c'est modifié chef!")
+                            window.history.back();
                         }
                     })
                     .catch(error => {
@@ -126,7 +121,7 @@ export default {
         }
     },
 created() {
-    this.fetchEmission(2) // La valeur devra changer en fonction de l'émission sur laquelle se trouve le bouton
+    this.fetchEmission(this.roomIdForEdit) // La valeur devra changer en fonction de l'émission sur laquelle se trouve le bouton
 }
 }
 </script>
