@@ -45,16 +45,7 @@
   },
 
   methods: {
-    getMessages() {
-        axios.get(`/emission/1/status/5`)
-            .then(response => {
-                this.messages = response.data;
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    },
-    
+   
     drag(event, messageId) {
     event.dataTransfer.setData('text', messageId);
   },
@@ -71,7 +62,7 @@
     async modifier(message){
     await axios.post(`/AdminInbox/message/${message.id}/content`, { content: message.content });
 },
-async deleteMessage(message) {
+    async deleteMessage(message) {
         try {
             const response = await axios.post(`/AdminInbox/message/${message.id}/delete`);
             // remove the message from local messages
@@ -84,8 +75,16 @@ async deleteMessage(message) {
                 this.filteredMessages = this.messages.filter(message => {
                     return !this.audiofiles.some(audiofile => audiofile.id === message.id);
                 });
-            }
-
+            },
+            sortByCreation() {
+            this.messages.sort((a, b) => {
+            return new Date(b.created_at) - new Date(a.created_at); // Trier par date de création en ordre décroissant
+                });
+            },
+            sortByLikes() {
+                this.messages.sort((a, b) => b.nb_likes - a.nb_likes); // Trier par nombre de likes en ordre décroissant
+            },
+            
 
     },
     computed: {
@@ -118,7 +117,12 @@ console.log("pas d'id recu")            }
   <div class="containerManagement">
 
         <h1>ChatRecu</h1>
+        <div style="display:flex; flex-direction: row; color: azure; width:auto;align-items: center;">
+         
+            <button @click="sortByCreation" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Créaation</button>
+          <button  @click="sortByLikes" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
 
+       </div>
   <div class="columns">
 
       <div class="column" v-for="status in [0,1,2,3,5]" :key="status">

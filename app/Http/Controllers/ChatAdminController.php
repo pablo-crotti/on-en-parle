@@ -16,6 +16,7 @@ class ChatAdminController extends Controller
         $messagesWithAudio = ChatMessage::where('chat_room_id', $id)
         ->has('audio')
         ->with(['text', 'audio', 'call'])
+        ->orderBy('created_at', 'asc') 
         ->get()
         ->map(function ($message) {
             $audioFiles = $message->audio->map(function ($audio) {
@@ -58,10 +59,11 @@ class ChatAdminController extends Controller
     // Récupéré élément pour partie management
     public function showManagementChatRoom($id)
     {
-
+        //récupérer les messages avec audio et call dans l'ordre chronologique du plus ancien au plus recents
         $messagesWithAudio = ChatMessage::where('chat_room_id', $id)
         ->has('audio')
         ->with(['text', 'audio', 'call'])
+        ->orderBy('created_at', 'asc') 
         ->get()
         ->map(function ($message) {
             $audioFiles = $message->audio->map(function ($audio) {
@@ -91,7 +93,7 @@ class ChatAdminController extends Controller
         
         $messages = ChatMessage::where('chat_room_id', $id) ->with(['text', 'audio', 'call'])->get();
       //  $audio = VoiceMessage::where('chat_room_id', $id)->get();
-        error_log("dasdgfds"); // imprime le contenu de $audio dans le log d'erreurs
+        error_log("management"); // imprime le contenu de $audio dans le log d'erreurs
 
         return Inertia::render('Admin/Administration/Management/container', [
             'initialMessages' => $messages,
@@ -107,6 +109,54 @@ class ChatAdminController extends Controller
         $messagesWithAudio = ChatMessage::where('chat_room_id', $id)
         ->has('audio')
         ->with(['text', 'audio', 'call'])
+        ->orderBy('created_at', 'asc') 
+        ->get()
+        ->map(function ($message) {
+            $audioFiles = $message->audio->map(function ($audio) {
+                return $audio->audio_file;
+            });
+    
+            $calls = $message->call->map(function ($call) {
+                return [
+                    'id' => $call->id,
+                    'caller' => $call->caller,
+                    'chat_message_id' => $call->chat_message_id,
+                ];
+            });
+    
+            return [
+                'id' => $message->id,
+                'content' => $message->content,
+                'nb_likes' => $message->nb_likes,
+                'status' => $message->status,
+                'chat_room_id' => $message->chat_room_id,
+                'audio_files' => $audioFiles,  // this will be an array of audio files
+                'calls' => $calls, // this will be an array of calls
+            ];
+        });
+    
+    
+        
+        $messages = ChatMessage::where('chat_room_id', $id) ->with(['text', 'audio', 'call'])->get();
+      //  $audio = VoiceMessage::where('chat_room_id', $id)->get();
+        error_log("Control"); // imprime le contenu de $audio dans le log d'erreurs
+
+        return Inertia::render('Admin/Administration/Control/container', [
+            'initialMessages' => $messages,
+            'audioChatroom' => $messagesWithAudio,
+            'callChatroom' => $messagesWithAudio,  // the same as audioChatroom because they share the same data structure
+            'idroom' => $id
+        ]);
+    }
+
+
+    public function showAnimatorChatRoom($id)
+    {
+
+        $messagesWithAudio = ChatMessage::where('chat_room_id', $id)
+        ->has('audio')
+        ->with(['text', 'audio', 'call'])
+        ->orderBy('created_at', 'asc') 
         ->get()
         ->map(function ($message) {
             $audioFiles = $message->audio->map(function ($audio) {
@@ -138,10 +188,10 @@ class ChatAdminController extends Controller
       //  $audio = VoiceMessage::where('chat_room_id', $id)->get();
         error_log("dasdgfds"); // imprime le contenu de $audio dans le log d'erreurs
 
-        return Inertia::render('Admin/Administration/Control/container', [
+        return Inertia::render('Admin/Administration/Animator/container', [
             'initialMessages' => $messages,
             'audioChatroom' => $messagesWithAudio,
-            'callChatroom' => $messagesWithAudio,  // the same as audioChatroom because they share the same data structure
+            'callChatroom' => $messagesWithAudio,
             'idroom' => $id
         ]);
     }

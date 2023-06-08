@@ -21,7 +21,6 @@
 
 <script>
     import axios from 'axios';
-    import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
     import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
     import CallForm from '@/Pages/MyComponents/CallForm.vue';
   //  import ChatContainer from '@/Pages/MyComponents/admin-message.vue';
@@ -29,7 +28,6 @@
 
     export default {
         components: {
-            AppLayout,
             CallForm,
              ChatMessage,
           //  ChatContainer
@@ -60,12 +58,11 @@
       messages: [],
       audiofiles: this.audioChatroom,
       filteredMessages: [],
-      statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "","Prêt à diffuser"],
-    chatroomId:null,
-    calls: this.callChatroom,
-
+      statu: ["Message Audio", "Message Vocal"],
+      chatroomId:null,
+      calls: this.callChatroom,
     };
-  },
+},
 
   methods: {
     getMessages() {
@@ -107,16 +104,31 @@ async deleteMessage(message) {
                 this.filteredMessages = this.messages.filter(message => {
                     return !this.audiofiles.some(audiofile => audiofile.id === message.id);
                 });
-            }
+            },
+            sortByCreation() {
+            this.messages.sort((a, b) => {
+            return new Date(b.created_at) - new Date(a.created_at); // Trier par date de création en ordre décroissant
+            });
+            },
+            sortByLikes() {
+                this.messages.sort((a, b) => b.nb_likes - a.nb_likes); // Trier par nombre de likes en ordre décroissant
+            },
 
 
     },
     computed: {
         affichedon(){
-        }
+        },
+        audioMessages() {
+        return this.messages.filter(m => m.audio && m.audio.length > 0 && m.status === 3);
+    },
+    callMessages() {
+        return this.messages.filter(m => m.call && m.call.length > 0 && m.status === 3);
+    },
     },
     created() {
         this.messages = this.initialMessages;
+        console.log(this.messages);
         let convertedId = null;
 
             if (typeof this.idroom === 'string') {
@@ -130,7 +142,7 @@ async deleteMessage(message) {
             if (convertedId !== null) {
             this.chatroomId = convertedId;
             } else {
-console.log("pas d'id recu")            }
+console.log("pas d'id recu")}
 },
   
 }
@@ -138,43 +150,53 @@ console.log("pas d'id recu")            }
 </script>
 
 <template>
-    <AppLayout title="On en parle | Administration (Régie)">
-        <div class="control-wrapper">
-        </div>
-    </AppLayout>
+
 
   <div class="containerManagement">
 
         <h1>ChatRecu</h1>
+        <div style="display:flex; flex-direction: row; color: azure; width:auto;align-items: center;">
+         
+            <button @click="sortByCreation" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Créaation</button>
+          <button  @click="sortByLikes" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
 
+       </div>
   <div class="columns">
 
-      <div class="column" v-for="status in [0,1,2,3,5]" :key="status">
-          <div class="admin-messages-container-" >
-              <div class="admin-messages-title-container">
-                  <div class="admin-messages-title">{{ statu[status] }}</div>
-              </div>
-          <div class="admin-messages-list"
-           :id="`column-${status}`"
-                  @drop="drop($event, status)"
-                  @dragover.prevent>
-            
-                <div class="admin-messages-item" v-for="message in messages.filter(m => m.status === status)">
-                    <chat-message
-                      :key="message.id"
-                      :message="message"
-                      :calls="calls"
-                    
-                      :audiofiles="audiofiles"
-                      @dragstart="drag($event, message.id)"
-                      @modify="modifier"
-                      @delete="deleteMessage"
-                    /> 
-                </div>
-        
-            </div>
-          </div>
-         </div>
+    <div class="column" v-for="status in [0,1]" :key="status">
+    <div class="admin-messages-container-" >
+        <div class="admin-messages-title-container">
+            <div class="admin-messages-title">{{ statu[status] }}</div>
+        </div>
+    <div class="admin-messages-list"
+        :id="`column-${status}`"
+        @drop="drop($event, status)"
+        @dragover.prevent>
+        <div class="admin-messages-item" v-if="status === 0" v-for="message in audioMessages">
+            <chat-message
+                :key="message.id"
+                :message="message"
+                :calls="calls"
+                :audiofiles="audiofiles"
+                @dragstart="drag($event, message.id)"
+                @modify="modifier"
+                @delete="deleteMessage"
+            />
+        </div>
+        <div class="admin-messages-item" v-else v-for="message in callMessages">
+            <chat-message
+                :key="message.id"
+                :message="message"
+                :calls="calls"
+                :audiofiles="audiofiles"
+                @dragstart="drag($event, message.id)"
+                @modify="modifier"
+                @delete="deleteMessage"
+            />
+        </div>
+    </div>
+  </div>
+</div>
     </div>
 
   </div> 
