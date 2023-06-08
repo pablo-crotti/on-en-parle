@@ -166,6 +166,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->post('/admin/users/delete/{id}', [UserController::class, 'destroy']);
 
+Route::post('/create-user', [UserController::class, 'create']);
 
 
 ////////// CONTACT FORM
@@ -175,3 +176,4 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::post('/contact/send', [ContactFormController::class, 'sendMail'])->name('contact.send');
+
