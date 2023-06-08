@@ -1,7 +1,7 @@
 <script>
     import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
     import axios from 'axios';
-    import modalConfirmation from '@/Pages/MyComponents/modalConfirmation.vue';
+    //import modalConfirmation from '@/Pages/MyComponents/modalConfirmation.vue';
 
     export default {
         components: {
