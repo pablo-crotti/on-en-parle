@@ -176,4 +176,3 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::post('/contact/send', [ContactFormController::class, 'sendMail'])->name('contact.send');
-

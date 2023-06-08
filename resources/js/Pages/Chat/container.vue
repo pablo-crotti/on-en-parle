@@ -4,6 +4,7 @@ import MessageContainer from "@/Pages/Chat/MessageContainer.vue";
 import InputMessage from "@/Pages/Chat/InputMessage.vue";
 import ChatRoomSelection from "@/Pages/Chat/ChatRoomSelection.vue";
 import TransmissionCard from "@/Pages/MyComponents/transmission-card.vue";
+import Player from "@/Pages/Chat/Player.vue";
 import axios from "axios";
 
 export default {
@@ -13,12 +14,14 @@ export default {
         InputMessage,
         ChatRoomSelection,
         TransmissionCard,
+        Player,
     },
     data: function () {
         return {
             messages: [],
             roomIdLink: window.location.href.split("/").pop(),
             room: null,
+            playerStatus: false,
         };
     },
     methods: {
@@ -36,6 +39,52 @@ export default {
                 .catch((error) => {
                     console.log(error);
                 });
+        },
+        togglePlayPause() {
+            const player = document.querySelector("audio");
+            const playIcon = document.querySelector(".play-icon");
+            const playIconSecond = document.querySelector(".play-icon-second");
+            if (player.paused) {
+                player.play();
+                this.playerStatus = true;
+                playIcon.innerHTML = playIconSecond.innerHTML = "pause";
+            } else {
+                player.pause();
+                this.playerStatus = false;
+                playIcon.innerHTML = playIconSecond.innerHTML = "play_circle";
+            }
+        },
+        playTransmission() {
+            const player = document.querySelector("audio");
+            const progressBar = document.querySelector(".player-progress-bar");
+            const playIconSecond = document.querySelector(".play-icon-second");
+            const back = document.querySelector(".back");
+            const forward = document.querySelector(".forward");
+
+            player.addEventListener('error', (event) => {
+                this.togglePlayPause();
+
+            });
+
+            this.togglePlayPause();
+            player.addEventListener("timeupdate", function () {
+                progressBar.max = player.duration;
+                progressBar.value = player.currentTime;
+            });
+            progressBar.addEventListener("change", function () {
+                player.currentTime = progressBar.value;
+            });
+
+            playIconSecond.addEventListener("click", () => {
+                this.togglePlayPause();
+            });
+
+            back.addEventListener("click", () => {
+                player.currentTime -= 10;
+            });
+            forward.addEventListener("click", () => {
+                player.currentTime += 10;
+            });
         },
     },
     watch: {
@@ -69,12 +118,6 @@ export default {
     <AppLayout
         :title="room ? `On en parle | Questions ${room.name}` : 'On en parle'"
     >
-    <audio controls autoplay>
-        <source src="blob:https://www.rts.ch/2d57b973-4dcb-4b77-8079-30401cd7752b" type="audio/mp3">
-        Votre navigateur ne prend pas en charge l'élément audio.
-    </audio>
-
-
         <div v-if="room" class="chat-wrapper">
             <div class="chat-transmission">
                 <div class="transmission-card-container">
@@ -87,6 +130,27 @@ export default {
                 </div>
             </div>
 
+            <div class="transmission-link" v-if="room.on_air">
+                <a
+                    href="https://www.rts.ch/audio-podcast/livepopup/la-1ere/"
+                    target="_blank"
+                >
+                    Écouter la transmission
+                    <span class="material-symbols-outlined"> play_circle </span>
+                </a>
+            </div>
+            <div class="transmission-player" v-else-if="room.audio_file">
+                <button @click="playTransmission()">
+                    <span class="material-symbols-outlined play-icon">
+                        play_circle
+                    </span>
+                </button>
+                <audio controls>
+                    <source :src="room.audio_file" type="audio/mp3" />
+                </audio>
+            </div>
+
+            <Player v-if="room.audio_file" :room="room" :status="playerStatus" />
             <div class="chat-container">
                 <message-container :messages="messages" />
                 <input-message

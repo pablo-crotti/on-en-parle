@@ -156,6 +156,28 @@ input[type="text"] {
     align-items: center;
     margin-right: 10px;
 }
+.transmission-link {
+    padding: 20px 60px;
+    width: max-content;
+    background-color: var(--primary-color);
+    border-radius: 15px;
+    margin: auto;
+}
+.transmission-link a {
+    color: var(--white);
+    font-size: 1.2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.transmission-link:hover {
+    scale: 1.05;
+}
+.transmission-link a span{
+    color: var(--white);
+    margin-left: 10px;
+}
 .input-message-button button{
     width: 90%;
     height: 90%;
@@ -197,6 +219,121 @@ input[type="text"] {
 .audio-recorder p {
     color: var(--white);
 }
+.transmission-player {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 10px;
+}
+.transmission-player span {
+    color: var(--white);
+    font-size: 2em;
+}
+.transmission-player audio {
+    display: none;
+}
+.player-displayer {
+    width: 70px;
+    height: 70px;
+    border-radius: 70px;
+    padding: 5px 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--light-black);
+    border: solid 1px var(--secondary-color);
+    position: fixed;
+    bottom: 100px;
+    right: 100px;
+}
+[data-display-player="false"] {
+    display: none;
+}
+
+@keyframes bars {
+    0% {
+        height: 10%;
+    }
+    100% {
+        height: 60%;
+    }
+}
+.bar {
+    display: block;
+    height: 60%;
+    width: 6px;
+    border-radius: 10px;
+    background-color: var(--secondary-color);
+}
+#bar_1,
+#bar_3 {
+    animation: bars 1s infinite alternate;
+}
+#bar_2 {
+    animation: bars 1s infinite alternate;
+    animation-delay: 0.2s;
+}
+.player-container {
+    width: 600px;
+    padding: 10px;
+    background: rgb(253,199,4);
+    background: linear-gradient(90deg, rgba(253,199,4,1) 0%, rgba(36,36,36,1) 38%);
+    border-radius: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    bottom: 100px;
+    right: 100px;
+    gap: 25px;
+}
+[data-player-container="false"] {
+    display: none;
+}
+.player-container img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    object-fit: cover;
+}
+.player-container input {
+    width: calc(70% - 100px);
+}
+.close-player-button {
+    position: relative;
+    top: -35px;
+    left: 570px;
+    border: none;
+    color: var(--white);
+    font-size: 1em;
+    width: 12px;
+    height: 12px;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.close-player-button span {
+    border: none;
+    color: var(--primary-color);
+    font-size: 2em;
+}
+.controlls {
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.controlls span {
+    color: var(--white);
+    font-size: 1.9em;
+}
 
 @media screen and (max-width: 768px) {
     /* ################################################# ===== CONTAINER */
@@ -217,5 +354,17 @@ input[type="text"] {
     /* ################################################# ===== INPUT MESSAGE */
     .input-message-container{
         padding: 1rem;
+    }
+    .transmission-player {
+        width: 100%;
+    }
+    .player-displayer, .player-container {
+        right: 1rem;
+    }
+    .player-container {
+        width: calc(100% - 2rem);
+    }
+    .close-player-button {
+        left: calc(100% - 1rem);
     }
 }
