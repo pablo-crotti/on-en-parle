@@ -7,27 +7,31 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import AdminProgramItem from '@/Pages/MyComponents/admin-program-selection.vue';
 
 export default {
     props: {
         title: String,
     },
     components: {
-        Head,
-        Link,
-        ApplicationMark,
-        Banner,
-        Dropdown,
-        DropdownLink,
-        NavLink,
-        ResponsiveNavLink,
-    },
+    Head,
+    Link,
+    ApplicationMark,
+    Banner,
+    Dropdown,
+    DropdownLink,
+    NavLink,
+    ResponsiveNavLink,
+    AdminProgramItem
+},
     data() {
         return {
             showingNavigationDropdown: false,
             menuList: [],
-            currentURL: window.location.href,
             upcomingPrograms: [],
+            currentURL: window.location.href,
+            showProgramSelection: false,
+            currentProgramId: 0,
         }
     },
     methods: {
@@ -49,25 +53,33 @@ export default {
                     console.log(error);
                 });
         },
-        setCurrentProgram(newId){
-            let regex = /\d+$/;
-            let newURL = this.currentURL.replace(regex, newId);
-            window.location.replace(newURL);
-        },
         isNavLinkActive(url) {
             return this.currentURL.includes(url);
         },
         getRoute(routeName){
-            if(routeName === "archives"){
-                return route(routeName, { id: 1 });
+            if(routeName === "inbox" || routeName === "archives" || routeName === "control" || routeName === "animator" || routeName === "manage"){
+                return route(routeName, { id: this.currentProgramId });
             } else {
                 return route(routeName);
             }
-        }
+        },
+        toggleProgramSelection() {
+            this.showProgramSelection = !this.showProgramSelection;
+        },
+        
     },
     created() {
         this.setMenu();
         this.getUpcomingPrograms();
+        document.addEventListener('click', (event) => {
+            const target = event.target;
+            const programButton = document.querySelector('.selection-programs-button');
+
+            if (this.showProgramSelection && !programButton.contains(target)) {
+                this.showProgramSelection = false;
+            }
+        });
+        this.currentProgramId = this.currentURL.split('/').pop();
     },
 }
 
@@ -104,13 +116,13 @@ const logout = () => {
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <div class="hidden adMenu space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('inbox')" :active="isNavLinkActive('admin/reception')">
+                                <NavLink :href="getRoute('inbox')" :active="isNavLinkActive('admin/reception')">
                                     Réception
                                 </NavLink>
-                                <NavLink :href="route('manage')" :active="isNavLinkActive('admin/administration')">
+                                <NavLink :href="getRoute('manage')" :active="isNavLinkActive('admin/administration')">
                                     Administration
                                 </NavLink>
-                                <NavLink :href="route('newProgramm')" :active="isNavLinkActive('admin/programs')">
+                                <NavLink :href="getRoute('newProgramm')" :active="isNavLinkActive('admin/programs')">
                                     Émissions
                                 </NavLink>
                             </div> 
@@ -120,9 +132,6 @@ const logout = () => {
                                     {{ item[1] }}
                                 </NavLink>
                             </div>
-                            <div class="program-selection">
-                                <div class="program-item" v-for="(program, index) in upcomingPrograms" :key="index" @click="setCurrentProgram(program.id)">{{ program.title }}</div>
-                            </div>
                             
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 
@@ -130,7 +139,12 @@ const logout = () => {
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
-
+                            <button class="selection-programs-button inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150" @click="toggleProgramSelection">
+                                Séléctionner une émission
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                </svg>
+                            </button>
                             <!-- Settings Dropdown -->
                             <div class="ml-3 relative">
                                 <Dropdown align="right" width="48">
@@ -249,6 +263,11 @@ const logout = () => {
                     </div>
                 </div>
             </nav>
+            <div class="program-selection" v-if="showProgramSelection">
+                <div v-for="(program, index) in upcomingPrograms" :key="index">
+                    <AdminProgramItem :program="program" :currentURL="this.currentURL"/>
+                </div>
+            </div>
 
             <!-- Page Heading -->
             <header v-if="$slots.header" class="bg-white shadow">
@@ -267,13 +286,67 @@ const logout = () => {
 
 <style>
     .program-selection {
-        display: none;
-        /* display: flex;
-        background-color: white;
-        height: 500px;
-        z-index: 2; */
+        background-color: var(--white);
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 20px;
     }
-    /* .program-item {
 
-    } */
+    .program-item {
+        background-color: var(--black);
+        width: 200px;
+        height: 200px;
+        border-radius: 20px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        justify-content: space-between;
+    }
+
+    .program-cover {
+        object-fit: cover;
+        width: 80px;
+        height: 80px;
+        border-radius: 15px;
+    }
+
+    .program-date {
+        color: var(--white);
+        font-size: 0.7rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: right;
+        text-transform: capitalize;
+    }
+
+    .program-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        height: 100%;
+        padding-top: 10px;
+    }
+    .program-info > .program-title{
+        color: var(--white);
+        font-size: 0.8rem;
+        font-weight: bold;
+        padding: 0px;
+        white-space: normal;
+    }
+
+    .program-info > .program-interactions > span {
+        color: var(--white);
+        font-size: 0.8rem;
+        font-weight: bold;
+        padding-right: 10px;
+    }
+
 </style>
