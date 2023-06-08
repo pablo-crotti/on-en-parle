@@ -61,9 +61,8 @@ export default {
             const back = document.querySelector(".back");
             const forward = document.querySelector(".forward");
 
-            player.addEventListener('error', (event) => {
+            player.addEventListener("error", (event) => {
                 this.togglePlayPause();
-
             });
 
             this.togglePlayPause();
@@ -150,7 +149,11 @@ export default {
                 </audio>
             </div>
 
-            <Player v-if="room.audio_file" :room="room" :status="playerStatus" />
+            <Player
+                v-if="room.audio_file"
+                :room="room"
+                :status="playerStatus"
+            />
             <div class="chat-container">
                 <message-container :messages="messages" />
                 <input-message

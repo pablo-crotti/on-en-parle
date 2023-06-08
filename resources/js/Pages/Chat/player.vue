@@ -13,13 +13,15 @@
             <span class="material-symbols-outlined"> cancel </span>
         </button>
         <img :src="room.image" />
-        <input type="range" class="player-progress-bar"/>
+        <input type="range" class="player-progress-bar" />
         <div class="controlls">
             <button class="back">
                 <span class="material-symbols-outlined"> replay_10 </span>
             </button>
             <button>
-                <span class="material-symbols-outlined play-icon-second"> play_circle </span>
+                <span class="material-symbols-outlined play-icon-second">
+                    play_circle
+                </span>
             </button>
             <button class="forward">
                 <span class="material-symbols-outlined"> forward_10 </span>
@@ -44,18 +46,20 @@ export default {
         },
         displayPlayerButton() {
             if (this.status) {
-                document.querySelector(".player-displayer").dataset.displayPlayer = "true";
+                document.querySelector(
+                    ".player-displayer"
+                ).dataset.displayPlayer = "true";
             } else {
-                document.querySelector(".player-displayer").dataset.displayPlayer = "false";
+                document.querySelector(
+                    ".player-displayer"
+                ).dataset.displayPlayer = "false";
             }
-            
-        }
+        },
     },
     watch: {
         status() {
             this.displayPlayerButton();
         },
     },
-
 };
 </script>

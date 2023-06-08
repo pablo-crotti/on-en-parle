@@ -11,7 +11,7 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center
+    justify-content: center;
 }
 /* ################################################# ===== MESSAGE CONTAINER */
 .message-container {
@@ -80,7 +80,7 @@
 }
 .message-item .left {
     width: 70%;
-    padding-right: 1rem; 
+    padding-right: 1rem;
 }
 .message-item .right p {
     text-align: right;
@@ -93,7 +93,7 @@
     justify-content: flex-start;
     align-items: flex-end;
 }
-.message-item button  {
+.message-item button {
     text-align: right;
     width: fit-content;
     display: flex;
@@ -137,16 +137,16 @@
 .input-message-container input::placeholder {
     color: var(--gray);
 }
-.input-message-container input:focus, 
-.input-message-container input:active, 
+.input-message-container input:focus,
+.input-message-container input:active,
 .input-message-container input:focus-visible {
-   outline: none;
-   border: none;
+    outline: none;
+    border: none;
 }
 input[type="text"] {
     outline: none;
     border: none;
-  }
+}
 .input-message-button {
     width: 40px;
     height: 40px;
@@ -174,11 +174,11 @@ input[type="text"] {
 .transmission-link:hover {
     scale: 1.05;
 }
-.transmission-link a span{
+.transmission-link a span {
     color: var(--white);
     margin-left: 10px;
 }
-.input-message-button button{
+.input-message-button button {
     width: 90%;
     height: 90%;
     background-color: var(--light-black);
@@ -280,8 +280,12 @@ input[type="text"] {
 .player-container {
     width: 600px;
     padding: 10px;
-    background: rgb(253,199,4);
-    background: linear-gradient(90deg, rgba(253,199,4,1) 0%, rgba(36,36,36,1) 38%);
+    background: rgb(253, 199, 4);
+    background: linear-gradient(
+        90deg,
+        rgba(253, 199, 4, 1) 0%,
+        rgba(36, 36, 36, 1) 20%
+    );
     border-radius: 50px;
     display: flex;
     flex-direction: row;
@@ -352,13 +356,14 @@ input[type="text"] {
         width: 100%;
     }
     /* ################################################# ===== INPUT MESSAGE */
-    .input-message-container{
+    .input-message-container {
         padding: 1rem;
     }
     .transmission-player {
         width: 100%;
     }
-    .player-displayer, .player-container {
+    .player-displayer,
+    .player-container {
         right: 1rem;
     }
     .player-container {
