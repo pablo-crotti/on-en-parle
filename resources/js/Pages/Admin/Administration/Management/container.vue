@@ -2,13 +2,15 @@
     import axios from 'axios';
     import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
     import CallForm from '@/Pages/MyComponents/CallForm.vue';
+    import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
   //  import ChatContainer from '@/Pages/MyComponents/admin-message.vue';
 
 
     export default {
         components: {
             CallForm,
-             ChatMessage,
+            ChatMessage,
+            AppLayout,
           //  ChatContainer
         },
     
@@ -114,50 +116,52 @@ console.log("pas d'id recu")            }
 </script>
 
 <template>
-  <div class="containerManagement">
+    <AppLayout title="On en parle | Administration (Gestion)">
+        <div class="containerManagement">
 
-        <h1>ChatRecu</h1>
-        <div style="display:flex; flex-direction: row; color: azure; width:auto;align-items: center;">
-         
-            <button @click="sortByCreation" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Créaation</button>
-          <button  @click="sortByLikes" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
+                <h1>ChatRecu</h1>
+                <div style="display:flex; flex-direction: row; color: azure; width:auto;align-items: center;">
+                
+                    <button @click="sortByCreation" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Créaation</button>
+                <button  @click="sortByLikes" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
 
-       </div>
-  <div class="columns">
-
-      <div class="column" v-for="status in [0,1,2,3,5]" :key="status">
-          <div class="admin-messages-container-" >
-              <div class="admin-messages-title-container">
-                  <div class="admin-messages-title">{{ statu[status] }}</div>
-              </div>
-          <div class="admin-messages-list"
-           :id="`column-${status}`"
-                  @drop="drop($event, status)"
-                  @dragover.prevent>
-            
-                <div class="admin-messages-item" v-for="message in messages.filter(m => m.status === status)">
-                    <chat-message
-                      :key="message.id"
-                      :message="message"
-                      :calls="calls"
-                    
-                      :audiofiles="audiofiles"
-                      @dragstart="drag($event, message.id)"
-                      @modify="modifier"
-                      @delete="deleteMessage"
-                    /> 
-                </div>
-        
             </div>
-          </div>
-         </div>
-    </div>
+        <div class="columns">
 
-  </div> 
-        <div id="creernouveaumsg">
-            <call-form
-            :room="chatroomId"></call-form>
-        </div>
+            <div class="column" v-for="status in [0,1,2,3,5]" :key="status">
+                <div class="admin-messages-container-" >
+                    <div class="admin-messages-title-container">
+                        <div class="admin-messages-title">{{ statu[status] }}</div>
+                    </div>
+                <div class="admin-messages-list"
+                :id="`column-${status}`"
+                        @drop="drop($event, status)"
+                        @dragover.prevent>
+                    
+                        <div class="admin-messages-item" v-for="message in messages.filter(m => m.status === status)">
+                            <chat-message
+                            :key="message.id"
+                            :message="message"
+                            :calls="calls"
+                            
+                            :audiofiles="audiofiles"
+                            @dragstart="drag($event, message.id)"
+                            @modify="modifier"
+                            @delete="deleteMessage"
+                            /> 
+                        </div>
+                
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        </div> 
+                <div id="creernouveaumsg">
+                    <call-form
+                    :room="chatroomId"></call-form>
+                </div>
+    </AppLayout>
 </template>
 
 

@@ -77,25 +77,15 @@ Route::get('/admin/programs/new', function () {
     return  Inertia::render('Admin/Programs/NewProgram/container');
 })->name('newProgramm');
 
-Route::get('/admin/reception/inbox', function () {
-    return  Inertia::render('Admin/Reception/Inbox/container');
-})->name('inbox');
+Route::get('/admin/reception/inbox/{id}', [ChatAdminController::class, 'showChatRoom'])->name('inbox');
 
-Route::get('/admin/reception/archives', function () {
-    return  Inertia::render('Admin/Reception/Archives/container');
+Route::get('/admin/reception/archives/{id}', function ($id) {
+    return  Inertia::render('Admin/Reception/Archives/container')->with('id', $id);
 })->name('archives');
-
-Route::get('/admin/administration/animator', function () {
-    return  Inertia::render('Admin/Administration/Animator/container');
-})->name('animator');
 
 Route::get('/admin/administration/control/{id}', [ChatAdminController::class, 'showControlChatRoom'])->name('control');
 
 Route::get('/admin/administration/animator/{id}', [ChatAdminController::class, 'showAnimatorChatRoom'])->name('animator');
-
-Route::get('/admin/administration/management', function () {
-    return  Inertia::render('Admin/Administration/Management/container');
-})->name('manage');
 
 Route::get('/admin/administration/management/{id}', [ChatAdminController::class, 'showManagementChatRoom'])->name('management');
 
@@ -122,7 +112,7 @@ Route::post('/chat/room/{roomId}/message', [ChatController::class, 'newMessage']
 Route::post('/chat/like/{messageId}', [LikesController::class, 'like']);
 Route::post('/chat/unlike/{messageId}', [LikesController::class, 'unlike']);
 Route::get('/chat/room/{chatId}/likes', [LikesController::class, 'sumChatLikes']);
-Route::get('/AdminInbox/{id}', [ChatAdminController::class, 'showChatRoom'])->name('chatroom.show');
+// Route::get('/AdminInbox/{id}', [ChatAdminController::class, 'showChatRoom'])->name('chatroom.show');
 Route::post('/AdminInbox/message/{id}/update', [ChatAdminController::class, 'updateMessageStatus']);
 Route::post('/AdminInbox/message/{id}/content', [ChatAdminController::class, 'updateMessageContent']);
 Route::post('/AdminInbox/message/{id}/delete', [ChatAdminController::class, 'deleteMessage']);

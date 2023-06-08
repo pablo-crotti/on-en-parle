@@ -46,7 +46,7 @@ class ChatAdminController extends Controller
       //  $audio = VoiceMessage::where('chat_room_id', $id)->get();
         error_log("dasdgfds"); // imprime le contenu de $audio dans le log d'erreurs
 
-   return Inertia::render('Admin/Reception/Inbox/ContainerRaey', [
+   return Inertia::render('Admin/Reception/Inbox/container', [
             'initialMessages' => $messages,
             'audioChatroom' => $messagesWithAudio,
             'idroom' => $id
