@@ -6,7 +6,7 @@
     export default {
         components: {
             AppLayout,
-            modalConfirmation
+            //modalConfirmation
         },
         data() {
             return {
