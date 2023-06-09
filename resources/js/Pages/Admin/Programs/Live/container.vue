@@ -1,22 +1,26 @@
 <script>
     import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
     import axios from 'axios';
-    //import modalConfirmation from '@/Pages/MyComponents/modalConfirmation.vue';
+    import modalConfirmation from '@/Pages/MyComponents/modalConfirmation.vue';
 
     export default {
         components: {
             AppLayout,
-            //modalConfirmation
+            modalConfirmation
         },
         data() {
             return {
                 program: {},
                 background: '',
-                btnCaption: ''
+                btnCaption: '',
+                isModalOpen: false,
+                modalTitle: 'Confirmation',
+                modalMessage: 'Êtes-vous sûr de vouloir démarrer le Live ?'
             }
         },
         methods : {
             goLive() {
+                    
                     axios.post(`/emission/${this.program.id}/live`).then(response => {
                         this.program = response.data.chatRoom;
                         this.isLive();
@@ -24,16 +28,26 @@
                 });
             },
             isLive() {
+                
             
                 if (this.program.on_air) {
                     this.background = '#838383';
                     this.btnCaption = 'Arrêter le live';
+                    this.modalMessage = 'Êtes-vous sûr de vouloir arrêter le Live ?';
                     return true;
                 } else {
                     this.background = '#f1f1f1';
                     this.btnCaption = 'Démarrer le live';
+                    this.modalMessage = 'Êtes-vous sûr de vouloir démarrer le Live ?';
                     return false;
                 }
+            },
+            
+            openModal() {
+                this.isModalOpen = true;
+            },
+            closeModal() {
+                this.isModalOpen = false;
             }
         },
         created() {
@@ -50,6 +64,7 @@
 
 <template>
     <AppLayout title="On en parle | Émissions (Live)">
+        <modalConfirmation :title="modalTitle" :message="modalMessage" :is-open="isModalOpen" @close="closeModal" @validate="goLive" />
         <!-- <Modal></Modal> -->
         <div class="live-wrapper">
             <div class="live-content-wrapper">
@@ -65,7 +80,7 @@
 
                 <div class="golive-body">
                     <div class="golive-buttons">
-                    <div class="golive-button" :style="{ backgroundColor: this.background }" @click="goLive()">
+                    <div class="golive-button" @click="openModal" :style="{ backgroundColor: this.background }" >
                         <div class="golive-rec-symbol"></div>
                             {{ this.btnCaption }}
                         </div>
