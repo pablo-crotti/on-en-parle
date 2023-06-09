@@ -32,6 +32,7 @@ export default {
             currentURL: window.location.href,
             showProgramSelection: false,
             currentProgramId: 0,
+            lastProgramId: 0,
         }
     },
     methods: {
@@ -39,7 +40,7 @@ export default {
             if (this.currentURL.includes('admin/reception')) {
                 this.menuList = [["inbox", "Inbox"], ["archives", "Archives"]];
             } else if (this.currentURL.includes('admin/administration')) {
-                this.menuList = [["manage", "Gestion"], ["control", "Régie"], ["animator", "Animateur"]];
+                this.menuList = [["management", "Gestion"], ["control", "Régie"], ["animator", "Animateur"]];
             } else if (this.currentURL.includes('admin/programs')) {
                 this.menuList = [["newProgramm", "Nouvelle émission"], ["live", "Live"], ["listPrograms", "Émissions"]];
             }
@@ -57,7 +58,7 @@ export default {
             return this.currentURL.includes(url);
         },
         getRoute(routeName){
-            if(routeName === "inbox" || routeName === "archives" || routeName === "control" || routeName === "animator" || routeName === "manage"){
+            if(routeName === "inbox" || routeName === "archives" || routeName === "control" || routeName === "animator" || routeName === "management"){
                 return route(routeName, { id: this.currentProgramId });
             } else {
                 return route(routeName);
@@ -79,7 +80,13 @@ export default {
                 this.showProgramSelection = false;
             }
         });
-        this.currentProgramId = this.currentURL.split('/').pop();
+        if(!isNaN(this.currentURL.split('/').pop())){
+            this.currentProgramId = this.currentURL.split('/').pop();
+            this.lastProgramId = this.currentURL.split('/').pop();
+        } else {
+            this.currentProgramId = this.lastProgramId;
+        }
+        
     },
 }
 
@@ -119,10 +126,10 @@ const logout = () => {
                                 <NavLink :href="getRoute('inbox')" :active="isNavLinkActive('admin/reception')">
                                     Réception
                                 </NavLink>
-                                <NavLink :href="getRoute('manage')" :active="isNavLinkActive('admin/administration')">
+                                <NavLink :href="getRoute('management')" :active="isNavLinkActive('admin/administration')">
                                     Administration
                                 </NavLink>
-                                <NavLink :href="getRoute('newProgramm')" :active="isNavLinkActive('admin/programs')">
+                                <NavLink :href="getRoute('listPrograms')" :active="isNavLinkActive('admin/programs')">
                                     Émissions
                                 </NavLink>
                             </div> 
@@ -334,7 +341,7 @@ const logout = () => {
         height: 100%;
         padding-top: 10px;
     }
-    .program-info > .program-title{
+    .program-info .program-title{
         color: var(--white);
         font-size: 0.8rem;
         font-weight: bold;
@@ -342,7 +349,7 @@ const logout = () => {
         white-space: normal;
     }
 
-    .program-info > .program-interactions > span {
+    .program-info .program-interactions span {
         color: var(--white);
         font-size: 0.8rem;
         font-weight: bold;
