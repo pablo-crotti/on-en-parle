@@ -32,8 +32,8 @@ export default {
             currentURL: window.location.href,
             showProgramSelection: false,
             showProgramSelectionButton: false,
-            currentProgramId: 0,
-            lastProgramId: 0,
+            currentProgramId: 1,
+            lastProgramId: 1,
         }
     },
     methods: {
@@ -43,13 +43,14 @@ export default {
             } else if (this.currentURL.includes('admin/administration')) {
                 this.menuList = [["management", "Gestion"], ["control", "Régie"], ["animator", "Animateur"]];
             } else if (this.currentURL.includes('admin/programs')) {
-                this.menuList = [["newProgramm", "Nouvelle émission"], ["live", "Live"], ["listPrograms", "Émissions"]];
+                this.menuList = [["listPrograms", "Émissions"], ["newProgramm", "Nouvelle émission"], ["live", "Live"]];
             }
         },
         getUpcomingPrograms(){
             axios.get('/prochaines-emissions')
                 .then(response => {
                     this.upcomingPrograms = response.data;
+                    this.lastProgramId = this.upcomingPrograms[0].id;
                 })
                 .catch(error => {
                     console.log(error);
