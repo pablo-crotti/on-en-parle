@@ -46,4 +46,16 @@ class LiveController extends Controller
 
         return response()->json(['success' => false]);
     }
+    
+    public function isLive() {
+        $chatRoom = DB::table('chat_rooms')
+            ->where('on_air', true)
+            ->first();
+
+        if ($chatRoom) {
+            return response()->json(['success' => true, 'chatRoom' => $chatRoom]);
+        }
+
+        return response()->json(['success' => false]);
+    }
 }

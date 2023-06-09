@@ -36,6 +36,14 @@
    padding: 6% 0;
 }
 
-#play-circle {
-  font-size: 50px;
+
+
+.row-program:hover {
+  transform: scale(1.05);
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.program-date {
+  color: var(--black) !important;
 }

@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             ChatMessageSeeder::class,
             VoiceMessageSeeder::class,
             ArchiveSeeder::class,
-
+            UserSeeder::class,
         ]);
        
     }

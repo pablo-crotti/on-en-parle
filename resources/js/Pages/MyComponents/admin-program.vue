@@ -1,5 +1,5 @@
 <template>
-    
+    <a :href="route('program-detail', { id: this.program.id })">
     <div class="program-wrapper">
         <div class="program-header">
             <img class="program-img" :src="program.image"/>
@@ -23,13 +23,14 @@
 
                 <span class="program-date">{{ formattedDate() }}</span>
                 
-                <a :href="route('program-detail', { id: this.program.id })"><span @click="modifyProgram()" id="play-circle" class="material-symbols-outlined">
+                <!-- <a :href="route('program-detail', { id: this.program.id })"><span @click="modifyProgram()" id="play-circle" class="material-symbols-outlined">
                         play_circle
-                 </span></a>
+                 </span></a> -->
                 
             </div>
         </div>
     </div>  
+    </a>
 </template>
 
 <script>
