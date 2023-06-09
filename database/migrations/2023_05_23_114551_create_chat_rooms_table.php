@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('image');
             $table->date('broadcast_date');
-            $table->string('audio_file');
+            $table->string('audio_file')->nullable(true);
             $table->boolean('on_air')->default(false);
             $table->boolean('closed')->default(false);
         });

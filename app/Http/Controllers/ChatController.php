@@ -18,7 +18,7 @@ class ChatController extends Controller
      */
     public function roomsList(Request $request)
     {
-        return ChatRoom::orderBy('broadcast_date', 'ASC')
+        return ChatRoom::orderBy('broadcast_date', 'DESC')
             ->withCount('messages')
             ->get();
     }
