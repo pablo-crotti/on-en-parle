@@ -27,12 +27,9 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Reset Password" />
+    <Head title="Nouveau mot de passe" />
 
     <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
 
         <form @submit.prevent="submit">
             <div>
@@ -50,7 +47,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Mot de passe" />
                 <TextInput
                     id="password"
                     v-model="form.password"
@@ -63,7 +60,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+                <InputLabel for="password_confirmation" value="Confirmer mot de passe" />
                 <TextInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"
@@ -76,8 +73,8 @@ const submit = () => {
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Reset Password
+                <PrimaryButton class="login-button" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    Réinitialiser mot de basse
                 </PrimaryButton>
             </div>
         </form>

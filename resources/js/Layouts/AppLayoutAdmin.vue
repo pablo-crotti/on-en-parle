@@ -67,6 +67,9 @@ export default {
         toggleProgramSelection() {
             this.showProgramSelection = !this.showProgramSelection;
         },
+        logout() {
+            router.post(route('logout'));
+        }
         
     },
     created() {
@@ -101,9 +104,6 @@ const switchToTeam = (team) => {
     });
 };
 
-const logout = () => {
-    router.post(route('logout'));
-};
 </script>
 
 <template>
@@ -131,6 +131,9 @@ const logout = () => {
                                 </NavLink>
                                 <NavLink :href="getRoute('listPrograms')" :active="isNavLinkActive('admin/programs')">
                                     Émissions
+                                </NavLink>
+                                <NavLink :href="getRoute('users')" :active="isNavLinkActive('users')">
+                                    Utilisateurs
                                 </NavLink>
                             </div> 
 

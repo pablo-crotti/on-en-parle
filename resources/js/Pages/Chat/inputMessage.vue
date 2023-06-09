@@ -1,4 +1,5 @@
 <template>
+    <modalValidation :title="modalTitle" :message="modalMessage" :is-open="isModalOpen" @close="closeModal" />
     <div class="input-message-container">
         <input
             id="input-message"
@@ -52,6 +53,7 @@
 
 <script>
 import axios from "axios";
+import modalValidation from "../MyComponents/modalValidation.vue";
 
 export default {
     props: ["room"],
@@ -64,7 +66,14 @@ export default {
             recordingTime: 0,
             timerInterval: null,
             audioDeleted: false,
+            isModalOpen: false,
+            modalTitle: "Merci !",
+            modalMessage:
+                "Votre message nous est parvenu, si il est accepté, il apparaitra dans le chat.",
         };
+    },
+    components: {
+        modalValidation
     },
     methods: {
         handleKeyUp() {
@@ -96,6 +105,7 @@ export default {
                     if (response.status == 201) {
                         this.message = "";
                         this.$emit("messagesent");
+                        this.openModal()
                     }
                 })
                 .catch((error) => {
@@ -199,10 +209,7 @@ export default {
                                 axios
                                     .post("/store-audio/" + this.room, formData)
                                     .then((response) => {
-                                        console.log(
-                                            "Enregistrement envoyé:",
-                                            response.data.path
-                                        );
+                                        this.openModal()
                                     })
                                     .catch((error) => {
                                         console.log(error);
@@ -235,6 +242,12 @@ export default {
             this.mediaRecorder = null;
             this.chunks = [];
             this.recordingTime = 0;
+        },
+        openModal() {
+            this.isModalOpen = true;
+        },
+        closeModal() {
+            this.isModalOpen = false;
         },
     },
 };

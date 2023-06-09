@@ -91,7 +91,6 @@ select:focus {
     padding: 3rem;
 }
 .mobile-menu-container {
-    /* background-color: aqua; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -115,6 +114,12 @@ select:focus {
 }
 .adMenu .link:hover, .adMenu .sel {
     background-color: var(--black);
+    color: var(--white);
+}
+.login-button {
+    background-color: var(--primary-color);
+}
+.light-text {
     color: var(--white);
 }
 @media screen and (max-width: 768px) {

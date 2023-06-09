@@ -21,15 +21,12 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Forgot Password" />
+    <Head title="Mot de passe oublié" />
 
     <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
 
         <div class="mb-4 text-sm text-gray-600">
-            Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
+            Vous avez oublié votre mot de passe ? Pas de problème. Il vous suffit de nous indiquer votre adresse e-mail, et nous vous enverrons un lien de réinitialisation de mot de passe qui vous permettra d'en choisir un nouveau.
         </div>
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
@@ -52,8 +49,8 @@ const submit = () => {
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Email Password Reset Link
+                <PrimaryButton class="login-button" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    Réinitialiser
                 </PrimaryButton>
             </div>
         </form>
