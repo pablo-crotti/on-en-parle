@@ -71,12 +71,11 @@ export default {
 
         <div v-if="room" class="chat-wrapper">
             <div class="chat-transmission">
-                <div class="transmission-card-container">
-                    <div class="on-air card " v-if="room.on_air" >
-                        <transmission-card :room="room"/>
-                    </div>
-                    <div class="card " v-else >
-                        <transmission-card :room="room"/>
+                <div class="program-detail">
+                    <div class="transmission-card-container">
+                        <div class="card" >
+                            <transmission-card :room="room"/>
+                        </div>
                     </div>
                 </div>
             </div>
