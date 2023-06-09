@@ -21,13 +21,10 @@
         required: true
     },
     idroom:{
-        type: Number,
+        type: String,
         required: true
     },
-    callChatroom:{
-        type: Array,
-        required: true
-    },
+
    
   },
 
@@ -37,7 +34,7 @@
       audiofiles: this.audioChatroom,
       filteredMessages: [],
       statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "Prêt à diffuser"],
-      calls: this.callChatroom,
+      sortType: 'creation', // Ajouté
 
     };
   },
@@ -75,6 +72,7 @@ async deleteMessage(message) {
                 });
             },
           sortByCreation() {
+            console.log("Création")
       this.messages.sort((a, b) => {
         return new Date(b.created_at) - new Date(a.created_at); // Trier par date de création en ordre décroissant
       });
@@ -85,24 +83,35 @@ async deleteMessage(message) {
 
     },
     computed: {
+    sortedByCreation() {
+        return [...this.messages].sort((a, b) => {
+            return new Date(b.created_at) - new Date(a.created_at); // Trier par date de création en ordre décroissant
+        });
+    },
+    sortedByLikes() {
+        return [...this.messages].sort((a, b) => b.nb_likes - a.nb_likes); // Trier par nombre de likes en ordre décroissant
+    },
   
-    },
-    created() {
-       console.log(this.messages) 
-    },
+    sortedMessages() {
+        if (this.sortType === 'creation') {
+            return this.sortedByCreation;
+        } else if (this.sortType === 'likes') {
+            return this.sortedByLikes;
+        }
+    }
 
 }
+};
 
 </script>
 
 <template>
   <AppLayout title="On en parle | Réception (Inbox)">
     <div class="containerInbox">
-          <h1>ChatRecu</h1>
           <div style="display:flex; flex-direction: row; color: azure; width:auto;align-items: center;">
           
-            <button @click="sortByCreation" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Créaation</button>
-            <button  @click="sortByLikes" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
+            <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
+            <button @click="sortType = 'likes'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
 
           </div>
         
@@ -111,13 +120,16 @@ async deleteMessage(message) {
         <div class="column" v-for="status in [0, 1]" :key="status">
           <div class="admin-messages-container">
          
-      
+            <div class="admin-messages-title-container">
+              
+              <div class="admin-messages-title">{{ statu[status] }}</div>
+              </div>
             <div class="admin-messages-list "
               :id="`column-${status}`"
                       @drop="drop($event, status)"
                       @dragover.prevent>
                 
-                    <div class="admin-messages-item" v-for="message in messages.filter(m => m.status === status)">
+                      <div class="admin-messages-item" v-for="message in sortedMessages.filter(m => m.status === status)">
                     
                             <chat-message
                           :key="message.id"
@@ -130,10 +142,7 @@ async deleteMessage(message) {
                     </div>
             
                   </div>
-                  <div class="admin-messages-title-container">
-              
-              <div class="admin-messages-title">{{ statu[status] }}</div>
-              </div>
+                
                 
           
             </div>

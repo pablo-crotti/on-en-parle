@@ -15,7 +15,6 @@
 .admin-messages-container {
     width: 100%;
     height: calc(100% - 50px);
-    overflow-y: scroll;
     background-color: var(--black);
     padding: 10px;
 

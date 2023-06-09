@@ -63,6 +63,7 @@
       statu: ["Message Audio", "Message Vocal"],
       chatroomId:null,
       calls: this.callChatroom,
+      sortType: 'creation',
     };
 },
 
@@ -86,7 +87,7 @@
       const message = this.messages.find(m => m.id === messageId);
 
       if (message) {
-        message.status = status;
+      //  message.status = status;
         await axios.post(`/AdminInbox/message/${message.id}/update`, { status });
       }
     },
@@ -119,14 +120,23 @@ async deleteMessage(message) {
 
     },
     computed: {
-        affichedon(){
-        },
         audioMessages() {
         return this.messages.filter(m => m.audio && m.audio.length > 0 && m.status === 3);
     },
     callMessages() {
         return this.messages.filter(m => m.call && m.call.length > 0 && m.status === 3);
     },
+
+    sortedAudioMessages() {
+                let messages = [...this.audioMessages];
+                if (this.sortType === 'creation') {
+                    messages.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                } else if (this.sortType === 'likes') {
+                    messages.sort((a, b) => b.nb_likes - a.nb_likes);
+                }
+                return messages;
+            },
+           
     },
     created() {
         this.messages = this.initialMessages;
@@ -156,11 +166,10 @@ console.log("pas d'id recu")}
 
         <div class="containerManagement">
 
-                <h1>ChatRecu</h1>
                 <div style="display:flex; flex-direction: row; color: azure; width:auto;align-items: center;">
                 
-                    <button @click="sortByCreation" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Créaation</button>
-                <button  @click="sortByLikes" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
+                    <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
+            <button @click="sortType = 'likes'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
 
             </div>
         <div class="columns">
@@ -174,7 +183,7 @@ console.log("pas d'id recu")}
                 :id="`column-${status}`"
                 @drop="drop($event, status)"
                 @dragover.prevent>
-                <div class="admin-messages-item" v-if="status === 0" v-for="message in audioMessages">
+                <div class="admin-messages-item" v-if="status === 0" v-for="message in sortedAudioMessages">
                     <chat-message
                         :key="message.id"
                         :message="message"
@@ -191,7 +200,7 @@ console.log("pas d'id recu")}
                         :message="message"
                         :calls="calls"
                         :audiofiles="audiofiles"
-                        @dragstart="drag($event, message.id)"
+                   
                         @modify="modifier"
                         @delete="deleteMessage"
                     />
@@ -209,8 +218,6 @@ console.log("pas d'id recu")}
         </AppLayout>
 
 </template>
-
-
 
 
 <style>
