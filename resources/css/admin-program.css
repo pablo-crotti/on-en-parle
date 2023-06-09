@@ -43,3 +43,7 @@
   transition: 0.5s;
   cursor: pointer;
 }
+
+.program-date {
+  color: var(--black) !important;
+}
