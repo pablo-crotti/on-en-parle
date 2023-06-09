@@ -26,20 +26,17 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Secure Area" />
+    <Head title="Zone sure" />
 
     <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
 
         <div class="mb-4 text-sm text-gray-600">
-            This is a secure area of the application. Please confirm your password before continuing.
+            Ceci est une zone sécurisée de l'application. Veuillez confirmer votre mot de passe avant de continuer.
         </div>
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Mot de passe" />
                 <TextInput
                     id="password"
                     ref="passwordInput"
@@ -54,8 +51,8 @@ const submit = () => {
             </div>
 
             <div class="flex justify-end mt-4">
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Confirm
+                <PrimaryButton class="login-button ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    Confirmer
                 </PrimaryButton>
             </div>
         </form>
