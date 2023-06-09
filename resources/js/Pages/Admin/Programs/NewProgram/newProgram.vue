@@ -67,8 +67,8 @@ export default {
     created() {
         axios.get('/is-live')
             .then(response => {
-                
-                if (response.data) {    
+
+                if (response.data.success !== false) {    
                     this.isModalOpen = true;
                     this.modalTitle = 'Erreur';
                     this.modalMessage = 'Vous ne pouvez pas créer une émission si une émission est en cours';
