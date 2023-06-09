@@ -1,5 +1,5 @@
 <template>
-    <div class="form-container">
+    <modalValidation :title="modalTitle" :message="modalMessage" :is-open="isModalOpen" @close="closeModal" />    <div class="form-container">
         <form @submit.prevent="submitForm" class="formulaire-emission">
             <div class="conteneurTitre"> <h2 class="form-title">Créer une émission</h2> </div>
 
@@ -44,6 +44,7 @@
 
 <script>
 import axios from "axios";
+import modalValidation from "@/Pages/MyComponents/modalValidation.vue";
 
 export default {
     name: 'NewChatRoomForm',
@@ -54,10 +55,23 @@ export default {
             description: '',
             banner: '',
             audio: '',
-            formErrors: {}
+            formErrors: {},
+            isModalOpen: false,
+            modalTitle: 'Confirmation de la création de l\'émission',
+            modalMessage: 'L\'émission à bien été créée!'
         }
     },
+    components: {
+        modalValidation
+    },
     methods: {
+        openModal() {
+            this.isModalOpen = true;
+        },
+        closeModal() {
+            this.isModalOpen = false;
+            window.location.href = '/admin/programs/list';
+        },
         cancel() {
                 this.title = '';
                 this.date = '';
@@ -99,7 +113,7 @@ export default {
                             this.banner = '';
                             this.audio = '';
                             this.$emit('messagesent')
-                            alert('Emission créée avec succès');
+                            this.openModal()
                         }
                     })
                     .catch(error => {
