@@ -51,4 +51,17 @@ class ProgramController extends Controller
 
         return $broadcasts;
     }
+    //supprimer une émission
+     public function destroy($id)
+        {
+            $room = ChatRoom::find($id);
+
+            if ($room) {
+                $room->delete();
+
+                return response()->json(['message' => 'Utilisateur supprimé avec succès']);
+            }
+
+            return response()->json(['message' => 'Utilisateur non trouvé'], 404);
+        }
 }

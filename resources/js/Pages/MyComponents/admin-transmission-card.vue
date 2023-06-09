@@ -1,16 +1,22 @@
 <script>
 import modifyProgram from "@/Pages/Admin/Programs/Programs/modifyProgram.vue";
 import moment from 'moment';
+import axios from "axios";
+import modalConfirmation from "@/Pages/MyComponents/modalConfirmation.vue";
 
 
 export default {
     components: {
-        modifyProgram
+        modifyProgram,
+        modalConfirmation,
     },
     data: function () {
         return {
             likes: 0,
-            roomIdForEdit: window.location.href.split('/').pop()
+            roomIdForEdit: window.location.href.split('/').pop(),
+            isModalOpen: false,
+            modalTitle: 'Confirmation',
+            modalMessage: 'Êtes-vous sûr de vouloir supprimer cette émission?'
         }
     },
     props: ['room'],
@@ -21,6 +27,12 @@ export default {
             } else {
                 return text.length > 300 ? text.substring(0, 300) + '...' : text
             }
+        },
+        openModal() {
+            this.isModalOpen = true;
+        },
+        closeModal() {
+            this.isModalOpen = false;
         },
         getLikes() {
             axios.get('/chat/room/' + this.room.id + '/likes')
@@ -35,6 +47,13 @@ export default {
             const currentURL = window.location.href;
             const modifiedURL = currentURL.replace(/\/questions\/\d+/, '/admin/programs/modify/' + this.room.id);
             window.location.href = modifiedURL;
+
+        },
+        deleteProgram(){
+            axios.post(`/chat/room/delete/`+ this.roomIdForEdit)
+                .then(response => {
+                    window.location.href = '/admin/programs/list';
+                })
 
         },
         formatDate(date) {
@@ -59,6 +78,7 @@ export default {
 }
 </script>
 <template>
+    <modalConfirmation :title="modalTitle" :message="modalMessage" :is-open="isModalOpen" @close="closeModal" @validate="deleteProgram" />
     <div className="img-container">
         <img :src="room.image" alt="">
         <div className="likes">
@@ -73,5 +93,6 @@ export default {
     </div>
     <div class="btn-modify">
         <a :href="route('modify', {id: this.roomIdForEdit})" style="color: aliceblue;"><span @click="openEditPage">Modifier</span></a>
+        <a style="color: aliceblue;"><span @click="openModal">Supprimer</span></a>
     </div>
 </template>
