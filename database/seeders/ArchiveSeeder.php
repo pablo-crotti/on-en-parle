@@ -24,7 +24,7 @@ class ArchiveSeeder extends Seeder
                 'content' => $faker->text(200),
                 'nb_likes' => $faker->numberBetween(0, 100),
                 'status' =>10,
-                'chat_room_id' => $faker->numberBetween(1, 5),
+                'chat_room_id' => 12,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

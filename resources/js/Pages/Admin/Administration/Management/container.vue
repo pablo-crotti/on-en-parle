@@ -42,7 +42,7 @@
       statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "","Prêt à diffuser"],
     chatroomId:null,
     calls: this.callChatroom,
-
+    sortType: 'creation',
     };
   },
 
@@ -90,9 +90,23 @@
 
     },
     computed: {
-        affichedon(){
-        }
+    sortedByCreation() {
+        return [...this.messages].sort((a, b) => {
+            return new Date(b.created_at) - new Date(a.created_at); // Trier par date de création en ordre décroissant
+        });
     },
+    sortedByLikes() {
+        return [...this.messages].sort((a, b) => b.nb_likes - a.nb_likes); // Trier par nombre de likes en ordre décroissant
+    },
+  
+    sortedMessages() {
+        if (this.sortType === 'creation') {
+            return this.sortedByCreation;
+        } else if (this.sortType === 'likes') {
+            return this.sortedByLikes;
+        }
+    }},
+
     created() {
         this.messages = this.initialMessages;
         let convertedId = null;
@@ -119,11 +133,10 @@ console.log("pas d'id recu")            }
     <AppLayout title="On en parle | Administration (Gestion)">
         <div class="containerManagement">
 
-                <h1>ChatRecu</h1>
                 <div style="display:flex; flex-direction: row; color: azure; width:auto;align-items: center;">
                 
-                    <button @click="sortByCreation" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Créaation</button>
-                <button  @click="sortByLikes" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
+                    <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
+            <button @click="sortType = 'likes'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
 
             </div>
         <div class="columns">
@@ -138,7 +151,7 @@ console.log("pas d'id recu")            }
                         @drop="drop($event, status)"
                         @dragover.prevent>
                     
-                        <div class="admin-messages-item" v-for="message in messages.filter(m => m.status === status)">
+                        <div class="admin-messages-item" v-for="message in sortedMessages.filter(m => m.status === status)">
                             <chat-message
                             :key="message.id"
                             :message="message"
