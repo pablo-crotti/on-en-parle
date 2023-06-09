@@ -84,10 +84,10 @@
             <label for="email">Votre email</label>
             <input type="email" id="email" name="email" placeholder="Votre email" v-model="formData.email">
 
-            <label for="avis">Votre avis *</label>
+            <label for="avis">Votre avis <span class="form-required">*</span></label>
             <textarea id="avis" name="avis" placeholder="Votre avis" style="height:200px" v-model="formData.avis"></textarea>
 
-            <label for="captcha">{{ num1 }} + {{ num2 }} = *</label>
+            <label for="captcha">{{ num1 }} + {{ num2 }} = <span class="form-required">*</span></label>
             <input type="text" id="captcha" name="captcha" placeholder="Captcha" v-model="formData.captcha" required>
 
             <button class="submit-btn" type="submit">Envoyer</button>

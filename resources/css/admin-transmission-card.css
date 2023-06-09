@@ -1,0 +1,131 @@
+
+.program-detail > .transmission-card-container {
+    background-color: var(--light-black);
+    margin-bottom: 40px;
+    /*width: 70%;*/
+    width: 900px;
+    border-radius: 20px;
+
+}
+.transmission-card-container .card {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-start;
+    border-radius: 20px;
+    border: solid 1px var(--white);
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.transmission-card-container:hover {
+    scale: 1.01;
+}
+.transmission-card-container .img-container {
+    width: 200px;
+    height: 250px;
+    /* background-color: red; */
+}
+.transmission-card-container .img-container img {
+    width: 100%;
+    height: 200px;
+    background-color: var(--primary-color);
+    object-fit: cover;
+}
+.transmission-card-container .img-container .likes {
+    width: 100%;
+    height: calc(100% - 200px);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.transmission-card-container .img-container .likes p,
+.transmission-card-container .img-container .likes span {
+    color: var(--light-gray);
+}
+.transmission-card-container .infos {
+    width: calc(100% - 250px);
+    margin-left: 5px;
+}
+.transmission-card-container .infos h1 {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: var(--primary-color);
+}
+.transmission-card-container .infos p {
+    color: var(--light-gray);
+}
+@media screen and (max-width: 768px) {
+    .transmission-card-container {
+        width: 100%;
+    }
+    .transmission-card-container .img-container {
+        border: solid 1px var(--white);
+        width: 80px;
+        height: 100px;
+    }
+    .transmission-card-container .img-container img {
+        height: 70px;
+        width: 70px;
+    }
+    .program-detail .transmission-card-container .img-container .likes {
+        height: calc(100% - 70px);
+    }
+    .transmission-card-container .infos {
+        width: calc(100% - 80px);
+        margin-left: 20px;
+    }
+    .transmission-card-container .infos h1 {
+        font-size: 1.1em;
+    }
+}
+/*bouton modfier*/
+.program-detail .transmission-card-container .card .btn-modify  a  span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    text-decoration: none;
+    color: #000000;
+    font-size: 15px;
+    border-radius: 5px;
+    width: 200px;
+    height: 40px;
+    font-weight: bold;
+    border-bottom: 4px solid var(--primary-color);
+    transition: 0.3s;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+    background-color: #e1e1e1;
+}
+/*bouton modfier: hover*/
+.program-detail .transmission-card-container .card .btn-modify  a  span:hover{
+    box-shadow: 0 0 rgba(0, 0, 0, 0.4);
+    border-bottom-width: 2px;
+    transform: translateY(2px);
+}
+/*Date de diffusion */
+.program-detail .transmission-card-container .infos .dateDiffusion {
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+
+}
+/*Enlever la bordure autour du bouton modifier*/
+.program-detail .transmission-card-container a{
+    border: none;
+}
+.program-detail .transmission-card-container .card .btn-modify{
+    display: flex;
+}
+/*Rajouter une bordure et adoucir les bords de l'image*/
+.program-detail .transmission-card-container .img-container img {
+    border: solid 2px var(--white);
+    border-radius: 20px
+
+}
+
