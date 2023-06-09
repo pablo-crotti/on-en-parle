@@ -36,8 +36,6 @@
    padding: 6% 0;
 }
 
-
-
 .row-program:hover {
   transform: scale(1.05);
   transition: 0.5s;
@@ -46,4 +44,10 @@
 
 .program-date {
   color: var(--black) !important;
+}
+
+.programs-wrapper {
+  overflow-y: scroll;
+  height: 64vh;
+  padding-top: 10px;
 }
