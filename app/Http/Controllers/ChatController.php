@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ChatMessage;
 use App\Models\ChatRoom;
-use Illuminate\Support\Facades\Auth;
 use App\Events\NewChatMessage;
 use App\Models\Message;
 
 class ChatController extends Controller
 {
     /**
-     * Retrieve all chat rooms.
+     * Retrieve the list of all chat rooms.
      *
      * @param Request $request The incoming request.
      * @return Illuminate\Database\Eloquent\Collection
@@ -24,6 +23,12 @@ class ChatController extends Controller
             ->get();
     }
 
+    /**
+     * Retrieve the list of all chat rooms.
+     *
+     * @param Request $request The incoming request.
+     * @return Illuminate\Database\Eloquent\Collection
+     */
     public function rooms(Request $request)
     {
         return ChatRoom::orderBy('on_air', 'DESC')
@@ -32,6 +37,13 @@ class ChatController extends Controller
             ->get();
     }
 
+    /**
+     * Retrieve a specific chat room.
+     *
+     * @param Request $request The incoming request.
+     * @param int $roomId The ID of the chat room.
+     * @return ChatRoom
+     */
     public function room(Request $request, $roomId)
     {
         return ChatRoom::where('id', $roomId)->first();
@@ -54,12 +66,13 @@ class ChatController extends Controller
 
         return $messages;
     }
+
     /**
      * Create a new chat message for a specific room.
      *
      * @param Request $request The incoming request.
      * @param int $roomId The ID of the chat room.
-     * @return App\Models\ChatMessage
+     * @return Message
      */
     public function newMessage(Request $request, $roomId)
     {
@@ -74,7 +87,6 @@ class ChatController extends Controller
         $newMessage->chat_message_id = $newChatMessage->id;
         $newMessage->save();
 
-        return $newMessage; 
-       
+        return $newMessage;
     }
 }

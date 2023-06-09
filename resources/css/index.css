@@ -13,4 +13,5 @@
 @import './admin-chat.css';
 @import './users.css';
 @import './contact-form.css';
-@import './admin-transmission-card.css';
+@import './modal-validation.css';
+@import './modal-confirmation.css';

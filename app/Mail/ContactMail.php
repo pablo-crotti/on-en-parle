@@ -17,7 +17,7 @@ class ContactMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($data)
     {
         $this->data = $data;    
     }
@@ -29,8 +29,8 @@ class ContactMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Contact Mail')
-                    ->view('emails.contact') // Vue du courrier électronique pour le contenu
+        return $this->subject('Formulaire de contact')
+                    ->view('emails.contact-mail') // Vue du courrier électronique pour le contenu
                     ->with('data', $this->data); // Passer les données du formulaire à la vue du courrier électronique
     }
 

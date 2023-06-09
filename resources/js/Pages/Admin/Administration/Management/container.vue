@@ -1,30 +1,16 @@
-<!-- methods: {
-    getMessages() {
-        axios.get(`/emission/${this.no}/status/${this.id}`)
-            .then(response => {
-                this.messages = response.data;
-                console.log(this.messages);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    },
-},
-created() {
-    this.getMessages();
-} -->
-
 <script>
     import axios from 'axios';
     import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
     import CallForm from '@/Pages/MyComponents/CallForm.vue';
+    import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
   //  import ChatContainer from '@/Pages/MyComponents/admin-message.vue';
 
 
     export default {
         components: {
             CallForm,
-             ChatMessage,
+            ChatMessage,
+            AppLayout,
           //  ChatContainer
         },
     
@@ -37,6 +23,14 @@ created() {
         type: Array,
         required: true
     },
+    idroom:{
+        type: String,
+        required: true
+    },
+    callChatroom:{
+        type: Array,
+        required: true
+    },
    
   },
 
@@ -45,36 +39,15 @@ created() {
       messages: [],
       audiofiles: this.audioChatroom,
       filteredMessages: [],
-      statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "Prêt à diffuser"],
-    exemplemsg:[{
-            id: 1,
-            content: "Salut",
-            created_at: "2023-05-31T11:13:07.000000Z",
-            nb_likes: 0,
-            status: 1,
-            updated_at: "2023-06-05T07:28:33.000000Z"}
-            ,{
-                id: 2,
-                content: "Salut",
-                created_at: "2023-05-31T11:13:07.000000Z",
-                nb_likes: 54,
-                status: 0,
-                updated_at: "2023-06-05T07:28:33.000000Z"}]
+      statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "","Prêt à diffuser"],
+    chatroomId:null,
+    calls: this.callChatroom,
+
     };
   },
 
   methods: {
-    getMessages() {
-        axios.get(`/emission/1/status/5`)
-            .then(response => {
-                this.messages = response.data;
-                console.log(this.messages);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    },
-    
+   
     drag(event, messageId) {
     event.dataTransfer.setData('text', messageId);
   },
@@ -91,7 +64,7 @@ created() {
     async modifier(message){
     await axios.post(`/AdminInbox/message/${message.id}/content`, { content: message.content });
 },
-async deleteMessage(message) {
+    async deleteMessage(message) {
         try {
             const response = await axios.post(`/AdminInbox/message/${message.id}/delete`);
             // remove the message from local messages
@@ -104,58 +77,91 @@ async deleteMessage(message) {
                 this.filteredMessages = this.messages.filter(message => {
                     return !this.audiofiles.some(audiofile => audiofile.id === message.id);
                 });
-            }
-
+            },
+            sortByCreation() {
+            this.messages.sort((a, b) => {
+            return new Date(b.created_at) - new Date(a.created_at); // Trier par date de création en ordre décroissant
+                });
+            },
+            sortByLikes() {
+                this.messages.sort((a, b) => b.nb_likes - a.nb_likes); // Trier par nombre de likes en ordre décroissant
+            },
+            
 
     },
     computed: {
-  
+        affichedon(){
+        }
     },
     created() {
         this.messages = this.initialMessages;
-    // this.getMessages();
-} 
+        let convertedId = null;
+
+            if (typeof this.idroom === 'string') {
+            const trimmedId = this.idroom.trim();
+            if (trimmedId !== '') {
+                convertedId = parseInt(trimmedId);
+            }
+            }
+
+            // Utilisez la variable convertie dans votre code plutôt que this.idroom
+            if (convertedId !== null) {
+            this.chatroomId = convertedId;
+            } else {
+console.log("pas d'id recu")            }
+},
+  
 }
 
 </script>
 
 <template>
-  <div class="containerManagement">
+    <AppLayout title="On en parle | Administration (Gestion)">
+        <div class="containerManagement">
 
-        <h1>ChatRecu</h1>
+                <h1>ChatRecu</h1>
+                <div style="display:flex; flex-direction: row; color: azure; width:auto;align-items: center;">
+                
+                    <button @click="sortByCreation" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Créaation</button>
+                <button  @click="sortByLikes" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
 
-  <div class="columns">
-
-      <div class="column" v-for="status in [0,1,2,3,5]" :key="status">
-          <div class="admin-messages-container-" >
-              <div class="admin-messages-title-container">
-                  <div class="admin-messages-title">{{ statu[status] }}</div>
-              </div>
-          <div class="admin-messages-list"
-           :id="`column-${status}`"
-                  @drop="drop($event, status)"
-                  @dragover.prevent>
-            
-                <div class="admin-messages-item" v-for="message in messages.filter(m => m.status === status)">
-                    <chat-message
-                      :key="message.id"
-                      :message="message"
-                      :audiofiles="audiofiles"
-                      @dragstart="drag($event, message.id)"
-                      @modify="modifier"
-                      @delete="deleteMessage"
-                    /> 
-                </div>
-        
             </div>
-          </div>
-         </div>
-    </div>
+        <div class="columns">
 
-  </div> 
-              <div id="creernouveaumsg">
-                <call-form></call-form>
-              </div>
+            <div class="column" v-for="status in [0,1,2,3,5]" :key="status">
+                <div class="admin-messages-container-" >
+                    <div class="admin-messages-title-container">
+                        <div class="admin-messages-title">{{ statu[status] }}</div>
+                    </div>
+                <div class="admin-messages-list"
+                :id="`column-${status}`"
+                        @drop="drop($event, status)"
+                        @dragover.prevent>
+                    
+                        <div class="admin-messages-item" v-for="message in messages.filter(m => m.status === status)">
+                            <chat-message
+                            :key="message.id"
+                            :message="message"
+                            :calls="calls"
+                            
+                            :audiofiles="audiofiles"
+                            @dragstart="drag($event, message.id)"
+                            @modify="modifier"
+                            @delete="deleteMessage"
+                            /> 
+                        </div>
+                
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        </div> 
+                <div id="creernouveaumsg">
+                    <call-form
+                    :room="chatroomId"></call-form>
+                </div>
+    </AppLayout>
 </template>
 
 
