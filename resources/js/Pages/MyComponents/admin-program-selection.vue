@@ -40,7 +40,7 @@
     <div class="program-item" @click="setCurrentProgram(program.id)">
         <div class="program-header">
             <img class="program-cover" :src="program.image"/>
-            <div class="program-date">
+            <div class="program-date-text">
                 {{ this.formatDate(program.broadcast_date)[0] }}
                 <br>
                 {{ this.formatDate(program.broadcast_date)[1] }}
