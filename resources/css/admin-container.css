@@ -18,8 +18,7 @@
     overflow-y: scroll;
     background-color: var(--black);
     padding: 10px;
-    display: block;
-     flex-direction: column; 
+
     justify-content: flex-start;
     gap: 20px;
 }

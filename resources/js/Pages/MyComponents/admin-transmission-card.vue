@@ -72,6 +72,6 @@ export default {
         <p class="dateDiffusion">{{ this.formatDate(this.room.broadcast_date) }}</p>
     </div>
     <div class="btn-modify">
-        <a :href="route('modify', {id: this.roomIdForEdit})"><span class="material-symbols-outlined" @click="openEditPage">Modifier</span></a>
+        <a :href="route('modify', {id: this.roomIdForEdit})" style="color: aliceblue;"><span @click="openEditPage">Modifier</span></a>
     </div>
 </template>

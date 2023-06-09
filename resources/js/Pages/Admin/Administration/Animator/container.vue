@@ -163,17 +163,17 @@ console.log("pas d'id recu")            }
                     <button @click="sortByCreation" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Créaation</button>
                 <button  @click="sortByLikes" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
 
-            </div>
-                        <div class="columns">
-                    <div class="column" v-for="status in [0,1,2,3]" :key="status">
-                        <div class="admin-messages-container-">
-                            <div class="admin-messages-title-container">
-                                <div class="admin-messages-title">{{ ['Message Vocal', 'Message Audio', 'Message Text', 'Diffuser'][status] }}</div>
-                            </div>
-                            <div class="admin-messages-list"
-                                :id="`column-${status}`"
-                                @drop="drop($event, status)"
-                                @dragover.prevent>
+       </div>
+                <div class="columns">
+            <div class="column" v-for="status in [0,1,2,3]" :key="status">
+                <div class="admin-messages-container-">
+                    <div class="admin-messages-title-container">
+                        <div class="admin-messages-title">{{ ['Message Vocal', 'Appels en attente', 'Message Text', 'Diffuser'][status] }}</div>
+                    </div>
+                    <div class="admin-messages-list"
+                        :id="`column-${status}`"
+                        @drop="drop($event, status)"
+                        @dragover.prevent>
 
                                 <div class="admin-messages-item" v-for="message in [audioMessages, callMessages, textMessages, statusTenMessages][status]">
                                     <chat-message

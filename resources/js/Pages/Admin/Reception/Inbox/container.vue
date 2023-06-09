@@ -110,16 +110,12 @@ async deleteMessage(message) {
 
         <div class="column" v-for="status in [0, 1]" :key="status">
           <div class="admin-messages-container">
-            <div class="admin-messages-title-container">
-              
-              <div class="admin-messages-title">{{ statu[status] }}</div>
-              </div>
+         
       
             <div class="admin-messages-list "
               :id="`column-${status}`"
                       @drop="drop($event, status)"
-                      @dragover.prevent
-              >
+                      @dragover.prevent>
                 
                     <div class="admin-messages-item" v-for="message in messages.filter(m => m.status === status)">
                     
@@ -134,7 +130,10 @@ async deleteMessage(message) {
                     </div>
             
                   </div>
-        
+                  <div class="admin-messages-title-container">
+              
+              <div class="admin-messages-title">{{ statu[status] }}</div>
+              </div>
                 
           
             </div>
