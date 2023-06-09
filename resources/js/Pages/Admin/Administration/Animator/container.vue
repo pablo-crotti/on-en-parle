@@ -45,7 +45,6 @@
         required: true
     },
     idroom:{
-        type: String,
         required: true
     },
     callChatroom:{
@@ -157,7 +156,6 @@ console.log("pas d'id recu")            }
 
         <div class="containerManagement">
 
-                <h1>ChatRecu</h1>
                 <div style="display:flex; flex-direction: row; color: azure; width:auto;align-items: center;">
                 
                     <button @click="sortByCreation" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Créaation</button>

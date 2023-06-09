@@ -54,11 +54,13 @@
       <span   class="material-symbols-outlined">Favorite</span> <p>{{ message.nb_likes}}</p>
     </div>
       <span class="material-symbols-outlined" @click="editing = !editing">edit</span>
-          <span class="material-symbols-outlined" @click="$emit('delete', message)">delete</span>
+          <span class="material-symbols-outlined" @click="$emit('delete', message)">archive</span>
         </div>
   
     <div v-else-if="message.status === 10">
           <span class="material-symbols-outlined" @click="$emit('archive', message)">archive</span>
+          <span class="material-symbols-outlined" @click="$emit('delete', message)">delete</span>
+
      </div>
   
   </div>

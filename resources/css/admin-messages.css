@@ -49,8 +49,8 @@ audio {
     width: 100%;
     height: fit-content;
     display: flex;
-    justify-content: space-between;
-    padding-bottom: 20px;
+    justify-content: center;
+    padding: 10px 0px 10px 10px;
 }
 .message-text {
     word-wrap: break-word;
