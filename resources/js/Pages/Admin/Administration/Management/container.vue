@@ -75,6 +75,15 @@
             console.error(error);
         }
     },
+    async deleted(message) {
+        try {
+            await axios.post(`/AdminInbox/message/${message.id}/update`, { status: 10 });
+            // remove the message from local messages
+            this.messages = this.messages.filter(m => m.id !== message.id);
+        } catch (error) {
+            console.error(error);
+        }
+    },
     filterMessages() {  // Nouvelle fonction pour filtrer les messages
                 this.filteredMessages = this.messages.filter(message => {
                     return !this.audiofiles.some(audiofile => audiofile.id === message.id);
@@ -162,7 +171,7 @@ console.log("pas d'id recu")            }
                             :audiofiles="audiofiles"
                             @dragstart="drag($event, message.id)"
                             @modify="modifier"
-                            @delete="deleteMessage"
+                            @delete="deleted"
                             /> 
                         </div>
                 
