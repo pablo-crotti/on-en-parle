@@ -36,33 +36,37 @@ export default {
         unsetItem,
         formatRelativeTime,
         like() {
-            if (this.isLiked()) {
-                axios
-                    .post("/chat/unlike/" + this.message.id, {})
-                    .then((response) => {
-                        if (response.status == 200) {
-                            unsetItem(this.message.id);
-                            document
-                                .getElementById("like-" + this.message.id)
-                                .classList.remove("liked");
-                        }
-                    });
+            if (window.location.href.includes("/admin/programs/program/")) {
                 return;
             } else {
-                axios
-                    .post("/chat/like/" + this.message.id, {})
-                    .then((response) => {
-                        if (response.status == 200) {
-                            setItem(this.message.id);
-                            document
-                                .getElementById("like-" + this.message.id)
-                                .classList.add("liked");
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            }
+                if (this.isLiked()) {
+                    axios
+                        .post("/chat/unlike/" + this.message.id, {})
+                        .then((response) => {
+                            if (response.status == 200) {
+                                unsetItem(this.message.id);
+                                document
+                                    .getElementById("like-" + this.message.id)
+                                    .classList.remove("liked");
+                            }
+                        });
+                    return;
+                } else {
+                    axios
+                        .post("/chat/like/" + this.message.id, {})
+                        .then((response) => {
+                            if (response.status == 200) {
+                                setItem(this.message.id);
+                                document
+                                    .getElementById("like-" + this.message.id)
+                                    .classList.add("liked");
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                }
+            }   
         },
         isLiked() {
             if (getItem(this.message.id)) {
