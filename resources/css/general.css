@@ -99,7 +99,7 @@ select:focus {
     width: calc(100vw - 2rem);
 }
 .adMenu {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
 }

@@ -11,6 +11,13 @@ use App\Events\NewChatMessage;
 
 class AudioController extends Controller
 {
+    /**
+     * Store the audio file and create related chat and voice messages.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $roomId
+     * @return \App\Models\VoiceMessage|\Illuminate\Http\JsonResponse
+     */
     public function store(Request $request, $roomId)
     {
         if ($request->hasFile('audio')) {
@@ -35,8 +42,18 @@ class AudioController extends Controller
             return response()->json(['path' => $path]);
         }
 
-
-
         return response()->json(['error' => 'No audio file received'], 400);
+    }
+
+    /**
+     * Get the audio file name for a given chat message ID.
+     *
+     * @param  int  $id
+     * @return string
+     */
+    public function getFileName($id)
+    {
+        $voiceMessage = VoiceMessage::where('chat_message_id', $id)->first();
+        return $voiceMessage->audio_file;
     }
 }

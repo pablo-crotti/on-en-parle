@@ -4,6 +4,7 @@ import MessageContainer from "@/Pages/Chat/MessageContainer.vue";
 import InputMessage from "@/Pages/Chat/InputMessage.vue";
 import ChatRoomSelection from "@/Pages/Chat/ChatRoomSelection.vue";
 import TransmissionCard from "@/Pages/MyComponents/transmission-card.vue";
+import Player from "@/Pages/Chat/Player.vue";
 import axios from "axios";
 
 export default {
@@ -13,20 +14,19 @@ export default {
         InputMessage,
         ChatRoomSelection,
         TransmissionCard,
+        Player
     },
     data: function () {
         return {
             messages: [],
-            // roomIdLink: window.location.href.split('/').pop(),
             room: null,
-            // roomIdLink: '',
+            playerStatus: false,
         };
     },
     methods: {
         getRoom() {
             axios.get("/index/room").then((response) => {
                 this.room = response.data;
-                // this.roomIdLink = response.data.id
             });
         },
         getMessages() {

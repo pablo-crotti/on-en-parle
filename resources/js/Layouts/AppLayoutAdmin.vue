@@ -44,7 +44,7 @@ export default {
             } else if (this.currentURL.includes('admin/administration')) {
                 this.menuList = [["management", "Gestion"], ["control", "Régie"], ["animator", "Animateur"]];
             } else if (this.currentURL.includes('admin/programs')) {
-                this.menuList = [["listPrograms", "Émissions"], ["newProgramm", "Nouvelle émission"], ["live", "Live"]];
+                this.menuList = [["listPrograms", "Émissions"], ["newProgramm", "Ajouter une émission"], ["live", "Live"]];
             }
         },
         getUpcomingPrograms(){
@@ -128,14 +128,14 @@ const switchToTeam = (team) => {
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <div class="hidden adMenu space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink :href="getRoute('listPrograms')" :active="isNavLinkActive('admin/programs')">
+                                    Émissions
+                                </NavLink>
                                 <NavLink :href="getRoute('inbox')" :active="isNavLinkActive('admin/reception')">
                                     Réception
                                 </NavLink>
                                 <NavLink :href="getRoute('management')" :active="isNavLinkActive('admin/administration')">
                                     Administration
-                                </NavLink>
-                                <NavLink :href="getRoute('listPrograms')" :active="isNavLinkActive('admin/programs')">
-                                    Émissions
                                 </NavLink>
                                 <NavLink :href="getRoute('users')" :active="isNavLinkActive('users')">
                                     Utilisateurs

@@ -6,7 +6,7 @@
     margin-top: 5%;
 }
 
-.form-title {
+.contactform-container .form-title {
     padding-bottom: 5%;
 }
 
@@ -39,7 +39,6 @@
     border-radius: 9px;
     border: none;
     padding: 5px;
-    margin-bottom: 5%;  
     height: 34px;
 }
 

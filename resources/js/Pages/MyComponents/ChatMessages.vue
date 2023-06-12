@@ -34,7 +34,7 @@
   
        {{ audiofiles[0].audio_files[0] }}
        <audio controls @loadedmetadata="audioLoaded">
-              <!-- <source :src="message.audio[0].audio_file" type="audio/mpeg"> -->
+              <source :src="getAudioPath(message.audio[0].audio_file)" type="audio/mpeg">
                  Your browser does not support the audio element.
         </audio>
       </p>
@@ -59,7 +59,6 @@
   
     <div v-else-if="message.status === 10">
           <span class="material-symbols-outlined" @click="$emit('archive', message)">archive</span>
-          <span class="material-symbols-outlined" @click="$emit('delete', message)">delete</span>
 
      </div>
   
@@ -128,7 +127,10 @@
               headerColor = '#FC9E5A';
               headerSymbol = 'call';
           }
-      }
+      },
+      getAudioPath(audioFile) {
+        return `${window.location.origin}/storage/rec/${audioFile}`
+      },
     },
     
   
