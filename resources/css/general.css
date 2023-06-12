@@ -4,17 +4,17 @@
 html, body {
     background-color: var(--black);
 }
-[type="text"]:focus, 
-[type="email"]:focus, 
-[type="url"]:focus, 
-[type="password"]:focus, 
-[type="number"]:focus, 
-[type="date"]:focus, 
-[type="datetime-local"]:focus, 
-[type="month"]:focus, [type="search"]:focus, 
-[type="tel"]:focus, [type="time"]:focus, 
-[type="week"]:focus, [multiple]:focus, 
-textarea:focus, 
+[type="text"]:focus,
+[type="email"]:focus,
+[type="url"]:focus,
+[type="password"]:focus,
+[type="number"]:focus,
+[type="date"]:focus,
+[type="datetime-local"]:focus,
+[type="month"]:focus, [type="search"]:focus,
+[type="tel"]:focus, [type="time"]:focus,
+[type="week"]:focus, [multiple]:focus,
+textarea:focus,
 select:focus {
     --tw-ring-color: var(--transparent);
 }
@@ -85,7 +85,7 @@ select:focus {
     stroke: var(--primary-color);
 }
 
-.chat-wrapper, 
+.chat-wrapper,
 .transmissions-wrapper {
     width: 100%;;
     background-color: var(--black);
@@ -125,7 +125,7 @@ select:focus {
 }
 @media screen and (max-width: 768px) {
     /* ################################################# ===== CONTAINER */
-    .chat-wrapper, 
+    .chat-wrapper,
     .transmissions-wrapper {
         padding: 1rem;
     }
@@ -185,7 +185,7 @@ select:focus {
 
 .program-info .program-title {
     color: var(--white);
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: bold;
     padding: 0px;
     white-space: normal;
@@ -197,3 +197,5 @@ select:focus {
     font-weight: bold;
     padding-right: 10px;
 }
+
+

@@ -19,9 +19,7 @@
     align-items: center;
 }
 
-.program-detail .transmission-card-container:hover {
-    scale: 1.01;
-}
+
 .program-detail .transmission-card-container .img-container {
     width: 200px;
     height: 250px;

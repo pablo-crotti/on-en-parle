@@ -25,9 +25,7 @@
 .transmission-card-container .on-air {
     border-color: var(--primary-color);
 }
-.transmission-card-container:hover {
-    scale: 1.01;
-}
+
 .transmission-card-container .img-container {
     width: 200px;
     height: 250px;

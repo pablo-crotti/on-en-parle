@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ChatMessage;
 
-
 class MessageAdminController extends Controller
 {
-        /**
+    /**
      * Retrieve all chat messages for a specific room.
      *
      * @param Request $request The incoming request.

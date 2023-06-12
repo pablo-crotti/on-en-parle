@@ -58,7 +58,7 @@ export default {
             formErrors: {},
             isModalOpen: false,
             modalTitle: 'Confirmation de la création de l\'émission',
-            modalMessage: 'L\'émission à bien été créée!'
+            modalMessage: 'L\'émission a bien été créée!'
         }
     },
     components: {
@@ -93,6 +93,7 @@ export default {
                 this.description = '';
                 this.banner = '';
                 this.audio = '';
+                window.location.href = '/admin/programs/list';
             },
         submitForm() {
             this.formErrors = {};
