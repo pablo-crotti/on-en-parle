@@ -9,12 +9,24 @@ use Carbon\Carbon;
 
 class ProgramController extends Controller
 {
-       public function room(Request $request, $roomId)
-        {
-            return ChatRoom::where('id', $roomId)->first();
-        }
+    /**
+     * Retrieve a specific chat room.
+     *
+     * @param Request $request The incoming request.
+     * @param int $roomId The ID of the chat room.
+     * @return ChatRoom|null
+     */
+    public function room(Request $request, $roomId)
+    {
+        return ChatRoom::where('id', $roomId)->first();
+    }
 
-    //nouvelle émission dans la liste
+    /**
+     * Create a new chat room.
+     *
+     * @param Request $request The incoming request.
+     * @return Illuminate\Http\JsonResponse
+     */
     public function newRoom(Request $request)
     {
         $newChatRoom = new ChatRoom();
@@ -28,19 +40,31 @@ class ProgramController extends Controller
         return response()->json($newChatRoom, 201);
     }
 
-    //update une émission
-    public function updateRoom(Request $request, $roomId,)
+    /**
+     * Update a chat room.
+     *
+     * @param Request $request The incoming request.
+     * @param int $roomId The ID of the chat room.
+     * @return void
+     */
+    public function updateRoom(Request $request, $roomId)
     {
         DB::table('chat_rooms')
-                        ->where('id', $roomId)
-                        ->update(['title' => $request->input('title'),
-                                  'description' => $request->input('description'),
-                                  'image' => $request->input('banner'),
-                                  'broadcast_date' => $request->input('date'),
-                                  'audio_file' => $request->input('audio')
-                                ]);
+            ->where('id', $roomId)
+            ->update([
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+                'image' => $request->input('banner'),
+                'broadcast_date' => $request->input('date'),
+                'audio_file' => $request->input('audio')
+            ]);
     }
 
+    /**
+     * Get the upcoming broadcast chat rooms.
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
     public function getUpcomingBroadcasts()
     {
         $currentDate = Carbon::now();
@@ -51,17 +75,23 @@ class ProgramController extends Controller
 
         return $broadcasts;
     }
-    //supprimer une émission
-     public function destroy($id)
-        {
-            $room = ChatRoom::find($id);
 
-            if ($room) {
-                $room->delete();
+    /**
+     * Delete a chat room.
+     *
+     * @param int $id The ID of the chat room.
+     * @return Illuminate\Http\JsonResponse
+     */
+    public function destroy($id)
+    {
+        $room = ChatRoom::find($id);
 
-                return response()->json(['message' => 'Utilisateur supprimé avec succès']);
-            }
+        if ($room) {
+            $room->delete();
 
-            return response()->json(['message' => 'Utilisateur non trouvé'], 404);
+            return response()->json(['message' => 'Chat room deleted successfully']);
         }
+
+        return response()->json(['message' => 'Chat room not found'], 404);
+    }
 }

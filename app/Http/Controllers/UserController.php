@@ -8,9 +8,14 @@ use Illuminate\Support\Facades\Hash;
 use App\Mail\LoginCredentialsEmail;
 use Illuminate\Support\Facades\Mail;
 
-
 class UserController extends Controller
 {
+    /**
+     * Generate a random password.
+     *
+     * @param int $length The length of the password. Default is 8.
+     * @return string The generated random password.
+     */
     private function generateRandomPassword($length = 8)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ%&@!#*';
@@ -21,10 +26,23 @@ class UserController extends Controller
         return $password;
     }
 
-    public function getUsers() {
+    /**
+     * Get all users.
+     *
+     * @return Illuminate\Http\JsonResponse
+     */
+    public function getUsers()
+    {
         $users = User::orderBy('name', 'asc')->get();
         return response()->json($users);
     }
+
+    /**
+     * Delete a user.
+     *
+     * @param int $id The ID of the user.
+     * @return Illuminate\Http\JsonResponse
+     */
     public function destroy($id)
     {
         $user = User::find($id);
@@ -38,7 +56,14 @@ class UserController extends Controller
         return response()->json(['message' => 'Utilisateur non trouvé'], 404);
     }
 
-    public function create(Request $request) {
+    /**
+     * Create a new user.
+     *
+     * @param Request $request The incoming request.
+     * @return Illuminate\Http\JsonResponse
+     */
+    public function create(Request $request)
+    {
         $request->validate([
             'name' => 'required|unique:users',
             'email' => 'required|email|unique:users',
@@ -53,6 +78,5 @@ class UserController extends Controller
 
         Mail::to($user->email)->send(new LoginCredentialsEmail($user, $password));
         return response()->json(['message' => 'Utilisateur créé avec succès']);
-
     }
 }

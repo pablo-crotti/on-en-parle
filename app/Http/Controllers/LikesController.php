@@ -9,7 +9,14 @@ use App\Events\NewLikeForRooms;
 
 class LikesController extends Controller
 {
-    public function like($messageId) {
+    /**
+     * Increase the number of likes for a chat message.
+     *
+     * @param int $messageId The ID of the chat message.
+     * @return ChatMessage
+     */
+    public function like($messageId)
+    {
         $message = ChatMessage::find($messageId);
         $message->nb_likes++;
         $message->save();
@@ -17,11 +24,17 @@ class LikesController extends Controller
         event(new NewLike($message->chat_room_id));
         event(new NewLikeForRooms());
 
-
         return $message;
     }
 
-    public function unLike($messageId) {
+    /**
+     * Decrease the number of likes for a chat message.
+     *
+     * @param int $messageId The ID of the chat message.
+     * @return ChatMessage
+     */
+    public function unLike($messageId)
+    {
         $message = ChatMessage::find($messageId);
         $message->nb_likes--;
         $message->save();
@@ -32,9 +45,16 @@ class LikesController extends Controller
         return $message;
     }
 
-    public function sumChatLikes($chatId) {
+    /**
+     * Get the total number of likes for a chat room.
+     *
+     * @param int $chatId The ID of the chat room.
+     * @return int
+     */
+    public function sumChatLikes($chatId)
+    {
         $sum = ChatMessage::where('chat_room_id', $chatId)->sum('nb_likes');
-        
+
         return $sum;
     }
 }
