@@ -68,7 +68,10 @@ Route::get('/transmissions/dates', [CalendarController::class, 'getBroadcasteDat
 
 Route::get('/calendar/{year}/{month}/{day}', [CalendarController::class, 'hasTransmission']);
 
+Route::get('/audio/name/{id}', [AudioController::class, 'getFileName']);
+
 Route::get('/audio/{filename}', function ($filename) {
+
     $path = storage_path('app/public/rec/' . $filename);
 
     if (!File::exists($path)) {
@@ -112,6 +115,10 @@ Route::middleware([
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/admin/programs/list', function () {
     return  Inertia::render('Admin/Programs/Programs/container');
 })->name('listPrograms');
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/admin', function() {
+    return redirect()->route('listPrograms');
+});
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/admin/programs/live', function () {
     return  Inertia::render('Admin/Programs/Live/container');
