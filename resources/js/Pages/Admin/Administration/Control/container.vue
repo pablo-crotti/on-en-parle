@@ -60,10 +60,11 @@
       messages: [],
       audiofiles: this.audioChatroom,
       filteredMessages: [],
-      statu: ["Message Audio", "Message Vocal"],
+      statu: ["Message Audio", "A diffusé"],
       chatroomId:null,
       calls: this.callChatroom,
       sortType: 'creation',
+      couleurtitre: ["#FF0000", "red", "#FFFF00", "#008000", "#0000FF"],
     };
 },
 
@@ -83,14 +84,20 @@
   },
 
   async drop(event, status) {
-    const messageId = parseInt(event.dataTransfer.getData('text'));
-      const message = this.messages.find(m => m.id === messageId);
+  const messageId = parseInt(event.dataTransfer.getData('text'));
+  const message = this.messages.find(m => m.id === messageId);
 
-      if (message) {
-      //  message.status = status;
-        await axios.post(`/AdminInbox/message/${message.id}/update`, { status });
-      }
-    },
+  if (message) {
+    // Vérifier si le message est un audio et est déplacé de la première colonne à la seconde
+    if (message.audio && message.status === 5 && status === 0) {
+      // Modifier le status à 5
+      message.status = 3;
+    } else {
+      message.status = status;
+    }
+    await axios.post(`/AdminInbox/message/${message.id}/update`, { status: message.status });
+  }
+},
     async modifier(message){
     await axios.post(`/AdminInbox/message/${message.id}/content`, { content: message.content });
 },
@@ -122,6 +129,10 @@ async deleteMessage(message) {
     computed: {
         audioMessages() {
         return this.messages.filter(m => m.audio && m.audio.length > 0 && m.status === 3);
+        
+    },
+    statusFiveMessages() {
+        return this.messages.filter(m => m.status === 5);
     },
     callMessages() {
         return this.messages.filter(m => m.call && m.call.length > 0 && m.status === 3);
@@ -174,10 +185,11 @@ console.log("pas d'id recu")}
             </div>
         <div class="columns">
 
-            <div class="column" v-for="status in [0,1]" :key="status">
+            <div class="column" v-for="status in [0,5]" :key="status">
             <div class="admin-messages-container-" >
-                <div class="admin-messages-title-container">
-                    <div class="admin-messages-title">{{ statu[status] }}</div>
+                <div class="admin-messages-title-container" style="background-color: {{couleurtitre[status]}};">
+                    <div class="admin-messages-title" >{{ statu[status] }}</div>
+               
                 </div>
             <div class="admin-messages-list"
                 :id="`column-${status}`"
@@ -194,17 +206,17 @@ console.log("pas d'id recu")}
                         @delete="deleteMessage"
                     />
                 </div>
-                <div class="admin-messages-item" v-else v-for="message in callMessages">
-                    <chat-message
-                        :key="message.id"
-                        :message="message"
-                        :calls="calls"
-                        :audiofiles="audiofiles"
-                   
-                        @modify="modifier"
-                        @delete="deleteMessage"
-                    />
-                </div>
+                <div class="admin-messages-item" v-if="status === 5" v-for="message in statusFiveMessages">
+                <chat-message
+                    :key="message.id"
+                    :message="message"
+                    :calls="calls"
+                    :audiofiles="audiofiles"
+                    @dragstart="drag($event, message.id)"
+                    @modify="modifier"
+                    @delete="deleteMessage"
+                />
+                    </div>
             </div>
         </div>
         </div>
