@@ -42,7 +42,7 @@
         formData: {
           caller: '',
           message: '',
-          status: 3,
+          status: 2,
           chat_room_id:this.room,
   
         }

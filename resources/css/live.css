@@ -2,27 +2,24 @@
     padding-top: 30px;
 }
 
-.live-content-wrapper {
-    margin-left: 5%;   
-}
 .live-title {
     font-size: 35px;
     font-weight: bold;
-    color: var(--white);
+
 }
 .live-subtitle {
     font-size: 25px;
     font-weight: bold;
-    color: var(--white);
 }
 .live-date {
     font-size: 17px;
-    color: var(--white);
 }
 .golive-wrapper {
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 20px;
+      margin: auto;
+  width: 50%;
 }
 .golive-header {
     background-color: var(--dark-gray);
@@ -40,11 +37,14 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    margin-top: 20px;
 }
 .golive-buttons {
     display: flex;
     justify-content: space-evenly;
-    padding: 100px 0;
+    padding: 50px 0;
+    flex-direction: column;
+    align-items: center;
 }
 .golive-rec-symbol {
     width: 30px;

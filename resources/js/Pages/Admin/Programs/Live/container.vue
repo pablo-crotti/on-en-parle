@@ -69,8 +69,6 @@
         <div class="live-wrapper">
             <div class="live-content-wrapper">
                 <h1 class="live-title">Émission (Live)</h1>
-                <h2 class="live-subtitle">{{ this.program.title }} </h2>
-                <span class="live-date">Emission du {{ this.program.broadcast_date }}</span>
             </div>
 
             <div class="golive-wrapper">
@@ -80,6 +78,8 @@
 
                 <div class="golive-body">
                     <div class="golive-buttons">
+                        <h2 class="live-subtitle">{{ this.program.title }} </h2>
+                <span class="live-date">Emission du {{ this.program.broadcast_date }}</span>
                     <div class="golive-button" @click="openModal" :style="{ backgroundColor: this.background }" >
                         <div class="golive-rec-symbol"></div>
                             {{ this.btnCaption }}

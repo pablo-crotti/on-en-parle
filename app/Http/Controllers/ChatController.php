@@ -14,7 +14,7 @@ class ChatController extends Controller
      * Retrieve the list of all chat rooms.
      *
      * @param Request $request The incoming request.
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function roomsList(Request $request)
     {
@@ -27,7 +27,7 @@ class ChatController extends Controller
      * Retrieve the list of all chat rooms.
      *
      * @param Request $request The incoming request.
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function rooms(Request $request)
     {
@@ -54,7 +54,7 @@ class ChatController extends Controller
      *
      * @param Request $request The incoming request.
      * @param int $roomId The ID of the chat room.
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function messages(Request $request, $roomId)
     {

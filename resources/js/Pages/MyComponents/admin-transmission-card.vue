@@ -16,7 +16,10 @@ export default {
             roomIdForEdit: window.location.href.split('/').pop(),
             isModalOpen: false,
             modalTitle: 'Confirmation',
-            modalMessage: 'Êtes-vous sûr de vouloir supprimer cette émission?'
+            modalMessage: 'Êtes-vous sûr de vouloir supprimer cette émission?',
+            roomForComment: {
+                type: Object
+            }
         }
     },
     props: ['room'],
@@ -57,7 +60,7 @@ export default {
 
         },
         formatDate(date) {
-            //moment.locale('fr'); ne marche pas donc j'ai du faire ça
+            //moment.locale('fr'); ne marche pas donc j'ai du faire ça:
             moment.updateLocale('en', {
                 months : [
                     "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet",
@@ -73,6 +76,10 @@ export default {
         likesChannelTransmission.listen('.like.rooms.new', (e) => {
             this.getLikes();
         });
+        axios.get(`/chat/room/${this.roomIdForEdit}/messages`).then(response => {
+            this.roomForComment = response.data;
+            console.log(this.roomForComment.length);
+        });
     },
 
 }
@@ -84,6 +91,8 @@ export default {
         <div className="likes">
             <span className="material-symbols-outlined">favorite</span>
             <p>{{ likes }}</p>
+            <span className="material-symbols-outlined">forum</span>
+            <p>{{this.roomForComment.length}}</p>
         </div>
     </div>
     <div className="infos">
