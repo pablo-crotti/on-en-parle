@@ -39,4 +39,8 @@ class AudioController extends Controller
 
         return response()->json(['error' => 'No audio file received'], 400);
     }
+    public function getFileName($id) {
+        $voiceMessage = VoiceMessage::where('chat_message_id', $id)->first();
+        return $voiceMessage->audio_file;
+    }
 }
