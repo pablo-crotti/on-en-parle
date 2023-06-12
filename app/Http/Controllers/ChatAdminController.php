@@ -236,7 +236,7 @@ class ChatAdminController extends Controller
     public function deleteMessage($id)
     {
         $message = ChatMessage::findOrFail($id);
-        $message->status = 10; 
+        $message->status = 10;
         $message->save();
 
         return response()->json(['message' => 'Message deleted successfully']);
