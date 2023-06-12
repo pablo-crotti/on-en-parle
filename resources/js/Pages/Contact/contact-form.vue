@@ -12,6 +12,7 @@
                     avis: '',
                     captcha: ''
                 },
+                formErrors: {},
                 num1: Math.floor(Math.random() * 10) + 1,
                 num2: Math.floor(Math.random() * 10) + 1,
                 isModalOpen: false,
@@ -24,8 +25,17 @@
         },
         methods: {
             async submitForm() {
+                this.formErrors = {};
+
+                if (this.formData.avis == '') {
+                    this.formErrors.avis = 'L\'avis est requis';
+                }
+
                 if (!this.checkCaptcha()) {
-                    alert('Captcha incorrect !');
+                    this.formErrors.captcha = 'Le captcha est incorrect';
+                }
+
+                if (Object.keys(this.formErrors).length > 0) {
                     return;
                 } else {
 
@@ -86,9 +96,11 @@
 
             <label for="avis">Votre avis <span class="form-required">*</span></label>
             <textarea id="avis" name="avis" placeholder="Votre avis" style="height:200px" v-model="formData.avis"></textarea>
+            <div class="error-message">{{ formErrors.avis }}</div>
 
             <label for="captcha">{{ num1 }} + {{ num2 }} = <span class="form-required">*</span></label>
-            <input type="text" id="captcha" name="captcha" placeholder="Captcha" v-model="formData.captcha" required>
+            <input type="text" id="captcha" name="captcha" placeholder="Captcha" v-model="formData.captcha">
+            <div class="error-message">{{ formErrors.captcha }}</div>
 
             <button class="submit-btn" type="submit">Envoyer</button>
         </form>
