@@ -56,10 +56,12 @@
     const messageId = parseInt(event.dataTransfer.getData('text'));
       const message = this.messages.find(m => m.id === messageId);
 
-      if (message) {
+      if (message) {if (status === 3 && !message.audio[0]) {
+        event.preventDefault();
+      } else {
         message.status = status;
         await axios.post(`/AdminInbox/message/${message.id}/update`, { status });
-      }
+      }}
     },
     async modifier(message){
     await axios.post(`/AdminInbox/message/${message.id}/content`, { content: message.content });
