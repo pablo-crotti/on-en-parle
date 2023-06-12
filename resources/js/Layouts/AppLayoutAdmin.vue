@@ -8,6 +8,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import AdminProgramItem from '@/Pages/MyComponents/admin-program-selection.vue';
+import axios from 'axios';
 
 export default {
     props: {
@@ -32,8 +33,8 @@ export default {
             currentURL: window.location.href,
             showProgramSelection: false,
             showProgramSelectionButton: false,
-            currentProgramId: 0,
-            lastProgramId: 0,
+            currentProgramId: 1,
+            lastProgramId: 1,
         }
     },
     methods: {
@@ -43,13 +44,14 @@ export default {
             } else if (this.currentURL.includes('admin/administration')) {
                 this.menuList = [["management", "Gestion"], ["control", "Régie"], ["animator", "Animateur"]];
             } else if (this.currentURL.includes('admin/programs')) {
-                this.menuList = [["newProgramm", "Nouvelle émission"], ["live", "Live"], ["listPrograms", "Émissions"]];
+                this.menuList = [["listPrograms", "Émissions"], ["newProgramm", "Ajouter une émission"], ["live", "Live"]];
             }
         },
         getUpcomingPrograms(){
             axios.get('/prochaines-emissions')
                 .then(response => {
                     this.upcomingPrograms = response.data;
+                    this.lastProgramId = this.upcomingPrograms[0].id;
                 })
                 .catch(error => {
                     console.log(error);
@@ -126,14 +128,14 @@ const switchToTeam = (team) => {
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <div class="hidden adMenu space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink :href="getRoute('listPrograms')" :active="isNavLinkActive('admin/programs')">
+                                    Émissions
+                                </NavLink>
                                 <NavLink :href="getRoute('inbox')" :active="isNavLinkActive('admin/reception')">
                                     Réception
                                 </NavLink>
                                 <NavLink :href="getRoute('management')" :active="isNavLinkActive('admin/administration')">
                                     Administration
-                                </NavLink>
-                                <NavLink :href="getRoute('listPrograms')" :active="isNavLinkActive('admin/programs')">
-                                    Émissions
                                 </NavLink>
                                 <NavLink :href="getRoute('users')" :active="isNavLinkActive('users')">
                                     Utilisateurs
@@ -296,70 +298,3 @@ const switchToTeam = (team) => {
         </div>
     </div>
 </template>
-
-<style>
-    .program-selection {
-        background-color: var(--white);
-        width: 100%;
-        overflow-x: auto;
-        white-space: nowrap;
-        padding: 20px;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        gap: 20px;
-    }
-
-    .program-item {
-        background-color: var(--black);
-        width: 200px;
-        height: 200px;
-        border-radius: 20px;
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        flex-shrink: 0;
-        justify-content: space-between;
-    }
-
-    .program-cover {
-        object-fit: cover;
-        width: 80px;
-        height: 80px;
-        border-radius: 15px;
-    }
-
-    .program-date {
-        color: var(--white);
-        font-size: 0.7rem;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        text-align: right;
-        text-transform: capitalize;
-    }
-
-    .program-info {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: flex-start;
-        height: 100%;
-        padding-top: 10px;
-    }
-    .program-info .program-title{
-        color: var(--white);
-        font-size: 0.8rem;
-        font-weight: bold;
-        padding: 0px;
-        white-space: normal;
-    }
-
-    .program-info .program-interactions span {
-        color: var(--white);
-        font-size: 0.8rem;
-        font-weight: bold;
-        padding-right: 10px;
-    }
-
-</style>

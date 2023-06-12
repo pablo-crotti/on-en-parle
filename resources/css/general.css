@@ -99,7 +99,7 @@ select:focus {
     width: calc(100vw - 2rem);
 }
 .adMenu {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
 }
@@ -129,4 +129,71 @@ select:focus {
     .transmissions-wrapper {
         padding: 1rem;
     }
+}
+
+/* Séléction des émissions */
+.program-selection {
+    background-color: var(--light-gray);
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 20px;
+    border-bottom: solid 10px var(--black);
+}
+
+.program-item {
+    background-color: var(--black);
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    justify-content: space-between;
+}
+
+.program-cover {
+    object-fit: cover;
+    width: 80px;
+    height: 80px;
+    border-radius: 15px;
+}
+
+.program-date-text {
+    color: var(--white);
+    font-size: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: right;
+    text-transform: capitalize;
+}
+
+.program-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100%;
+    padding-top: 10px;
+}
+
+.program-info .program-title {
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0px;
+    white-space: normal;
+}
+
+.program-info .program-interactions span {
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding-right: 10px;
 }

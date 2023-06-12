@@ -30,7 +30,7 @@ use App\Http\Controllers\ContactFormController;
 
 // !*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!* USER APP *!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!
 
-// *************** ======= PAGE GENERATING ROUTES 
+// *************** ======= PAGE GENERATING ROUTES
 Route::get('/', function () {
     return  Inertia::render('Index/container');
 })->name('index');
@@ -51,7 +51,7 @@ Route::get('/calendar', function () {
     return  Inertia::render('Calendar/container');
 })->name('calendar');
 
-// *************** ======= DATA GET 
+// *************** ======= DATA GET
 Route::get('/index/room', [IndexRoomController::class, 'indexRoom']);
 
 Route::get('/chat/rooms', [ChatController::class, 'rooms']);
@@ -68,7 +68,10 @@ Route::get('/transmissions/dates', [CalendarController::class, 'getBroadcasteDat
 
 Route::get('/calendar/{year}/{month}/{day}', [CalendarController::class, 'hasTransmission']);
 
+Route::get('/audio/name/{id}', [AudioController::class, 'getFileName']);
+
 Route::get('/audio/{filename}', function ($filename) {
+
     $path = storage_path('app/public/rec/' . $filename);
 
     if (!File::exists($path)) {
@@ -80,7 +83,7 @@ Route::get('/audio/{filename}', function ($filename) {
     ]);
 });
 
-// *************** ======= DATA POST 
+// *************** ======= DATA POST
 Route::post('/contact/send', [ContactFormController::class, 'sendMail'])->name('contact.send');
 
 Route::post('/chat/room/{roomId}/message', [ChatController::class, 'newMessage']);
@@ -107,11 +110,15 @@ Route::middleware([
 
 
 
-// *********************************************** ======= PROGRAMS 
+// *********************************************** ======= PROGRAMS
 // *************** ======= PAGE GENERATING ROUTES
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/admin/programs/list', function () {
     return  Inertia::render('Admin/Programs/Programs/container');
 })->name('listPrograms');
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/admin', function() {
+    return redirect()->route('listPrograms');
+});
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/admin/programs/live', function () {
     return  Inertia::render('Admin/Programs/Live/container');
@@ -148,6 +155,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
     ->post('/chat/room/new', [ProgramController::class, 'newRoom']);
+
+ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
+    ->post('/chat/room/delete/{roomId}', [ProgramController::class, 'destroy'])->name('deleteRoom');
+
+
 
 // ====================================================================================================---
 

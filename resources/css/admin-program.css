@@ -21,6 +21,7 @@
 .program-header {
   display: flex;
   justify-content: space-between;
+  margin-top: 10px;
 }
 
 .program-title {
@@ -36,8 +37,6 @@
    padding: 6% 0;
 }
 
-
-
 .row-program:hover {
   transform: scale(1.05);
   transition: 0.5s;
@@ -46,4 +45,9 @@
 
 .program-date {
   color: var(--black) !important;
+}
+
+.programs-wrapper {
+  height: 64vh;
+  padding-top: 10px;
 }

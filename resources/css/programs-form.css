@@ -2,10 +2,12 @@
     display: flex;
     justify-content: center;
     padding: 20px;
+    height: 75vh;
+    overflow-y: scroll;
 }
 
 .form-container {
-    height: auto;
+    height: 630px;
     width: 50vw;
     background-color: var(--light-gray);
     border-radius: 20px;
