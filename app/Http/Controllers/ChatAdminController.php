@@ -227,7 +227,6 @@ class ChatAdminController extends Controller
 
         return response()->json(['message' => 'Message content updated successfully']);
     }
-
     /**
      * Delete a message (status 10).
      *

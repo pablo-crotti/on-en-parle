@@ -56,10 +56,12 @@
     const messageId = parseInt(event.dataTransfer.getData('text'));
       const message = this.messages.find(m => m.id === messageId);
 
-      if (message) {
+      if (message) {if (status === 3 && !message.audio[0]) {
+        event.preventDefault();
+      } else {
         message.status = status;
         await axios.post(`/AdminInbox/message/${message.id}/update`, { status });
-      }
+      }}
     },
     async modifier(message){
     await axios.post(`/AdminInbox/message/${message.id}/content`, { content: message.content });
@@ -67,6 +69,15 @@
     async deleteMessage(message) {
         try {
             const response = await axios.post(`/AdminInbox/message/${message.id}/delete`);
+            // remove the message from local messages
+            this.messages = this.messages.filter(m => m.id !== message.id);
+        } catch (error) {
+            console.error(error);
+        }
+    },
+    async deleted(message) {
+        try {
+            await axios.post(`/AdminInbox/message/${message.id}/update`, { status: 10 });
             // remove the message from local messages
             this.messages = this.messages.filter(m => m.id !== message.id);
         } catch (error) {
@@ -160,7 +171,7 @@ console.log("pas d'id recu")            }
                             :audiofiles="audiofiles"
                             @dragstart="drag($event, message.id)"
                             @modify="modifier"
-                            @delete="deleteMessage"
+                            @delete="deleted"
                             /> 
                         </div>
                 
