@@ -1,19 +1,18 @@
 .programs-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    gap: 30px;
+    margin: 5%;
+    width: 90%;
 }
-.row-program {
-    width: 26%;
-    margin-bottom: 80px;
-}   
   
 #dropdown-filter label, #dropdown-filter span {
     color: var(--white);
 }
   
+.row-program {
+    height: 310px;
+}
 
 #programs-title {
     font-size: 35px;

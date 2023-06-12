@@ -29,8 +29,8 @@
             },
         },
         created() {
-            axios.get(`/chat/room/${this.program.id}/messages`).then(response => {
-                this.room = response.data;
+            axios.get('/chat/rooms-list').then(response => {
+                this.room = response.data.find(item => item.id === this.program.id);
             })
         }
     }
@@ -52,7 +52,7 @@
                 <span class="material-symbols-outlined">
                     forum
                 </span>
-                <span>{{ room.length }}</span>   
+                <span>{{ room.messages_count }}</span>   
             </div>                        
         </div>
     </div>  

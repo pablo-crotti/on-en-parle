@@ -4,7 +4,7 @@
         <div class="program-header">
             <img class="program-img" :src="program.image"/>
             <div class="program-title">
-                <span>Replay</span>
+                <span>{{ status }}</span>
                 <h2>{{ program.title }}</h2>
             </div>
         </div>
@@ -18,7 +18,7 @@
                         forum
                     </span>
 
-                   <span>{{ room.length }}</span>   
+                   <span>{{ room.messages_count }}</span>   
                 </div>
 
                 <span class="program-date">{{ formattedDate() }}</span>
@@ -41,7 +41,8 @@ import axios from 'axios';
             return {
                 room: {
                     type: Object
-                }
+                },
+                status: "",
             }
         },
         props: {
@@ -52,44 +53,47 @@ import axios from 'axios';
         methods: {
 
             truncateParagraph(paragraph, wordCount) {
-  // Sépare le paragraphe en mots individuels
-  const words = paragraph.split(' ');
+            // Sépare le paragraphe en mots individuels
+            const words = paragraph.split(' ');
 
-  // Vérifie si le paragraphe est plus court que le nombre de mots souhaité
-  if (words.length <= wordCount) {
-    return paragraph; // Retourne le paragraphe complet tel quel
-  }
+            // Vérifie si le paragraphe est plus court que le nombre de mots souhaité
+            if (words.length <= wordCount) {
+                return paragraph; // Retourne le paragraphe complet tel quel
+            }
 
-  // Tronque le tableau de mots à la longueur souhaitée
-  const truncatedWords = words.slice(0, wordCount);
+            // Tronque le tableau de mots à la longueur souhaitée
+            const truncatedWords = words.slice(0, wordCount);
 
-  // Rejoindre les mots tronqués en une seule chaîne avec des espaces
-  const truncatedParagraph = truncatedWords.join(' ');
+            // Rejoindre les mots tronqués en une seule chaîne avec des espaces
+            const truncatedParagraph = truncatedWords.join(' ');
 
-  // Ajouter une ellipse à la fin du paragraphe tronqué
-  const finalParagraph = truncatedParagraph + '...';
+            // Ajouter une ellipse à la fin du paragraphe tronqué
+            const finalParagraph = truncatedParagraph + '...';
 
-  return finalParagraph;
-},
-formattedDate() {
-      const [year, month, day] = this.program.broadcast_date.split('-');
-      const monthNames = [
-        'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-        'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
-      ];
-      const formattedMonth = monthNames[Number(month) - 1];
-      return `${Number(day)} ${formattedMonth} ${year}`;
-    }
+            return finalParagraph;
+            },
+            formattedDate() {
+                const [year, month, day] = this.program.broadcast_date.split('-');
+                const monthNames = [
+                    'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+                    'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
+                ];
+                const formattedMonth = monthNames[Number(month) - 1];
+                return `${Number(day)} ${formattedMonth} ${year}`;
+                }
         },
         created() {
-            axios.get(`/chat/room/${this.program.id}/messages`).then(response => {
-            
-                this.room = response.data;
-                
-            
+            axios.get('/chat/rooms-list').then(response => {
+                this.room = response.data.find(item => item.id === this.program.id);
             });
-    
-        
+            const today = new Date();
+            const programDate = new Date(this.program.broadcast_date);
+            if(programDate < today){
+                this.status = "Replay";
+            } else {
+                this.status = "A venir";
+            }
         }
+
     }   
 </script>

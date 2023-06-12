@@ -185,7 +185,7 @@ select:focus {
 
 .program-info .program-title {
     color: var(--white);
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: bold;
     padding: 0px;
     white-space: normal;
