@@ -3,7 +3,7 @@
     flex-direction: row;
     justify-content: space-evenly;
     flex-wrap: wrap;
-    margin-top: 50px;
+    margin-top: 10px;
 }
 .row-program {
     width: 26%;
@@ -25,6 +25,7 @@
     justify-content:  space-between;
     align-items: center;
     padding: 0 5%;
+    padding-top: 10px;
 }
 
 

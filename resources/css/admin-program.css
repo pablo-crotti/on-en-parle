@@ -21,6 +21,7 @@
 .program-header {
   display: flex;
   justify-content: space-between;
+  margin-top: 10px;
 }
 
 .program-title {
@@ -47,7 +48,6 @@
 }
 
 .programs-wrapper {
-  overflow-y: scroll;
   height: 64vh;
   padding-top: 10px;
 }

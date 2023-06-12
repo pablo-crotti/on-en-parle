@@ -1,6 +1,5 @@
 <script>
     import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
-    import axios from 'axios';
     import newProgram from './newProgram.vue';
 
     export default {
