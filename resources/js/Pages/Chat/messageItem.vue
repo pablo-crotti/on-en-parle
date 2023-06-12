@@ -3,14 +3,6 @@
         <h2 v-if="message.text[0]" class="text-message">Question</h2>
         <h2 v-else class="transcription-message">Transcription</h2>
         <p>{{ message.content }}</p>
-        <audio controls v-if="audioFile">
-            <source :src="audioFile" type="audio/mp3">
-            Your browser does not support the audio element.
-        </audio>
-        <!-- <audio controls >
-            <source :src="audioFile" type="audio/mp3">
-            Your browser does not support the audio element.
-        </audio> -->
     </div>
     <div class="right">
         <p>{{ formatRelativeTime(message.created_at) }}</p>
@@ -36,7 +28,6 @@ export default {
     data: function () {
         return {
             localStorage: "1234",
-            audioFile: ""
         };
     },
     methods: {
@@ -78,19 +69,6 @@ export default {
                 return true;
             }
         },
-        getAudioPath() {
-            axios.get("audio/name/" + this.message.id).then((response) => {
-                if (response.status == 200) {
-                    // console.log(response.data)
-                    this.audioFile = `${window.location.origin}/storage/rec/${response.data}`;
-                }
-            });
-        },
-    },
-    created() {
-
-        // console.log(this.message);
-        this.getAudioPath();
     },
 };
 </script>
