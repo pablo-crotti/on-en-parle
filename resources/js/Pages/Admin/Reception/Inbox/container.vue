@@ -1,13 +1,11 @@
 <script>
     import axios from 'axios';
     import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
-    import CallForm from '@/Pages/MyComponents/CallForm.vue';
     import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
 
 
     export default {
         components: {
-          CallForm,
           ChatMessage,
           AppLayout},
     
@@ -159,10 +157,7 @@ async deleteMessage(message) {
         </div>
 
     </div> 
-                <div id="creernouveaumsg">
-                  <call-form
-                  :room="idroom"></call-form>
-                </div>
+        
   </AppLayout>
 </template>
 

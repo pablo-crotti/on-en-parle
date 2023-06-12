@@ -40,6 +40,7 @@
       audiofiles: this.audioChatroom,
       filteredMessages: [],
       statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "","Prêt à diffuser"],
+      couleurtitre: ["#FF0000", "red", "#008000","#FF9F00", "", "#0000FF"],
     chatroomId:null,
     calls: this.callChatroom,
     sortType: 'creation',
@@ -144,18 +145,23 @@ console.log("pas d'id recu")            }
     <AppLayout title="On en parle | Administration (Gestion)">
         <div class="containerManagement">
 
-                <div style="display:flex; flex-direction: row; color: azure; width:auto;align-items: center;">
-                
+                <div id="boutonsmangament">
+                <div>
                     <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
             <button @click="sortType = 'likes'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
-
+        </div>
+            <div id="creernouveaumsg">
+                    <call-form
+                    :room="chatroomId"></call-form>
+                </div>
             </div>
         <div class="columns">
 
             <div class="column" v-for="status in [0,1,2,3,5]" :key="status">
-                <div class="admin-messages-container-" >
-                    <div class="admin-messages-title-container">
-                        <div class="admin-messages-title">{{ statu[status] }}</div>
+                <div class="admin-messages-container" >
+                    <div class="admin-messages-title-container" :style="{backgroundColor: couleurtitre[status]}">
+                        <div class="admin-messages-title">
+                            {{ statu[status] }}</div>
                     </div>
                 <div class="admin-messages-list"
                 :id="`column-${status}`"
@@ -181,106 +187,8 @@ console.log("pas d'id recu")            }
             </div>
 
         </div> 
-                <div id="creernouveaumsg">
-                    <call-form
-                    :room="chatroomId"></call-form>
-                </div>
+                
     </AppLayout>
 </template>
 
 
-
-
-<style>
-#creernouveaumsg{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    padding: 20px;
-    justify-content: center;
-    align-items: center;
-   }
-
-h1 {
-    font-size: 40px;
-    text-align: center;
-    color: white;
-}
-
-.containerManagement{
-    margin-right:0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    width:auto;
-}
-.columns {
-    width: 80vw;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-     align-items: top;
-    justify-content: center;
-}
-.column {
-    width: auto;
-    height: 80%;
-    border: solid 1px black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    padding: 0px;
-}
-
-
-.message{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    min-height: 35px;
-    margin-right: 0px;
-    border:1px solid black;
-    border-radius: 1px;
-    width: 80%;
-    font-size: 15px;
-    margin-bottom: 10px;
-    padding: 10px;
-}
-.buttons{
-    display:flex;
-    flex-direction: columns;
-    justify-content: flex-end;
-}
-.input{
-
-    width:auto;
-    height: auto;
-}
-
-.button {
-    border: 1px solid black;
-
-    border-radius: 15px;
-}
-.item {
-    padding: 20px;
-    color: white;
-    width: 100%;
-}
-.dropzone {
-    width: 100%;
-    height: 100%;
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: white;
-    margin:0;
-}
-</style>

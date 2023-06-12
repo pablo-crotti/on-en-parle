@@ -28,9 +28,9 @@
   
   <div class="message-body">
    
-    <div v-if="isAudio" class="message-content">
+    <div v-if="isAudio && !isCall" class="message-content">
       <p >
-        <span class="audio-duration"> Durée du player</span>
+        <span class="audio-duration"> Audio Durée du player</span>
   
        {{ audiofiles[0].audio_files[0] }}
        <audio controls @loadedmetadata="audioLoaded">
@@ -40,6 +40,7 @@
       </p>
   
     </div>
+
       <div  v-else class="message-content" >
           <p v-if="!editing" class="message-text" >{{ message.content }}</p>
         <input v-else type="text" v-model="message.content" class="input" @keyup.enter="saveChanges"/>
@@ -58,7 +59,7 @@
         </div>
   
     <div v-else-if="message.status === 10">
-          <span class="material-symbols-outlined" @click="$emit('archive', message)">archive</span>
+          <span class="material-symbols-outlined" @click="$emit('archive', message)">delete</span>
 
      </div>
   

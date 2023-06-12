@@ -2,6 +2,8 @@
     border-radius: 20px 20px 0 0;
     display: flex;
     justify-content: left;
+    width: auto;
+
 }
 .message-header span{
    margin-right:10px;
@@ -23,19 +25,21 @@
 }
 
 .message-body {
-    padding: 15px;
+    padding: 5px 10px 15px 10px;
     display: flex;
     flex-direction: row;
-    justify-content:center;
+    justify-content: space-between;
     align-content: center;
-    max-width: 280px;
-    padding:10px;
+    width: auto;
 }
 
 audio {
+    margin-top: 5px;
     width: 85%;
     height: 30px;
     margin: 10px 0 10px 0;
+    border:#616061 1px solid;
+    border-radius: 10px;
 }
 .message-date {
     color: #616061;
@@ -45,22 +49,34 @@ audio {
     color: #B2171B;
 }
 .message-content {
-    min-width: 250px;
-    width: 100%;
+    min-width: 100px;
+    width: auto;
     height: fit-content;
     display: flex;
-    justify-content: center;
-    padding: 10px 0px 10px 10px;
+    justify-content: space-evenly left;
+    padding: 5px 5px 0px 0px;
 }
 .message-text {
     word-wrap: break-word;
     width: 80%;
 }
 .message-actions {
+    min-width: 35px;
+    max-width: 40px;
+    height: 100px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding-right: 10px;
+    justify-content: space-around;
+    align-content: center;
+
+}
+
+.message-actions div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    
 }
 .message-like-symbol {
     font-size: 15px;

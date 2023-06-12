@@ -81,13 +81,6 @@
   </script>
   
   <style scoped>
-  .container {
-    display: flex;
-    align-items: left;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-  }
   
   .add-product {
     display: flex;
@@ -173,7 +166,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-top: 1em;
+    margin-bottom: 10px;
   }
   
   .form--field,
@@ -205,8 +198,9 @@
   }
   
   .form--element.textarea {
-    height: 200px;
+    height: 180px;
     resize: none;
+    margin-bottom: 20px;
   }
   
   .form--title {

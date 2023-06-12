@@ -22,14 +22,12 @@
 <script>
     import axios from 'axios';
     import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
-    import CallForm from '@/Pages/MyComponents/CallForm.vue';
     import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
   //  import ChatContainer from '@/Pages/MyComponents/admin-message.vue';
 
 
     export default {
         components: {
-            CallForm,
             ChatMessage,
             AppLayout,
           //  ChatContainer
@@ -166,7 +164,7 @@ console.log("pas d'id recu")            }
             <div class="column" v-for="status in [0,1,2,3]" :key="status">
                 <div class="admin-messages-container-">
                     <div class="admin-messages-title-container">
-                        <div class="admin-messages-title">{{ ['Message Vocal', 'Appels en attente', 'Message Text', 'Diffuser'][status] }}</div>
+                        <div class="admin-messages-title">{{ ['Messages Vocaux', 'Appels en attente', 'Messages', 'Diffusé'][status] }}</div>
                     </div>
                     <div class="admin-messages-list"
                         :id="`column-${status}`"
@@ -190,10 +188,7 @@ console.log("pas d'id recu")            }
                 </div>
 
             </div> 
-                <div id="creernouveaumsg">
-                    <call-form
-                    :room="chatroomId"></call-form>
-                </div>
+               
         </AppLayout>
 </template>
 

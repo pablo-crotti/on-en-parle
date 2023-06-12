@@ -22,17 +22,14 @@
 <script>
     import axios from 'axios';
     import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
-    import CallForm from '@/Pages/MyComponents/CallForm.vue';
     import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
   //  import ChatContainer from '@/Pages/MyComponents/admin-message.vue';
 
 
     export default {
         components: {
-            CallForm,
             ChatMessage,
             AppLayout,
-          //  ChatContainer
         },
     
     props: {
@@ -60,11 +57,11 @@
       messages: [],
       audiofiles: this.audioChatroom,
       filteredMessages: [],
-      statu: ["Message Audio", "A diffusé"],
+      statu: ["Message Audio","","","","", "A diffusé"],
       chatroomId:null,
       calls: this.callChatroom,
       sortType: 'creation',
-      couleurtitre: ["#FF0000", "red", "#FFFF00", "#008000", "#0000FF"],
+      couleurtitre: ["#FF0000", "red", "","#FFFF00", "#008000", "#0000FF"],
     };
 },
 
@@ -187,7 +184,7 @@ console.log("pas d'id recu")}
 
             <div class="column" v-for="status in [0,5]" :key="status">
             <div class="admin-messages-container-" >
-                <div class="admin-messages-title-container" style="background-color: {{couleurtitre[status]}};">
+                <div class="admin-messages-title-container" :style="{backgroundColor: couleurtitre[status]}">
                     <div class="admin-messages-title" >{{ statu[status] }}</div>
                
                 </div>
@@ -223,10 +220,7 @@ console.log("pas d'id recu")}
             </div>
 
         </div> 
-                <div id="creernouveaumsg">
-                    <call-form
-                    :room="chatroomId"></call-form>
-                </div>
+                
         </AppLayout>
 
 </template>
