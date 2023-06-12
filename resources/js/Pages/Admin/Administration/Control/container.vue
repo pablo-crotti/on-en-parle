@@ -174,16 +174,16 @@ console.log("pas d'id recu")}
 
         <div class="containerManagement">
 
-                <div style="display:flex; flex-direction: row; color: azure; width:auto;align-items: center;">
-                
+            <div id="boutonsmangament">
+                <div>
                     <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
             <button @click="sortType = 'likes'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
-
+        </div>
             </div>
         <div class="columns">
 
             <div class="column" v-for="status in [0,5]" :key="status">
-            <div class="admin-messages-container-" >
+            <div class="admin-messages-container" >
                 <div class="admin-messages-title-container" :style="{backgroundColor: couleurtitre[status]}">
                     <div class="admin-messages-title" >{{ statu[status] }}</div>
                

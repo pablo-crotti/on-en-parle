@@ -154,15 +154,15 @@ console.log("pas d'id recu")            }
 
         <div class="containerManagement">
 
-                <div style="display:flex; flex-direction: row; color: azure; width:auto;align-items: center;">
-                
-                    <button @click="sortByCreation" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Créaation</button>
-                <button  @click="sortByLikes" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
-
+            <div id="boutonsmangament">
+                <div>
+                    <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
+            <button @click="sortType = 'likes'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
+        </div>
        </div>
                 <div class="columns">
             <div class="column" v-for="status in [0,1,2,3]" :key="status">
-                <div class="admin-messages-container-">
+                <div class="admin-messages-container">
                     <div class="admin-messages-title-container">
                         <div class="admin-messages-title">{{ ['Messages Vocaux', 'Appels en attente', 'Messages', 'Diffusé'][status] }}</div>
                     </div>

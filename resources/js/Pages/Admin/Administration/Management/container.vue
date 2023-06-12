@@ -147,8 +147,8 @@ console.log("pas d'id recu")            }
 
                 <div id="boutonsmangament">
                 <div>
-                    <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
-            <button @click="sortType = 'likes'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
+                    <button @click="sortType = 'creation'" >Création</button>
+            <button @click="sortType = 'likes'" >Like</button>
         </div>
             <div id="creernouveaumsg">
                     <call-form

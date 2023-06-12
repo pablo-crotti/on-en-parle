@@ -115,17 +115,19 @@ async deleteMessage(message) {
 <template>
   <AppLayout title="On en parle | Réception (Inbox)">
     <div class="containerInbox">
-          <div style="display:flex; flex-direction: row; color: azure; width:auto;align-items: center;">
-          
-            <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
-            <button @click="sortType = 'likes'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
 
+      <div id="boutonsmangament">
+          
+        <div>
+                    <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
+            <button @click="sortType = 'likes'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
+        </div>
           </div>
         
     <div class="columns">
 
         <div class="column" v-for="status in [0, 1]" :key="status">
-          <div class="admin-messages-container">
+          <div class="admin-messages-container" style="width:30vw; margin-right:30px;">
          
             <div class="admin-messages-title-container">
               

@@ -86,13 +86,12 @@
     display: flex;
     flex-direction: column;
     align-items: left;
-    justify-content: left;
     transition: all 0.3s ease;
     background-color: #B2171B;
     border-radius: 72px;
     box-shadow: 0 4px 16px 0 rgba(0, 0, 0, .07);
     cursor: pointer;
-    height: 60px;
+    height: 50px;
     width: 144px;
   }
   
@@ -122,12 +121,7 @@
     height: auto;
   }
   
-  .button-copy {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 60px;
-  }
+
   
   .button-text {
     color: #ffffff;

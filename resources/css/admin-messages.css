@@ -53,7 +53,6 @@ audio {
     width: auto;
     height: fit-content;
     display: flex;
-    justify-content: space-evenly left;
     padding: 5px 5px 0px 0px;
 }
 .message-text {
