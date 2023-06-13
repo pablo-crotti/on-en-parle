@@ -69,7 +69,7 @@ export default {
             isModalOpen: false,
             modalTitle: "Merci !",
             modalMessage:
-                "Votre message nous est parvenu, si il est accepté, il apparaitra dans le chat.",
+                "Votre message nous est parvenu, s'il est accepté, il apparaitra dans le chat.",
         };
     },
     components: {
