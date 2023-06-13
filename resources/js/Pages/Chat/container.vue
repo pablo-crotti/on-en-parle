@@ -1,8 +1,8 @@
 <script>
 import AppLayout from "@/Layouts/AppLayoutUser.vue";
-import MessageContainer from "@/Pages/Chat/MessageContainer.vue";
-import InputMessage from "@/Pages/Chat/InputMessage.vue";
-import ChatRoomSelection from "@/Pages/Chat/ChatRoomSelection.vue";
+import MessageContainer from "@/Pages/Chat/messageContainer.vue";
+import InputMessage from "@/Pages/Chat/inputMessage.vue";
+import ChatRoomSelection from "@/Pages/Chat/chatRoomSelection.vue";
 import TransmissionCard from "@/Pages/MyComponents/transmission-card.vue";
 import Player from "@/Pages/Chat/Player.vue";
 import axios from "axios";
