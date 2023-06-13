@@ -57,16 +57,26 @@
     const messageId = parseInt(event.dataTransfer.getData('text'));
       const message = this.messages.find(m => m.id === messageId);
 
-      if (message) {if (status === 3 && !message.audio[0]) {
-        event.preventDefault();
-      } else {
-        message.status = status;
-        await axios.post(`/AdminInbox/message/${message.id}/update`, { status });
-      }}
+      if (message) {
+        if (status === 3 && (!message.audio[0] || message.call[0])) {
+            event.preventDefault();
+            alert("Vous ne pouvez pas mettre ce message en régie");
+        } 
+        else if(status === 5 && message.audio[0]&& !message.call[0]){
+            event.preventDefault();
+            alert("Vous ne pouvez pas mettre ce message en prêt à diffuser");
+        }
+        else {
+            // Autrement, on met à jour le statut et on fait une requête pour le mettre à jour
+            message.status = status;
+            await axios.post(`/AdminInbox/message/${message.id}/update`, { status });
+        }
+    }
     },
+    
     async modifier(message){
     await axios.post(`/AdminInbox/message/${message.id}/content`, { content: message.content });
-},
+    },
     async deleteMessage(message) {
         try {
             const response = await axios.post(`/AdminInbox/message/${message.id}/delete`);

@@ -1,4 +1,5 @@
 <template>
+
   <div class="containercreer" @click="closeForm($event)">
     
         <div class="add-product" :class="{'open': formOpen}">
@@ -30,6 +31,7 @@
         </form>
       </div>
   </div>
+  
   </template>
   
   

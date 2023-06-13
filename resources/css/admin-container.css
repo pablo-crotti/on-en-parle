@@ -14,7 +14,7 @@ width: auto;
 }
 
 .admin-messages-container {
-    min-width: 250px;
+    min-width: calc(100vh / 5.5);
    width: 18vw;
     height: 10%;
     background-color: var(--black);
@@ -127,7 +127,7 @@ width: auto;
 }
 
 .columns {
-    width: 100%;
+    width: 100vw;
     height: 80%;
     /* rendre la hauteur maximal à la limite d'affichage de l'écran */
     display: flex;

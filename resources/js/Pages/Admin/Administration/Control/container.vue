@@ -66,15 +66,6 @@
 },
 
   methods: {
-    getMessages() {
-        axios.get(`/emission/1/status/5`)
-            .then(response => {
-                this.messages = response.data;
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    },
     
     drag(event, messageId) {
     event.dataTransfer.setData('text', messageId);
@@ -129,7 +120,7 @@ async deleteMessage(message) {
         
     },
     statusFiveMessages() {
-        return this.messages.filter(m => m.status === 5);
+        return this.messages.filter(m => m.status === 5 && m.audio.length > 0);
     },
     callMessages() {
         return this.messages.filter(m => m.call && m.call.length > 0 && m.status === 3);
@@ -161,8 +152,7 @@ async deleteMessage(message) {
             // Utilisez la variable convertie dans votre code plutôt que this.idroom
             if (convertedId !== null) {
             this.chatroomId = convertedId;
-            } else {
-console.log("pas d'id recu")}
+            }
 },
   
 }

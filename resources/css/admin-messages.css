@@ -1,27 +1,35 @@
 .message-header {
     border-radius: 20px 20px 0 0;
+    padding: 10px;
     display: flex;
-    justify-content: left;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     width: auto;
     align-content: center;
+}
+
+.message-header span{
+    color:black;
 
 }
+.likes-indicator {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.likes-indicator span{
+   color: var(--primary-color);
+}
 .message-header span{
-   margin-right:10px;
-   justify-content: center;
-   align-items: center;
-   align-content: center;
+   margin-right: 20px;
 }
 .symbol-header {
-    color: black;
-    padding: 5px 0 5px 10px;
+    color: var(--primary-color); 
 }
 .message-wrapper {
-    /*fais moi un border noir épais*/
-    border: 3px solid black;
-    
-    /* arrondi moi le border en bas à gauche et à droite */
-    border-radius: 20px 20px 20px 20px;
+    border: 3px solid var(--black);
+    border-radius: 22px;
     background-color: var(--white);
 }
 
@@ -35,8 +43,9 @@
 }
 
 audio {
-    margin-top: 5px;
-    width: 85%;
+    padding-right: 5px;
+    min-width: 150px;
+    width: 95%;
     height: 30px;
     margin: 10px 0 10px 0;
     border:#616061 1px solid;
@@ -53,15 +62,27 @@ audio {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-width: 100px;
+    padding-right: 5px;
+    min-width: 80%;
     width: auto;
     height: fit-content;
-    display: flex;
-    padding: 5px 5px 0px 0px;
+    padding: 5px 5px 0px 0px;;
+}
+.message-content p {
+    width: 100%;
+    display: block;
+    font-size: 15px;
+
 }
 .message-text {
     word-wrap: break-word;
     width: 80%;
+}
+.modiftextarea{
+    min-height: 120px;
+ height: fit-content;
+overflow-y: visible;
+font-size: 15px;
 }
 .message-actions {
     min-width: 35px;
@@ -71,9 +92,8 @@ audio {
     flex-direction: column;
     justify-content: space-around;
     align-content: center;
-
+    margin-right: 10px;
 }
-
 .message-actions div{
     display: flex;
     flex-direction: row;
@@ -86,18 +106,17 @@ audio {
     padding-left: 3px;
 }
 .aired-status {
-    /* fait une border arrondi en blanc */
-    border: 2px solid white;
-    /* arrondi que les coins sur les côtés */
-    border-radius: 20px 20px 20px 20px;
-    padding: 5px 10px 5px 10px;
+    border: 2px solid var(--white);
+    border-radius: 20px;
+    padding: 5px 10px;
     color: var(--white);
 }
+.message-actions .material-symbols-outlined {
+    color: var(--dark-gray);
+}
 
-span .message-caller{
-    display:flex;
-    align-self: center;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
+.message-actions > .material-symbols-outlined {
+    color: var(--dark-gray);
+    font-size: 20px;
+    cursor: pointer;
 }

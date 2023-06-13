@@ -115,7 +115,7 @@ async deleteMessage(message) {
         affichedon(){
         },
         audioMessages() {
-    return this.messages.filter(m => m.audio && m.audio.length > 0 && m.status === 5);
+    return this.messages.filter(m => m.audio && m.audio.length > 0 && m.status === 5 && m.call.length === 0);
 },
 callMessages() {
     return this.messages.filter(m => m.call && m.call.length > 0 && m.status === 5);
