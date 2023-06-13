@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ChatRoom;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Events\NewRoom;
 
 class ProgramController extends Controller
 {
@@ -37,6 +38,8 @@ class ProgramController extends Controller
         $newChatRoom->audio_file = $request->input('audio');
         $newChatRoom->save();
 
+        event(new NewRoom());
+
         return response()->json($newChatRoom, 201);
     }
 
@@ -58,6 +61,7 @@ class ProgramController extends Controller
                 'broadcast_date' => $request->input('date'),
                 'audio_file' => $request->input('audio')
             ]);
+        event(new NewRoom());
     }
 
     /**
@@ -69,7 +73,7 @@ class ProgramController extends Controller
     {
         $currentDate = Carbon::now();
 
-        $broadcasts = ChatRoom::where('broadcast_date', '>=', $currentDate)
+        $broadcasts = ChatRoom::whereDate('broadcast_date', '>=', $currentDate)
             ->orderBy('broadcast_date', 'asc')
             ->get();
 
@@ -92,6 +96,8 @@ class ProgramController extends Controller
             return response()->json(['message' => 'Chat room deleted successfully']);
         }
 
+        event(new NewRoom());
+        
         return response()->json(['message' => 'Chat room not found'], 404);
     }
 }

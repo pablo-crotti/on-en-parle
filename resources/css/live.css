@@ -5,11 +5,11 @@
 .live-title {
     font-size: 35px;
     font-weight: bold;
-
 }
 .live-subtitle {
     font-size: 25px;
     font-weight: bold;
+    text-align: center;
 }
 .live-date {
     font-size: 17px;
@@ -18,8 +18,8 @@
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 20px;
-      margin: auto;
-  width: 50%;
+    margin: auto;
+    width: 50%;
 }
 .golive-header {
     background-color: var(--dark-gray);
@@ -42,7 +42,7 @@
 .golive-buttons {
     display: flex;
     justify-content: space-evenly;
-    padding: 50px 0;
+    padding: 50px 20px;
     flex-direction: column;
     align-items: center;
 }

@@ -157,6 +157,12 @@ select:focus {
     justify-content: space-between;
 }
 
+.program-item:hover {
+    transform: scale(1.05);
+    transition: 0.5s;
+    cursor: pointer;
+}
+
 .program-cover {
     object-fit: cover;
     width: 80px;
@@ -198,4 +204,33 @@ select:focus {
     padding-right: 10px;
 }
 
+.program-name {
+    color: var(--white);
+    margin-right: 20px;
+    font-size: 0.8rem;
+}
 
+.submenu{
+    margin-left: 2rem;
+    display: flex;
+    gap: 20px;
+    position: absolute;
+    top: 134px;
+    left: 0;
+}
+
+.submenu .link {
+    padding: 0.3rem 1rem;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--black);
+    color: var(--white);
+    font-weight: bold;
+    border: 3px solid var(--white);
+}
+
+.submenu .link:hover,
+.submenu .sel {
+    background-color: var(--white);
+    color: var(--black);
+}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PhoneCall;
 use Illuminate\Http\Request;
 use App\Models\ChatMessage;
+use App\Events\NewChatMessage;
 
 class PhoneCallController extends Controller
 {
@@ -29,6 +30,8 @@ class PhoneCallController extends Controller
         $chatMessage->status = $request->input('status');
         $chatMessage->chat_room_id = $request->input('chat_room_id');
         $chatMessage->save();
+
+        event(new NewChatMessage($chatMessage));
 
         $phoneCall = new PhoneCall();
         $phoneCall->caller = $request->input('caller');
