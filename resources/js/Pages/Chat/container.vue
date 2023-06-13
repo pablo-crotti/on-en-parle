@@ -4,7 +4,7 @@ import MessageContainer from "@/Pages/Chat/messageContainer.vue";
 import InputMessage from "@/Pages/Chat/inputMessage.vue";
 import ChatRoomSelection from "@/Pages/Chat/chatRoomSelection.vue";
 import TransmissionCard from "@/Pages/MyComponents/transmission-card.vue";
-import Player from "@/Pages/Chat/Player.vue";
+import Player from "@/Pages/Chat/player.vue";
 import axios from "axios";
 
 export default {
