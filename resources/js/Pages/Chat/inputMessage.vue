@@ -12,7 +12,7 @@
         />
         <div class="audio-recorder" id="audio-recorder" data-display="false">
             <div class="recording-infos-container">
-                <p>{{ recordingTime }} / 60 sec.</p>
+                <p>{{ recordingTime }} / 90 sec.</p>
             </div>
         </div>
         <div id="delete" data-display="false" class="input-message-button">
@@ -210,7 +210,7 @@ export default {
                                     .post("/store-audio/" + this.room, formData)
                                     .then((response) => {
                                         this.openModal()
-                                    })
+                                    })  
                                     .catch((error) => {
                                         console.log(error);
                                     });
@@ -223,6 +223,9 @@ export default {
 
                     this.timerInterval = setInterval(() => {
                         this.recordingTime++;
+                        if (this.recordingTime >= 90) {
+                            this.stopRecording();
+                        }
                     }, 1000);
                 },
                 (error) => {
