@@ -108,8 +108,7 @@ export default {
         } else {
             this.lastProgramId = this.firstProgramId;
         }
-        console.log(document.referrer);
-    },
+    }
 }
 
 
@@ -154,20 +153,18 @@ const switchToTeam = (team) => {
                                 <NavLink :href="getRoute('users')" :active="isNavLinkActive('users')">
                                     Utilisateurs
                                 </NavLink>
-                            </div> 
-
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink v-for="item in menuList" :key="item" :href="getRoute(item[0])" :active="route().current(item[0])">
-                                    {{ item[1] }}
-                                </NavLink>
                             </div>
                             
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 
                             </div>
                         </div>
-
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
+                            <div class="submenu">
+                                <NavLink class="submenu-item" v-for="item in menuList" :key="item" :href="getRoute(item[0])" :active="route().current(item[0])">
+                                    {{ item[1] }}
+                                </NavLink>
+                            </div>
                             <div class="program-name" v-if="showProgramSelectionButton">({{ this.currentProgram.broadcast_date }}) {{ this.currentProgram.title }}</div>
                             <button class="selection-programs-button inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150" @click="toggleProgramSelection" v-if="showProgramSelectionButton">
                                 Séléctionner une émission

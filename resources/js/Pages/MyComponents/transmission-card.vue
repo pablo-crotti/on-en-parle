@@ -54,7 +54,7 @@ export default {
                 <span class="material-symbols-outlined"> album </span>
             </div>
             <div v-else-if="new Date(room.broadcast_date) > new Date()" class="upcoming">
-                <p>Prochainnement</p>
+                <p>Prochainement</p>
             </div>
         </div>
 
