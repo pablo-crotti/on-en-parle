@@ -1,6 +1,6 @@
 <script>
 import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
-import MessageContainer from '@/Pages/Chat/MessageContainer.vue';
+import MessageContainer from '@/Pages/Chat/messageContainer.vue';
 import InputMessage from '@/Pages/Chat/InputMessage.vue';
 import ChatRoomSelection from '@/Pages/Chat/ChatRoomSelection.vue';
 import TransmissionCard from '@/Pages/MyComponents/admin-transmission-card.vue';
