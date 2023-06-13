@@ -3,6 +3,7 @@
     display: flex;
     justify-content: left;
     width: auto;
+    align-content: center;
 
 }
 .message-header span{
@@ -49,6 +50,9 @@ audio {
     color: #B2171B;
 }
 .message-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     min-width: 100px;
     width: auto;
     height: fit-content;
@@ -88,4 +92,12 @@ audio {
     border-radius: 20px 20px 20px 20px;
     padding: 5px 10px 5px 10px;
     color: var(--white);
+}
+
+span .message-caller{
+    display:flex;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }

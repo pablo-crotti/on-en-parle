@@ -27,10 +27,10 @@ width: auto;
 .admin-messages-list {
     width:auto;
     overflow-y: auto;
-    min-height: calc(100vh - 330px);
-    max-height: calc(100vh - 330px);
+    min-height: calc(100vh - 340px);
+    max-height: calc(100vh - 340px);
     height: 100%;
-    padding: 15px 3px 3px 3px;
+    padding: 12px 2px 2px 2px;
     border-left: 1px solid var(--white);
     border-right: 1px solid var(--white);
     border-bottom: 1px solid var(--white);
@@ -74,11 +74,11 @@ width: auto;
 
 
 .containerInbox{
-    margin-right:0;
+
+    padding-top: 10px;
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 20px;
     justify-content: center;
     align-items: center;
     align-content: center;
@@ -86,7 +86,7 @@ width: auto;
 }
 
 #boutonsmangament{
-    width: 100%;
+    width: 90%;
     padding: 0px 20px 0px 20px;
     height:auto;
     display:flex; 
@@ -94,18 +94,26 @@ width: auto;
     color: azure;
      width:100%;
      align-items: center;
-     justify-content: space-between;
-     margin: 10px 0px 10px 0px;
+     justify-content: space-between ;
+     margin: 10px 0px 30px 0px;
 }
-
-#boutonsmangament button{
+#boutonsmangament #boutonsmangamenttype
+{   padding-left: 15px;
+    display:flex;
+    flex-direction: row;
+}
+#boutonsmangamenttype button{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
     color:azure;
     margin-right:15px; 
     min-width: 90px;
-    border: 1px solid rgb(255, 255, 255);
+    border: 2px solid rgb(255, 255, 255);
     border-radius: 25px;
     padding:10px;
     background-color: rgb(51, 68, 153);
+    height: 35px;
 }
 
 .button-copy{
@@ -113,7 +121,7 @@ width: auto;
     align-items: center;
     justify-content: space-evenly;
     align-content: center;
-    height: 50px;
+    height: 40px;
     font-size: large;
     font-weight: bold;
 }
@@ -124,7 +132,6 @@ width: auto;
     /* rendre la hauteur maximal à la limite d'affichage de l'écran */
     display: flex;
     flex-direction: row;
-    padding-top: 10px;
     justify-content: center;
     align-items: top;
     align-content: center;

@@ -33,12 +33,12 @@
         <span class="audio-duration"> Audio Durée du player</span>
   
        {{ audiofiles[0].audio_files[0] }}
-       <audio controls @loadedmetadata="audioLoaded">
+      
+      </p>
+      <audio controls @loadedmetadata="audioLoaded">
               <source :src="getAudioPath(message.audio[0].audio_file)" type="audio/mpeg">
                  Your browser does not support the audio element.
         </audio>
-      </p>
-  
     </div>
 
       <div  v-else class="message-content" >
@@ -51,8 +51,8 @@
   
   
     <div v-if="message.status !== 10 && message.status !== 5" class="message-actions">
-      <div v-if="isText || isAudio">
-      <span   class="material-symbols-outlined">Favorite</span> <p>{{ message.nb_likes}}</p>
+      <div v-if="isText || isAudio && !isCall">
+      <span   class="material-symbols-outlined" style="color: brown; display: flex; justify-content: center;">Favorite</span> <p style="font-size: 13px; display: flex; align-items: center;">{{ message.nb_likes}}</p>
     </div>
       <span class="material-symbols-outlined" @click="editing = !editing">edit</span>
           <span class="material-symbols-outlined" @click="$emit('delete', message)">archive</span>

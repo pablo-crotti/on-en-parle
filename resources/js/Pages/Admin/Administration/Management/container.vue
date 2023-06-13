@@ -146,15 +146,13 @@ console.log("pas d'id recu")            }
         <div class="containerManagement">
 
                 <div id="boutonsmangament">
-                <div>
+                <div id="boutonsmangamenttype">
                     <button @click="sortType = 'creation'" >Création</button>
             <button @click="sortType = 'likes'" >Like</button>
-        </div>
-            <div id="creernouveaumsg">
-                    <call-form
-                    :room="chatroomId"></call-form>
                 </div>
-            </div>
+                        <call-form
+                        :room="chatroomId"></call-form>
+                </div>
         <div class="columns">
 
             <div class="column" v-for="status in [0,1,2,3,5]" :key="status">
