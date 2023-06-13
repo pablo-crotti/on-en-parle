@@ -1,26 +1,30 @@
 .message-header {
     border-radius: 20px 20px 0 0;
+    padding: 10px;
     display: flex;
-    justify-content: left;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     width: auto;
 
 }
+.likes-indicator {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.likes-indicator span{
+   color: var(--primary-color);
+}
 .message-header span{
-   margin-right:10px;
-   justify-content: center;
-   align-items: center;
-   align-content: center;
+   margin-right: 20px;
 }
 .symbol-header {
-    color: black;
-    padding: 5px 0 5px 10px;
+    color: var(--primary-color); 
 }
 .message-wrapper {
-    /*fais moi un border noir épais*/
-    border: 3px solid black;
-    
-    /* arrondi moi le border en bas à gauche et à droite */
-    border-radius: 20px 20px 20px 20px;
+    border: 3px solid var(--black);
+    border-radius: 20px;
     background-color: var(--white);
 }
 
@@ -52,8 +56,11 @@ audio {
     min-width: 100px;
     width: auto;
     height: fit-content;
-    display: flex;
-    padding: 5px 5px 0px 0px;
+    padding: 5px 5px 0px 0px;;
+}
+.message-content p {
+    width: 100%;
+    display: block;
 }
 .message-text {
     word-wrap: break-word;
@@ -69,7 +76,6 @@ audio {
     align-content: center;
 
 }
-
 .message-actions div{
     display: flex;
     flex-direction: row;
@@ -82,10 +88,17 @@ audio {
     padding-left: 3px;
 }
 .aired-status {
-    /* fait une border arrondi en blanc */
-    border: 2px solid white;
-    /* arrondi que les coins sur les côtés */
-    border-radius: 20px 20px 20px 20px;
-    padding: 5px 10px 5px 10px;
+    border: 2px solid var(--white);
+    border-radius: 20px;
+    padding: 5px 10px;
     color: var(--white);
+}
+.message-actions .material-symbols-outlined {
+    color: var(--dark-gray);
+}
+
+.message-actions > .material-symbols-outlined {
+    color: var(--dark-gray);
+    font-size: 20px;
+    cursor: pointer;
 }

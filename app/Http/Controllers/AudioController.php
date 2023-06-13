@@ -26,7 +26,7 @@ class AudioController extends Controller
             $path = $file->storeAs('public/rec', $fileName);
 
             $newChatMessage = new ChatMessage();
-            $newChatMessage->content =  $request->message;
+            $newChatMessage->content =  'Transcription';
             $newChatMessage->chat_room_id = $roomId;
             $newChatMessage->save();
 
