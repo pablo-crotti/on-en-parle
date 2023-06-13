@@ -157,6 +157,12 @@ select:focus {
     justify-content: space-between;
 }
 
+.program-item:hover {
+    transform: scale(1.05);
+    transition: 0.5s;
+    cursor: pointer;
+}
+
 .program-cover {
     object-fit: cover;
     width: 80px;
@@ -198,4 +204,8 @@ select:focus {
     padding-right: 10px;
 }
 
-
+.program-name {
+    color: var(--white);
+    margin-right: 20px;
+    font-size: 0.8rem;
+}

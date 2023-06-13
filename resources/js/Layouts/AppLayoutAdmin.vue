@@ -33,8 +33,9 @@ export default {
             currentURL: window.location.href,
             showProgramSelection: false,
             showProgramSelectionButton: false,
-            currentProgramId: 1,
+            firstProgramId: 1,
             lastProgramId: 1,
+            currentProgram: "",
         }
     },
     methods: {
@@ -51,7 +52,7 @@ export default {
             axios.get('/prochaines-emissions')
                 .then(response => {
                     this.upcomingPrograms = response.data;
-                    this.lastProgramId = this.upcomingPrograms[0].id;
+                    this.firstProgramId = this.upcomingPrograms[0].id;
                 })
                 .catch(error => {
                     console.log(error);
@@ -63,7 +64,13 @@ export default {
         getRoute(routeName){
             if(routeName === "inbox" || routeName === "archives" || routeName === "control" || routeName === "animator" || routeName === "management"){
                 this.showProgramSelectionButton = true;
-                return route(routeName, { id: this.currentProgramId });
+
+                // if(isNaN(previousURL.split('/').pop())){
+                //     return route(routeName, { id: this.lastProgramId });
+                // } else {
+                //     return route(routeName);
+                // }
+                return route(routeName, { id: this.lastProgramId });
             } else {
                 this.showProgramSelectionButton = false;
                 return route(routeName);
@@ -89,12 +96,19 @@ export default {
             }
         });
         if(!isNaN(this.currentURL.split('/').pop())){
-            this.currentProgramId = this.currentURL.split('/').pop();
             this.lastProgramId = this.currentURL.split('/').pop();
+            
+            axios.get('/chat/room/' + this.currentURL.split('/').pop())
+                .then(response => {
+                    this.currentProgram = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         } else {
-            this.currentProgramId = this.lastProgramId;
+            this.lastProgramId = this.firstProgramId;
         }
-        
+        console.log(document.referrer);
     },
 }
 
@@ -154,6 +168,7 @@ const switchToTeam = (team) => {
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
+                            <div class="program-name" v-if="showProgramSelectionButton">({{ this.currentProgram.broadcast_date }}) {{ this.currentProgram.title }}</div>
                             <button class="selection-programs-button inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150" @click="toggleProgramSelection" v-if="showProgramSelectionButton">
                                 Séléctionner une émission
                                 <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

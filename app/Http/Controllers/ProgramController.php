@@ -69,7 +69,7 @@ class ProgramController extends Controller
     {
         $currentDate = Carbon::now();
 
-        $broadcasts = ChatRoom::where('broadcast_date', '>=', $currentDate)
+        $broadcasts = ChatRoom::whereDate('broadcast_date', '>=', $currentDate)
             ->orderBy('broadcast_date', 'asc')
             ->get();
 
