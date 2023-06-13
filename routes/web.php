@@ -64,7 +64,7 @@ Route::get('/chat/room/{roomId}/messages', [ChatController::class, 'messages']);
 
 Route::get('/chat/room/{chatId}/likes', [LikesController::class, 'sumChatLikes']);
 
-Route::get('/transmissions/dates', [CalendarController::class, 'getBroadcasteDates']);
+Route::get('/transmissions/dates', [CalendarController::class, 'getBroadcastDates']);
 
 Route::get('/calendar/{year}/{month}/{day}', [CalendarController::class, 'hasTransmission']);
 
