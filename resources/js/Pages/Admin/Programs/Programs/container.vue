@@ -2,21 +2,36 @@
     import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
     import AdminProgram from '@/Pages/MyComponents/admin-program.vue';
     import axios from 'axios';
+    import dropdownFilter from '@/Pages/MyComponents/dropdownFilter.vue';
 
     export default {
         components: {
             AppLayout,
-            AdminProgram
+            AdminProgram,
+            dropdownFilter
         },
         data() {
             return {
                 programs: [],
                 filteredPrograms: [], 
-                filterBy: 'date', 
-                isSelectOpen: false
+                filterBy: '', 
+                isSelectOpen: false,
+                categories: [
+                {
+                    name: 'Date de diffusion (décroissante)',
+                    value: 'date'
+                },
+                {
+                    name: 'Nombre de messages',
+                    value: 'interactions'
+                }
+    ]
             }
         },
         methods: {
+            handleFilterApplied(filterData) {
+            this.filterBy = filterData;
+    },
             toggleSelect() {
             this.isSelectOpen = !this.isSelectOpen;
     },  
@@ -65,17 +80,19 @@
     <AppLayout title="On en parle | Émissions (Liste)">
         <div class="programs-header">
             <h1 id="programs-title">Émissions</h1>
-
+            <dropdownFilter :categories="categories" @filter-applied="handleFilterApplied"></dropdownFilter>
+            <!--
+     
             <div id="dropdown-filter">
-              <label for="filter" @click="toggleSelect">Trier par 
-                    <!-- <span class="material-symbols-outlined" :class="{'rotate': isSelectOpen}">arrow_drop_down</span> -->
+              <label for="filter">Trier par 
+                   
               </label>
                 <select v-model="filterBy" id="filter" @change="handleFilterChange">
                     <option value="date" >Date</option>
                     <option value="interactions">Interactions</option>
                 </select>  
             </div>
-            
+             -->
             
         </div>
         
@@ -94,7 +111,5 @@
 </template>
 
 <style>
-.rotate {
-  transform: rotate(180deg);
-}
+
 </style>
