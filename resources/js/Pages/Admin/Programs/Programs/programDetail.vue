@@ -2,7 +2,7 @@
 import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
 import MessageContainer from '@/Pages/Chat/messageContainer.vue';
 import InputMessage from '@/Pages/Chat/inputMessage.vue';
-import ChatRoomSelection from '@/Pages/Chat/ChatRoomSelection.vue';
+import ChatRoomSelection from '@/Pages/Chat/chatRoomSelection.vue';
 import TransmissionCard from '@/Pages/MyComponents/admin-transmission-card.vue';
 import axios from 'axios';
 
