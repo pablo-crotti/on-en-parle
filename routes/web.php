@@ -148,16 +148,16 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
 // *************** ======= DATA POST
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
-    ->post('/chat/room/edit/{roomId}', [ProgramController::class, 'updateRoom']);
+    ->post('/chat/room/edit/{roomId}', [ProgramController::class, 'updateRoom']); //event done
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
-    ->post('/emission/{roomId}/live', [LiveController::class, 'setLive']);
+    ->post('/emission/{roomId}/live', [LiveController::class, 'setLive']); //event done
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',]) //event done
     ->post('/chat/room/new', [ProgramController::class, 'newRoom']);
 
  Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
-    ->post('/chat/room/delete/{roomId}', [ProgramController::class, 'destroy'])->name('deleteRoom');
+    ->post('/chat/room/delete/{roomId}', [ProgramController::class, 'destroy'])->name('deleteRoom'); //event done
 
 
 
@@ -199,7 +199,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
 // *************** ======= DATA POST
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
-    ->post('/phone-calls', [PhoneCallController::class, 'store']);
+    ->post('/phone-calls', [PhoneCallController::class, 'store']); // event done
 
 // ====================================================================================================---
 
@@ -231,16 +231,16 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
 // *********************************************** =======  ADMIN GENERAL DATA POST
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
-    ->post('/AdminInbox/message/{id}/update', [ChatAdminController::class, 'updateMessageStatus']);
+    ->post('/AdminInbox/message/{id}/update', [ChatAdminController::class, 'updateMessageStatus']); //event done
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
-    ->post('/AdminInbox/message/{id}/content', [ChatAdminController::class, 'updateMessageContent']);
+    ->post('/AdminInbox/message/{id}/content', [ChatAdminController::class, 'updateMessageContent']); //event done
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
-    ->post('/AdminInbox/message/{id}/delete', [ChatAdminController::class, 'deleteMessage']);
+    ->post('/AdminInbox/message/{id}/delete', [ChatAdminController::class, 'deleteMessage']); //event done
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
-    ->post('/chat/room/{roomId}/admin-message', [AdminMessagesController::class, 'newMessage']);
+    ->post('/chat/room/{roomId}/admin-message', [AdminMessagesController::class, 'newMessage']); //event done
 
 
 

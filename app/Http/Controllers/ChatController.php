@@ -32,6 +32,7 @@ class ChatController extends Controller
     public function rooms(Request $request)
     {
         return ChatRoom::orderBy('on_air', 'DESC')
+            ->orderBy('broadcast_date', 'DESC')
             ->orderBy('closed', 'ASC')
             ->withCount('messages')
             ->get();

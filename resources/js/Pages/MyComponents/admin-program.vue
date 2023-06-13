@@ -20,12 +20,7 @@
 
                    <span>{{ room.messages_count }}</span>   
                 </div>
-
-                <span class="program-date">{{ formattedDate() }}</span>
-                
-                <!-- <a :href="route('program-detail', { id: this.program.id })"><span @click="modifyProgram()" id="play-circle" class="material-symbols-outlined">
-                        play_circle
-                 </span></a> -->
+                <span class="program-date" v-if="room.broadcast_date">{{ new Date(room.broadcast_date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }) }}</span>
                 
             </div>
         </div>
@@ -72,15 +67,6 @@ import axios from 'axios';
 
             return finalParagraph;
             },
-            formattedDate() {
-                const [year, month, day] = this.program.broadcast_date.split('-');
-                const monthNames = [
-                    'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-                    'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
-                ];
-                const formattedMonth = monthNames[Number(month) - 1];
-                return `${Number(day)} ${formattedMonth} ${year}`;
-                }
         },
         created() {
             axios.get('/chat/rooms-list').then(response => {
