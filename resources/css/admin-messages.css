@@ -44,7 +44,7 @@
 
 audio {
     padding-right: 5px;
-    min-width: 150px;
+    min-width: 160px;
     width: 95%;
     height: 30px;
     margin: 10px 0 10px 0;
@@ -85,12 +85,12 @@ font-size: 15px;
 .message-actions {
     min-width: 35px;
     max-width: 40px;
-    height: 100px;
+    height: auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: top;
     align-content: center;
-    margin-right: 10px;
+    margin-left: 5px;
 }
 .message-actions div{
     display: flex;
@@ -110,6 +110,10 @@ font-size: 15px;
     color: var(--white);
 }
 .message-actions .material-symbols-outlined {
+    margin-bottom: 5px;    
+    margin-top: 5px;
+
+
     color: var(--dark-gray);
 }
 

@@ -57,6 +57,9 @@
 .transmission-card-container .infos {
     width: calc(100% - 250px);
     margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .transmission-card-container .infos h1 {
     font-weight: bold;
