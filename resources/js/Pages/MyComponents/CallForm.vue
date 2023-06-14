@@ -1,13 +1,14 @@
 <template>
+    <modalValidation :title="modalTitle" :message="modalMessage" :is-open="isModalOpen" @close="closeModal" />
 
   <div class="containercreer" @click="closeForm($event)">
-    
+
         <div class="add-product" :class="{'open': formOpen}">
         <div class="button-copy" v-show="!formOpen" @click="formOpen = true">
           <span class="button-text">Créer</span>
         </div>
         <form @submit.prevent="submit">
-        
+
           <meta name="csrf-token" content="{{ csrf_token() }}">
           <div class="admin-messages-title-container" style="height: 50px; justify-content: end; align-items: center;">
             <span class="symbol-header material-symbols-outlined" style="color:aliceblue;" @click="cancel">close</span>
@@ -25,26 +26,30 @@
           </div>
           <div class="form--actions">
             <div class="cancel" @click="cancel">Annuler</div>
-            <button type="submit" class="submit-button" >Enregistrer</button>
+            <button type="submit" class="submit-button" @click="openModal" >Enregistrer</button>
           </div>
         </div>
         </form>
       </div>
   </div>
-  
+
   </template>
-  
-  
-  
+
+
+
   <script>
   import axios from 'axios';
+  import modalValidation from "@/Pages/MyComponents/modalValidation.vue";
   export default {
     props: {
      room:{
           type: Number,
           required: true
       },
-     
+
+    },
+    components: {
+      modalValidation
     },
     data() {
       return {
@@ -53,17 +58,26 @@
           caller: '',
           message: '',
           status: 2,
-          chat_room_id:this.room,
-  
-        }
+            chat_room_id:this.room,
+        },
+
+          isModalOpen: false,
+          modalTitle: 'Ajout de la transcription',
+          modalMessage: 'Confirmation de création de la transcription!'
       }
     },
     methods: {
+        openModal() {
+            this.isModalOpen = true;
+        },
+        closeModal() {
+            this.isModalOpen = false;
+        },
       cancel() {
           this.formOpen = false;
           this.formData.caller = '';
           this.formData.message = '';
-        
+
       },
       closeForm(event) {
       if (event.target.classList.contains('container')) {
@@ -71,24 +85,24 @@
       }
     },
       submit() {
-  
+
           axios.post('/phone-calls', this.formData)
               .then(response => {
-  
+
                   if (response.status === 200) {
                       this.cancel();
                       this.$inertia.reload();
-  
+
                   }
               })
               .catch(error => {
                   console.log(error);
               });
       }
-  } 
+  }
   }
   </script>
-  
+
   <style scoped>
 
 .admin-messages-title-container{
@@ -115,7 +129,7 @@
     height: 40px;
     width: 114px;
   }
-  
+
   .add-product.open {
     background-color: #FAFAFA;
     border-radius: 5px;
@@ -126,7 +140,7 @@
     border-radius: 20px;
 margin-top: 50px;
   }
-  
+
   .add-product form {
     display: flex;
     flex-direction: column;
@@ -136,17 +150,17 @@ margin-top: 50px;
     height: 0;
     transition: opacity 0.1s ease;
   }
-  
+
   .add-product.open form {
     opacity: 1;
     transition-delay: 0.3s;
     height: auto;
 
-  
-  }
-  
 
-  
+  }
+
+
+
 
   .form--field{
     margin-bottom: 5px;
@@ -156,7 +170,7 @@ margin-top: 50px;
     color: #ffffff;
     line-height: 100px;
   }
-  
+
   .cancel {
     background-color: #ffffff;
     height: 50px;
@@ -169,7 +183,7 @@ margin-top: 50px;
     justify-content: center;
     font-size: 0.85em;
     font-weight: bold;  }
-  
+
   .cancel span:hover {
     text-decoration: underline;
   }
@@ -190,17 +204,17 @@ margin-top: 50px;
     line-height: 30px;
     text-align: center;
     color: #fff;
-  
+
     font-size: 0.85em;
     border: none;
     font-weight: bold;
   }
-  
+
   .submit-button:hover {
     darken: 70%;
     cursor: pointer;
   }
-  
+
   .form--actions {
     display: flex;
     justify-content: space-between;
@@ -211,11 +225,11 @@ margin-top: 50px;
     height: auto;
     max-height: 60px;
   }
-  
+
   .form--actions {
     width: 100%;
   }
-  
+
   .form--element {
     background-color: #fff;
     border: 1px solid #ECECEC;
@@ -229,16 +243,16 @@ margin-top: 50px;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
   }
-  
+
   .form--element:focus {
     border: 1px solid #B2171B;
     border-radius: 2px;
   }
-  
+
   .form--element:not(.textarea) {
     height: 30px;
   }
-  
+
   .form--element.textarea {
     height: auto;
     min-height:100px;
@@ -246,7 +260,7 @@ margin-top: 50px;
     margin-bottom: 20px;
     overflow-y: scroll;
   }
-  
+
   .form--title {
     text-align: center;
     font-size: 20px;
@@ -260,6 +274,5 @@ margin-top: 50px;
     margin-bottom: 5px;
     display: block;
   }
-  
+
   </style>
-  

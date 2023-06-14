@@ -2,13 +2,16 @@
     import axios from 'axios';
     import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
     import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
+    import dropdownFilter from '@/Pages/MyComponents/dropdownFilter.vue';
 
 
     export default {
         components: {
           ChatMessage,
-          AppLayout},
-    
+          AppLayout,
+            dropdownFilter
+        },
+
     props: {
     initialMessages:{
       type: Array,
@@ -23,7 +26,7 @@
         required: true
     },
 
-   
+
   },
 
   data() {
@@ -33,12 +36,25 @@
       filteredMessages: [],
       statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "Prêt à diffuser"],
       sortType: 'creation', // Ajouté
+        categories: [
+            {
+                name: 'Date de création',
+                value: 'creation'
+            },
+            {
+                name: 'Nombre de likes',
+                value: 'likes'
+            }
+        ]
 
     };
   },
 
   methods: {
-    
+      handleFilterApplied(filterData) {
+          this.sortType = filterData;
+      },
+
     drag(event, messageId) {
     event.dataTransfer.setData('text', messageId);
   },
@@ -100,7 +116,7 @@ async deleteMessage(message) {
     sortedByLikes() {
         return [...this.messages].sort((a, b) => b.nb_likes - a.nb_likes); // Trier par nombre de likes en ordre décroissant
     },
-  
+
     sortedMessages() {
         if (this.sortType === 'creation') {
             return this.sortedByCreation;
@@ -119,29 +135,30 @@ async deleteMessage(message) {
     <div class="containerInbox">
 
       <div id="boutonsmangament">
-          
+
         <div id="boutonsmangamenttype">
-            <button @click="sortType = 'creation'" >Date</button>
-            <button @click="sortType = 'likes'" >Like</button>
+<!--            <button @click="sortType = 'creation'" >Date</button>
+            <button @click="sortType = 'likes'" >Like</button>-->
+            <dropdownFilter :categories="categories" @filter-applied="handleFilterApplied"></dropdownFilter>
         </div>
           </div>
-        
+
     <div class="columns">
 
         <div class="column" v-for="status in [0, 1]" :key="status">
           <div class="admin-messages-container" style="width:30vw; margin-right:30px;">
-         
+
             <div class="admin-messages-title-container">
-              
+
               <div class="admin-messages-title">{{ statu[status] }}</div>
               </div>
             <div class="admin-messages-list "
               :id="`column-${status}`"
                       @drop="drop($event, status)"
                       @dragover.prevent>
-                
+
                       <div class="admin-messages-item" v-for="message in sortedMessages.filter(m => m.status === status)">
-                    
+
                             <chat-message
                           :key="message.id"
                           :message="message"
@@ -149,18 +166,18 @@ async deleteMessage(message) {
                           @dragstart="drag($event, message.id)"
                           @modify="modifier"
                           @delete="deleted"
-                        /> 
+                        />
                     </div>
-            
+
                   </div>
-                
-                
-          
+
+
+
             </div>
           </div>
         </div>
 
-    </div> 
-        
+    </div>
+
   </AppLayout>
 </template>

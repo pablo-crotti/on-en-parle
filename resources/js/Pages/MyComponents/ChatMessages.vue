@@ -142,7 +142,6 @@ export default {
             const audio = event.target;
             if (!audio || !audio.duration) {
         // Gérer l'erreur ici, par exemple en affichant un message d'erreur
-                console.log("erreur audio")
             } else {
                 const duration = Math.floor(audio.duration);
             const minutes = Math.floor(duration / 60);
@@ -151,25 +150,21 @@ export default {
                 .toString()
                 .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
             this.chiffre = 1;
-            console.log(audio.duration);
             }
 
         },
 
         couleur(type) {
             if (type === "message") {
-                console.log("c'est un message");
                 this.headerColor = "#8239DF";
             } else if (type === "audio") {
                 this.headerColor = "#FBEF85";
-                console.log("c'est un audio");
             } else if (type === "call") {
                 headerColor = "#FC9E5A";
                 headerSymbol = "call";
             }
         },
         getAudioPath(audioFile) {
-          console.log(audioFile)
 
             return `${window.location.origin}/audio/${audioFile}`;
         },

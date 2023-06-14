@@ -4,6 +4,7 @@ import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
 import CallForm from '@/Pages/MyComponents/CallForm.vue';
 import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
 import modalValidation from '@/Pages/MyComponents/modalValidation.vue';
+import dropdownFilter from '@/Pages/MyComponents/dropdownFilter.vue';
 //  import ChatContainer from '@/Pages/MyComponents/admin-message.vue';
 
 
@@ -12,7 +13,8 @@ export default {
         CallForm,
         ChatMessage,
         AppLayout,
-        modalValidation
+        modalValidation,
+        dropdownFilter
         //  ChatContainer
     },
 
@@ -48,11 +50,24 @@ export default {
             sortType: 'creation',
             isModalOpen: false,
             modalTitle: 'Erreur',
-            modalMessage: ''
+            modalMessage: '',
+            categories: [
+                {
+                    name: 'Date de création',
+                    value: 'creation'
+                },
+                {
+                    name: 'Nombre de likes',
+                    value: 'likes'
+                }
+            ]
         };
     },
 
     methods: {
+        handleFilterApplied(filterData) {
+            this.sortType = filterData;
+        },
 
         drag(event, messageId) {
             event.dataTransfer.setData('text', messageId);
@@ -92,7 +107,7 @@ export default {
                 // remove the message from local messages
                 this.messages = this.messages.filter(m => m.id !== message.id);
             } catch (error) {
-                
+
             }
         },
         async deleted(message) {
@@ -174,11 +189,12 @@ export default {
         <div class="containerManagement">
 
             <div id="boutonsmangament">
-                <div id="boutonsmangamenttype">
+<!--                <div id="boutonsmangamenttype">
                     <p style="color: aliceblue; margin-right: 10px; display:flex;align-items:center ;">Trier par</p>
                     <button @click="sortType = 'creation'">Création</button>
                     <button @click="sortType = 'likes'">Like</button>
-                </div>
+                </div>-->
+                <dropdownFilter :categories="categories" @filter-applied="handleFilterApplied"></dropdownFilter>
                 <call-form :room="chatroomId"></call-form>
             </div>
             <div class="columns">

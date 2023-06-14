@@ -1,0 +1,7 @@
+#filter{
+    border-radius: 20px;
+    cursor: pointer;
+}
+#dropdown-filter label{
+    margin-right: 10px;
+}
