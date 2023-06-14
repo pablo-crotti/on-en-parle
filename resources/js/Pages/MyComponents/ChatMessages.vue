@@ -85,7 +85,7 @@
         </div>
 
     <div v-else-if="message.status === 10">
-          <span class="material-symbols-outlined" @click="$emit('archive', message)">archive</span>
+          <span class="material-symbols-outlined" @click="$emit('archive', message)">unarchive</span>
 
      </div>
 

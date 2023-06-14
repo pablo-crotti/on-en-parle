@@ -99,7 +99,7 @@ export default {
             try {
                 await axios.post(`/AdminInbox/message/${message.id}/update`, { status: 10 });
                 // remove the message from local messages
-                this.messages = this.messages.filter(m => m.id !== message.id);
+                // this.messages = this.messages.filter(m => m.id !== message.id);
             } catch (error) {
                 console.error(error);
             }
