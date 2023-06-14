@@ -1,23 +1,3 @@
-<!-- <script>
-    import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
-    import axios from 'axios';
-
-    export default {
-        components: {
-            AppLayout
-        },
-    }
-</script>
-
-<template>
-    <AppLayout title="On en parle | Administration (Régie)">
-        <div class="control-wrapper">
-
-        </div>
-    </AppLayout>
-</template> -->
-
-
 
 <script>
     import axios from 'axios';
@@ -34,30 +14,12 @@
             dropdownFilter
         },
 
-    props: {
-    initialMessages:{
-      type: Array,
-      required: true
-    },
-    audioChatroom:{
-        type: Array,
-        required: true
-    },
-    idroom:{
-        type: String,
-        required: true
-    },
-    callChatroom:{
-        type: Array,
-        required: true
-    },
-
-  },
-
   data() {
     return {
-      messages: [],
-      audiofiles: this.audioChatroom,
+     messages: [],
+     audiofiles: [],
+     callChatroom: [],
+    idroom: null,
       filteredMessages: [],
       statu: ["Message Audio","","","","", "A diffusé"],
       chatroomId:null,
@@ -152,9 +114,19 @@ async deleteMessage(message) {
             },
 
     },
-    created() {
-        this.messages = this.initialMessages;
-        console.log(this.messages);
+    async created() {
+        const currentUrl = window.location.pathname;
+
+const idFromUrl = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+
+
+    const { data } = await axios.get(`/admin/reception/api/control/${idFromUrl}`);
+   
+        this.messages = data.initialMessages;
+        this.audiofiles = data.audioChatroom;
+        this.callChatroom = data.callChatroom;
+        this.idroom = data.idroom;
+
         let convertedId = null;
 
             if (typeof this.idroom === 'string') {

@@ -45,11 +45,12 @@ class ChatAdminController extends Controller
                     'audio_files' => $audioFiles,
                     'calls' => $calls,
                 ];
+            
             });
 
         $messages = ChatMessage::where('chat_room_id', $id)->with(['text', 'audio', 'call'])->get();
 
-        return Inertia::render('Admin/Reception/Inbox/container', [
+        return response()->json([
             'initialMessages' => $messages,
             'audioChatroom' => $messagesWithAudio,
             'idroom' => $id
@@ -62,7 +63,7 @@ class ChatAdminController extends Controller
      * @param  int  $id
      * @return \Inertia\Response
      */
-    public function showManagementChatRoom($id)
+    public function dataManagementChatRoom($id)
     {
         $messagesWithAudio = ChatMessage::where('chat_room_id', $id)
             ->has('audio')
@@ -95,7 +96,8 @@ class ChatAdminController extends Controller
 
         $messages = ChatMessage::where('chat_room_id', $id)->with(['text', 'audio', 'call'])->get();
 
-        return Inertia::render('Admin/Administration/Management/container', [
+        
+        return response()->json([
             'initialMessages' => $messages,
             'audioChatroom' => $messagesWithAudio,
             'callChatroom' => $messagesWithAudio,
@@ -109,7 +111,7 @@ class ChatAdminController extends Controller
      * @param  int  $id
      * @return \Inertia\Response
      */
-    public function showControlChatRoom($id)
+    public function dataControlChatRoom($id)
     {
         $messagesWithAudio = ChatMessage::where('chat_room_id', $id)
             ->has('audio')
@@ -142,7 +144,7 @@ class ChatAdminController extends Controller
 
         $messages = ChatMessage::where('chat_room_id', $id)->with(['text', 'audio', 'call'])->get();
 
-        return Inertia::render('Admin/Administration/Control/container', [
+        return response()->json([
             'initialMessages' => $messages,
             'audioChatroom' => $messagesWithAudio,
             'callChatroom' => $messagesWithAudio,
@@ -156,7 +158,7 @@ class ChatAdminController extends Controller
      * @param  int  $id
      * @return \Inertia\Response
      */
-    public function showAnimatorChatRoom($id)
+    public function dataAnimatorChatRoom($id)
     {
         $messagesWithAudio = ChatMessage::where('chat_room_id', $id)
             ->has('audio')
@@ -189,7 +191,7 @@ class ChatAdminController extends Controller
 
         $messages = ChatMessage::where('chat_room_id', $id)->with(['text', 'audio', 'call'])->get();
 
-        return Inertia::render('Admin/Administration/Animator/container', [
+        return response()->json([
             'initialMessages' => $messages,
             'audioChatroom' => $messagesWithAudio,
             'callChatroom' => $messagesWithAudio,

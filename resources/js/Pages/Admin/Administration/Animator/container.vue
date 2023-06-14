@@ -1,23 +1,3 @@
-<!-- <script>
-    import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
-    import axios from 'axios';
-
-    export default {
-        components: {
-            AppLayout
-        },
-    }
-</script>
-
-<template>
-    <AppLayout title="On en parle | Administration (Régie)">
-        <div class="control-wrapper">
-
-        </div>
-    </AppLayout>
-</template> -->
-
-
 
 <script>
     import axios from 'axios';
@@ -56,8 +36,10 @@
 
   data() {
     return {
-      messages: [],
-      audiofiles: this.audioChatroom,
+        messages: [],
+     audiofiles: [],
+     callChatroom: [],
+    idroom: null,
       filteredMessages: [],
       chatroomId:null,
       calls: this.callChatroom,
@@ -147,8 +129,20 @@ async deleteMessage(message) {
             return this.messages.filter(m => m.status === 10);
         }
     },
-    created() {
-        this.messages = this.initialMessages;
+  async  created() {
+    const currentUrl = window.location.pathname;
+
+    const idFromUrl = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+
+
+        const { data } = await axios.get(`/admin/reception/api/animator/${idFromUrl}`);
+       
+        this.messages = data.initialMessages;
+        this.audiofiles = data.audioChatroom;
+        this.callChatroom = data.callChatroom;
+        this.idroom = data.idroom;
+
+
         let convertedId = null;
         console.log(this.messages);
             if (typeof this.idroom === 'string') {

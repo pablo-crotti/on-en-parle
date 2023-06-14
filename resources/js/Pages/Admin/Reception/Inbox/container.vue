@@ -12,30 +12,13 @@
             dropdownFilter
         },
 
-    props: {
-    initialMessages:{
-      type: Array,
-      required: true
-    },
-    audioChatroom:{
-        type: Array,
-        required: true
-    },
-    idroom:{
-        type: String,
-        required: true
-    },
-
-
-  },
 
   data() {
     return {
-      messages: this.initialMessages,
-      audiofiles: this.audioChatroom,
+    
       filteredMessages: [],
       statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "Prêt à diffuser"],
-      sortType: 'creation', // Ajouté
+      sortType: 'creation', 
         categories: [
             {
                 name: 'Date de création',
@@ -45,7 +28,10 @@
                 name: 'Nombre de likes',
                 value: 'likes'
             }
-        ]
+        ],
+        messages: [],
+            audiofiles: [],
+            idroom: null,
 
     };
   },
@@ -125,7 +111,19 @@ async deleteMessage(message) {
         }
     }
 
-}
+},
+
+async created() { 
+    const currentUrl = window.location.pathname;
+
+    const idFromUrl = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+
+    const { data } = await axios.get(`/admin/reception/api/animator/${idFromUrl}`);
+   
+        this.messages = data.initialMessages;
+        this.audiofiles = data.audioChatroom;
+        this.idroom = data.idroom;
+    },
 };
 
 </script>
@@ -137,8 +135,6 @@ async deleteMessage(message) {
       <div id="boutonsmangament">
 
         <div id="boutonsmangamenttype">
-<!--            <button @click="sortType = 'creation'" >Date</button>
-            <button @click="sortType = 'likes'" >Like</button>-->
             <dropdownFilter :categories="categories" @filter-applied="handleFilterApplied"></dropdownFilter>
         </div>
           </div>

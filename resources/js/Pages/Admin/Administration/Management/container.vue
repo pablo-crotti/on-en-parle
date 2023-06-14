@@ -18,30 +18,12 @@ export default {
         //  ChatContainer
     },
 
-    props: {
-        initialMessages: {
-            type: Array,
-            required: true
-        },
-        audioChatroom: {
-            type: Array,
-            required: true
-        },
-        idroom: {
-            type: String,
-            required: true
-        },
-        callChatroom: {
-            type: Array,
-            required: true
-        },
-
-    },
-
     data() {
         return {
             messages: [],
-            audiofiles: this.audioChatroom,
+            audiofiles: [],
+            callChatroom: [],
+            idroom: null,
             filteredMessages: [],
             statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "", "Prêt à diffuser"],
             couleurtitre: ["#000000", "rgb(179, 23, 28,0.18)", "rgb(179, 23, 28,0.45)", "rgb(179, 23, 28,0.7)", "", "rgb(179, 23, 28)"],
@@ -161,8 +143,19 @@ export default {
         }
     },
 
-    created() {
-        this.messages = this.initialMessages;
+    async created() {
+        const currentUrl = window.location.pathname;
+
+    const idFromUrl = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+
+
+        const { data } = await axios.get(`/admin/reception/api/management/${idFromUrl}`);
+       
+        this.messages = data.initialMessages;
+        this.audiofiles = data.audioChatroom;
+        this.callChatroom = data.callChatroom;
+        this.idroom = data.idroom;
+
         let convertedId = null;
 
         if (typeof this.idroom === 'string') {
