@@ -14,8 +14,8 @@ width: auto;
 }
 
 .admin-messages-container {
-    min-width: calc(100vh / 5.5);
-   width: 18vw;
+    min-width: calc(100vh / 5);
+   width: calc(100vh / 3);
     height: 10%;
     background-color: var(--black);
     justify-content: flex-start;
@@ -96,7 +96,7 @@ width: auto;
      width:100%;
      align-items: center;
      justify-content: space-between ;
-     margin: 10px 0px 30px 0px;
+     margin: 5px 0px 18px 0px;
 }
 #boutonsmangament #boutonsmangamenttype
 {   padding-left: 15px;

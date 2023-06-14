@@ -35,10 +35,10 @@ export default {
         },
 
          async desarchiver(message){  
-            console.log("le message id ");
-            console.log("le message id " + message.status);
             message.status = 0;
         await axios.post(`/AdminInbox/message/${message.id}/update`, { status: message.status });
+        this.messages = this.messages.filter(m => m.id !== message.id);
+
 
         },
         filterMessages(status) {
