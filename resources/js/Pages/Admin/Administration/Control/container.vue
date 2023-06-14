@@ -23,6 +23,7 @@
     import axios from 'axios';
     import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
     import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
+    import dropdownFilter from '@/Pages/MyComponents/dropdownFilter.vue';
   //  import ChatContainer from '@/Pages/MyComponents/admin-message.vue';
 
 
@@ -30,8 +31,9 @@
         components: {
             ChatMessage,
             AppLayout,
+            dropdownFilter
         },
-    
+
     props: {
     initialMessages:{
       type: Array,
@@ -49,7 +51,7 @@
         type: Array,
         required: true
     },
-   
+
   },
 
   data() {
@@ -62,11 +64,24 @@
       calls: this.callChatroom,
       sortType: 'creation',
       couleurtitre: ["#FF0000", "red", "","#FFFF00", "#008000", "#0000FF"],
+        categories: [
+            {
+                name: 'Date de création',
+                value: 'creation'
+            },
+            {
+                name: 'Nombre de likes',
+                value: 'likes'
+            }
+        ]
     };
 },
 
   methods: {
-    
+      handleFilterApplied(filterData) {
+          this.sortType = filterData;
+      },
+
     drag(event, messageId) {
     event.dataTransfer.setData('text', messageId);
   },
@@ -117,7 +132,7 @@ async deleteMessage(message) {
     computed: {
         audioMessages() {
         return this.messages.filter(m => m.audio && m.audio.length > 0 && m.status === 3);
-        
+
     },
     statusFiveMessages() {
         return this.messages.filter(m => m.status === 5 && m.audio.length > 0);
@@ -135,7 +150,7 @@ async deleteMessage(message) {
                 }
                 return messages;
             },
-           
+
     },
     created() {
         this.messages = this.initialMessages;
@@ -154,7 +169,7 @@ async deleteMessage(message) {
             this.chatroomId = convertedId;
             }
 },
-  
+
 }
 
 </script>
@@ -166,8 +181,9 @@ async deleteMessage(message) {
 
             <div id="boutonsmangament">
                 <div id="boutonsmangamenttype">
-                    <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
-            <button @click="sortType = 'likes'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
+<!--                    <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
+            <button @click="sortType = 'likes'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>-->
+                    <dropdownFilter :categories="categories" @filter-applied="handleFilterApplied"></dropdownFilter>
         </div>
             </div>
         <div class="columns">
@@ -176,7 +192,7 @@ async deleteMessage(message) {
             <div class="admin-messages-container" >
                 <div class="admin-messages-title-container" :style="{backgroundColor: couleurtitre[status]}">
                     <div class="admin-messages-title" >{{ statu[status] }}</div>
-               
+
                 </div>
             <div class="admin-messages-list"
                 :id="`column-${status}`"
@@ -209,8 +225,8 @@ async deleteMessage(message) {
         </div>
             </div>
 
-        </div> 
-                
+        </div>
+
         </AppLayout>
 
 </template>

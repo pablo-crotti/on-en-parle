@@ -23,6 +23,7 @@
     import axios from 'axios';
     import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
     import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
+    import dropdownFilter from '@/Pages/MyComponents/dropdownFilter.vue';
   //  import ChatContainer from '@/Pages/MyComponents/admin-message.vue';
 
 
@@ -30,9 +31,10 @@
         components: {
             ChatMessage,
             AppLayout,
+            dropdownFilter
           //  ChatContainer
         },
-    
+
     props: {
     initialMessages:{
       type: Array,
@@ -49,7 +51,7 @@
         type: Array,
         required: true
     },
-   
+
   },
 
   data() {
@@ -59,12 +61,24 @@
       filteredMessages: [],
       chatroomId:null,
       calls: this.callChatroom,
+        categories: [
+            {
+                name: 'Date de création',
+                value: 'creation'
+            },
+            {
+                name: 'Nombre de likes',
+                value: 'likes'
+            }
+        ]
     };
 },
 
   methods: {
-   
-    
+      handleFilterApplied(filterData) {
+          this.sortType = filterData;
+      },
+
     drag(event, messageId) {
     event.dataTransfer.setData('text', messageId);
   },
@@ -144,7 +158,7 @@ statusTenMessages() {
             } else {
 console.log("pas d'id recu")            }
 },
-  
+
 }
 
 </script>
@@ -157,8 +171,9 @@ console.log("pas d'id recu")            }
             <div id="boutonsmangament">
                 <div id="boutonsmangamenttype">
 
-                    <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
-            <button @click="sortType = 'likes'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>
+<!--                    <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
+            <button @click="sortType = 'likes'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>-->
+                    <dropdownFilter :categories="categories" @filter-applied="handleFilterApplied"></dropdownFilter>
         </div>
        </div>
                 <div class="columns">
@@ -188,8 +203,8 @@ console.log("pas d'id recu")            }
                     </div>
                 </div>
 
-            </div> 
-               
+            </div>
+
         </AppLayout>
 </template>
 
