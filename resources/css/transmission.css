@@ -1,3 +1,6 @@
+.transmission-card-container .infos h1 {
+    text-align: left;
+}
 .transmissions-wrapper, .calendar-transmission-wrapper {
     display: flex;
     flex-direction: row;
@@ -42,9 +45,10 @@
     height: calc(100% - 200px);
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     gap: 10px;
+    padding-top: 15px;
 }
 .transmission-card-container .img-container .likes p,
 .transmission-card-container .img-container .likes span {
@@ -81,6 +85,8 @@
     color: var(--primary-color);
     animation: live 2s infinite;
 }
+
+
 @media screen and (max-width: 768px) {
     .transmission-card-container {
         width: 100%;
@@ -95,6 +101,7 @@
     }
     .transmission-card-container .img-container .likes {
         height: calc(100% - 70px);
+        font-size: 0.8em;
     }
     .transmission-card-container .infos {
         width: calc(100% - 80px);
@@ -102,5 +109,10 @@
     }
     .transmission-card-container .infos h1 {
         font-size: 1.1em;
+        
     }
+    .infos .det-container {
+        font-size: 0.8em;
+    }
+    
 }
