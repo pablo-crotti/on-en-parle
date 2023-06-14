@@ -168,7 +168,7 @@ export default {
                     <span
                         class="material-symbols-outlined"
                         @click="editing = !editing"
-                        >edit</span
+                        >edit {{ message.status }}</span
                     >
                     <span
                         class="material-symbols-outlined"
