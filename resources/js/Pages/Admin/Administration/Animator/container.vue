@@ -180,7 +180,7 @@ console.log("pas d'id recu")            }
                                     :audiofiles="audiofiles"
                                     @dragstart="drag($event, message.id)"
                                     @modify="modifier"
-                                    @delete="deleteMessage"
+                                    @archive="deleteMessage"
                                     />
                                 </div>
                             </div>

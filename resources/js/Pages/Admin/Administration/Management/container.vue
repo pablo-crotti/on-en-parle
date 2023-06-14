@@ -40,7 +40,7 @@
       audiofiles: this.audioChatroom,
       filteredMessages: [],
       statu: ["Inbox", "Présélectionnés", "Sélectionnés", "Régie", "","Prêt à diffuser"],
-      couleurtitre: ["#FF0000", "red", "#008000","#FF9F00", "", "#0000FF"],
+      couleurtitre: ["#000000", "rgb(179, 23, 28,0.18)", "rgb(179, 23, 28,0.45)","rgb(179, 23, 28,0.7)", "", "rgb(179, 23, 28)"],
     chatroomId:null,
     calls: this.callChatroom,
     sortType: 'creation',
@@ -157,6 +157,7 @@ console.log("pas d'id recu")            }
 
                 <div id="boutonsmangament">
                 <div id="boutonsmangamenttype">
+                    <p style="color: aliceblue; margin-right: 10px; display:flex;align-items:center ;">Trier par</p>
                     <button @click="sortType = 'creation'" >Création</button>
             <button @click="sortType = 'likes'" >Like</button>
                 </div>

@@ -181,7 +181,7 @@ export default {
                     <span
                         class="material-symbols-outlined"
                         @click="$emit('archive', message)"
-                        >archive</span
+                        >unarchive</span
                     >
                 </div>
             </div>
