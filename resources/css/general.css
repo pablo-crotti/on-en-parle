@@ -204,10 +204,17 @@ select:focus {
     padding-right: 10px;
 }
 
+.program-name-container {
+    display:flex;
+    justify-content: space-around;
+}
+
 .program-name {
     color: var(--white);
-    margin-right: 20px;
-    font-size: 0.8rem;
+    font-size: 1.2rem;
+    position: absolute;
+    padding-top: 36px;
+    font-weight: bold;
 }
 
 .submenu{

@@ -1,7 +1,5 @@
 <script>
     import axios from 'axios';
-    import moment from 'moment';
-    import 'moment/dist/locale/fr';
 
     export default {
         props: {
@@ -18,10 +16,6 @@
             }
         },
         methods: {
-            formatDate(date) {
-                moment.locale('fr');
-                return [moment(date).format('dddd'), moment(date).format('D MMMM YYYY')];
-            },
             setCurrentProgram(newId) {
                 let regex = /\d+$/;
                 let newURL = this.currentURL.replace(regex, newId);
@@ -41,9 +35,9 @@
         <div class="program-header">
             <img class="program-cover" :src="program.image"/>
             <div class="program-date-text">
-                {{ this.formatDate(program.broadcast_date)[0] }}
-                <br>
-                {{ this.formatDate(program.broadcast_date)[1] }}
+                {{ new Date(program.broadcast_date).toLocaleDateString('fr-FR', { weekday: 'long' }) }}
+                <br/>
+                {{ new Date(program.broadcast_date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }) }}
             </div>
         </div>
         <div class="program-info">
