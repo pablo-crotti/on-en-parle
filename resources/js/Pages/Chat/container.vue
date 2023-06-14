@@ -32,7 +32,7 @@ export default {
         },
         getMessages() {
             axios
-                .get("/chat/room/" + this.roomIdLink + "/messages")
+                .get("/chat/room/" + this.roomIdLink + "/textmessages")
                 .then((response) => {
                     this.messages = response.data;
                 })

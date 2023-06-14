@@ -48,8 +48,6 @@ audio {
     width: 95%;
     height: 30px;
     margin: 10px 0 10px 0;
-    border:#616061 1px solid;
-    border-radius: 10px;
 }
 .message-date {
     color: #616061;
