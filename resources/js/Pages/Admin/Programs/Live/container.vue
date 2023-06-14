@@ -2,6 +2,7 @@
     import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
     import axios from 'axios';
     import modalConfirmation from '@/Pages/MyComponents/modalConfirmation.vue';
+    import moment from 'moment';
 
     export default {
         components: {
@@ -48,6 +49,9 @@
             },
             closeModal() {
                 this.isModalOpen = false;
+            },
+            formatDate(date) {
+                return moment(date).format('DD.MM.YYYY');
             }
         },
         created() {
@@ -79,7 +83,7 @@
                 <div class="golive-body">
                     <div class="golive-buttons">
                         <h2 class="live-subtitle">{{ this.program.title }} </h2>
-                <span class="live-date">Emission du {{ this.program.broadcast_date }}</span>
+                <span class="live-date">Emission du {{ formatDate(this.program.broadcast_date) }}</span>
                     <div class="golive-button" @click="openModal" :style="{ backgroundColor: this.background }" >
                         <div class="golive-rec-symbol"></div>
                             {{ this.btnCaption }}

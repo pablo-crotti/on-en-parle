@@ -25,7 +25,7 @@
    margin-right: 20px;
 }
 .symbol-header {
-    color: var(--primary-color); 
+    color: var(--primary-color);
 }
 .message-wrapper {
     border: 3px solid var(--black);
@@ -97,7 +97,7 @@ font-size: 15px;
     flex-direction: row;
     justify-content: center;
     align-content: center;
-    
+
 }
 .message-like-symbol {
     font-size: 15px;
@@ -120,5 +120,8 @@ font-size: 15px;
 .message-actions > .material-symbols-outlined {
     color: var(--dark-gray);
     font-size: 20px;
+    cursor: pointer;
+}
+.archiveIcon{
     cursor: pointer;
 }
