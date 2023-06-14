@@ -1,12 +1,16 @@
 <template>
-    <modalValidation :title="modalTitle" :message="modalMessage" :is-open="isModalOpen" @close="closeModal" />    <div class="form-container">
+    <modalValidation :title="modalTitle" :message="modalMessage" :is-open="isModalOpen" @close="closeModal" />
+    <div class="form-container">
         <form @submit.prevent="submitForm" class="formulaire-emission">
-            <div class="conteneurTitre"> <h2 class="form-title">Créer une émission</h2> </div>
+            <div class="conteneurTitre">
+                <h2 class="form-title">Créer une émission</h2>
+            </div>
 
             <div class="conteneurformulaire">
                 <div class="form-field">
                     <label class="form-label">Titre*</label>
-                    <input type="text" class="form-element" name="title" v-model="title" placeholder="Ex : Raconter des histoires aux enfants: amusant et… utile!">
+                    <input type="text" class="form-element" name="title" v-model="title"
+                        placeholder="Ex : Raconter des histoires aux enfants: amusant et… utile!">
                     <div class="error-message">{{ formErrors.title }}</div>
                 </div>
 
@@ -68,7 +72,7 @@ export default {
         axios.get('/is-live')
             .then(response => {
 
-                if (response.data.success !== false) {    
+                if (response.data.success !== false) {
                     this.isModalOpen = true;
                     this.modalTitle = 'Erreur';
                     this.modalMessage = 'Vous ne pouvez pas créer une émission si une émission est en cours';
@@ -88,26 +92,26 @@ export default {
             window.location.href = '/admin/programs/list';
         },
         cancel() {
-                this.title = '';
-                this.date = '';
-                this.description = '';
-                this.banner = '';
-                this.audio = '';
-                window.location.href = '/admin/programs/list';
-            },
+            this.title = '';
+            this.date = '';
+            this.description = '';
+            this.banner = '';
+            this.audio = '';
+            window.location.href = '/admin/programs/list';
+        },
         submitForm() {
             this.formErrors = {};
 
-            if(!this.title) {
+            if (!this.title) {
                 this.formErrors.title = 'Le titre est obligatoire';
             };
             if (!this.date) {
                 this.formErrors.date = 'La date est obligatoire';
             };
-            if(!this.description) {
+            if (!this.description) {
                 this.formErrors.description = 'La description est obligatoire';
             };
-            if(!this.banner) {
+            if (!this.banner) {
                 this.formErrors.banner = 'La bannière est obligatoire';
             };
 

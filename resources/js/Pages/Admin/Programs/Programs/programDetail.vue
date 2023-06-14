@@ -1,3 +1,24 @@
+<template>
+    <AppLayout :title="room ? `On en parle | Questions ${room.name}` : 'On en parle'">
+
+        <div v-if="room" class="chat-wrapper">
+            <div class="chat-transmission">
+                <div class="program-detail">
+                    <div class="transmission-card-container">
+                        <div class="card">
+                            <transmission-card :room="room" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-container">
+                <message-container :messages="messages" />
+            </div>
+        </div>
+    </AppLayout>
+</template>
+
 <script>
 import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
 import MessageContainer from '@/Pages/Chat/messageContainer.vue';
@@ -14,7 +35,7 @@ export default {
         ChatRoomSelection,
         TransmissionCard
     },
-    data: function ()  {
+    data: function () {
         return {
             messages: [],
             roomIdLink: window.location.href.split('/').pop(),
@@ -62,27 +83,11 @@ export default {
             this.getRoom();
         });
 
+        const roomChannel = Echo.channel('room.update');
+        roomChannel.listen('.event.on.room', (e) => {
+            this.getRoom();
+        });
+
     },
 };
 </script>
-
-<template>
-    <AppLayout :title="room ? `On en parle | Questions ${room.name}` : 'On en parle'">
-
-        <div v-if="room" class="chat-wrapper">
-            <div class="chat-transmission">
-                <div class="program-detail">
-                    <div class="transmission-card-container">
-                        <div class="card" >
-                            <transmission-card :room="room"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="chat-container">
-                <message-container :messages="messages"/>
-            </div>
-        </div>
-    </AppLayout>
-</template>

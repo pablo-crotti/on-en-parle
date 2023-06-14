@@ -1,12 +1,15 @@
 <template>
     <div class="form-container">
         <form @submit.prevent="submitForm" class="formulaire-emission">
-            <div class="conteneurTitre"> <h2 class="form-title">Modifier une émission</h2> </div>
+            <div class="conteneurTitre">
+                <h2 class="form-title">Modifier une émission</h2>
+            </div>
 
             <div class="conteneurformulaire">
                 <div class="form-field">
                     <label class="form-label">Titre*</label>
-                    <input type="text" class="form-element" name="title" v-model.trim="program.title" placeholder="Ex : Raconter des histoires aux enfants: amusant et… utile!">
+                    <input type="text" class="form-element" name="title" v-model.trim="program.title"
+                        placeholder="Ex : Raconter des histoires aux enfants: amusant et… utile!">
                     <div class="error-message">{{ formErrors.title }}</div>
                 </div>
 
@@ -18,19 +21,22 @@
 
                 <div class="form-field">
                     <label class="form-label">Description*</label>
-                    <textarea class="form-element textarea" v-model.trim="program.description" placeholder="Description ..."></textarea>
+                    <textarea class="form-element textarea" v-model.trim="program.description"
+                        placeholder="Description ..."></textarea>
                     <div class="error-message">{{ formErrors.description }}</div>
                 </div>
 
                 <div class="form-field">
                     <label class="form-label">Banière*</label>
-                    <input type="text" class="form-element" v-model.trim="program.image" placeholder="Entrez l'URL de la bannière">
+                    <input type="text" class="form-element" v-model.trim="program.image"
+                        placeholder="Entrez l'URL de la bannière">
                     <div class="error-message">{{ formErrors.banner }}</div>
                 </div>
 
                 <div class="form-field">
                     <label class="form-label">Fichier audio</label>
-                    <input type="text" class="form-element" v-model.trim="program.audio_file" placeholder="Entrez l'URL du fichier audio">
+                    <input type="text" class="form-element" v-model.trim="program.audio_file"
+                        placeholder="Entrez l'URL du fichier audio">
                 </div>
                 <div class="error-message">*Champs obligatoires</div>
                 <div class="form-actions">
@@ -44,7 +50,6 @@
 
 <script>
 import axios from 'axios';
-import moment from 'moment';
 
 export default {
     name: 'ModifyChatRoomForm',
@@ -65,11 +70,11 @@ export default {
         cancel() {
             window.history.back();
         },
-        fetchEmission(roomId) { //roomId
-            axios.get('/chat/room/'+ roomId)
+        fetchEmission(roomId) {
+            axios.get('/chat/room/' + roomId)
                 .then(response => {
                     this.program = response.data;
-                    this.program.date = moment(this.program.date).format('YYYY-MM-DD');
+                    this.program.date = this.program.broadcast_date;
                 })
                 .catch(error => {
                     console.log(error);
@@ -103,15 +108,8 @@ export default {
                 })
                     .then(response => {
                         if (response.status == 200) {
-                            this.program = {
-                                title: '',
-                                date: '',
-                                description: '',
-                                image: '',
-                                audio_file: ''
-                            };
                             this.$emit('messagesent');
-                            window.history.back();
+                            window.location.href = '/admin/programs/program/' + this.roomIdForEdit;
                         }
                     })
                     .catch(error => {
@@ -120,8 +118,8 @@ export default {
             }
         }
     },
-created() {
-    this.fetchEmission(this.roomIdForEdit) // La valeur devra changer en fonction de l'émission sur laquelle se trouve le bouton
-}
+    created() {
+        this.fetchEmission(this.roomIdForEdit)
+    }
 }
 </script>
