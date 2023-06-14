@@ -22,22 +22,22 @@
             :style="{ backgroundColor: '#FBEF85' }"
         >
             <!-- <div>
-     <span class="symbol-header material-symbols-outlined">{{ headerSymbol }}</span> 
+     <span class="symbol-header material-symbols-outlined">{{ headerSymbol }}</span>
                   <span v-if="message.call.length > 0" class="message-caller">{{message.call[0].caller}}</span>
-              
+
               </div>  -->
                   <span class="symbol-header material-symbols-outlined">mic</span>
     </div>
-    
-    
+
+
     <div v-else-if="isText" class="message-header" :style="{ backgroundColor:'#8239DF'}">
     <span class="symbol-header material-symbols-outlined">textsms</span>
   </div>
-  
-  
+
+
  <div class="message-body">
-   
-    <!--  
+
+    <!--
      -->
      <div v-if="isAudio && !isCall" class="message-content">
                 <p>
@@ -48,13 +48,13 @@
                     <span v-if="!editing" class="message-text">
                         {{ message.content }}
                     </span>
-                    <input
+                    <textarea
                         v-else
                         type="text"
                         v-model="message.content"
-                        class="input"
-                        @keyup.enter="saveChanges"
-                    />
+                        class="modiftextarea"
+                        @keyup.enter="saveChanges">
+                    </textarea>
                 </p>
                 <audio v-if="chiffre==0" controls @canplaythrough="audioLoaded">
                     <source
@@ -71,8 +71,8 @@
                 <textarea v-else type="text" v-model="message.content" class="modiftextarea" @keyup.enter="saveChanges"></textarea>
 
             </div>
-  
-  
+
+
     <div v-if="message.status !== 10 && message.status !== 5" class="message-actions">
       <div v-if="isText || isAudio && !isCall">
         <span   class="material-symbols-outlined" style="color: brown; display: flex; justify-content: center;">Favorite</span> <p style="font-size: 13px; display: flex; align-items: center;">{{ message.nb_likes}}</p>
@@ -83,14 +83,14 @@
           <span class="material-symbols-outlined" @click="$emit('delete', message)">archive</span>
 
         </div>
-  
+
     <div v-else-if="message.status === 10">
-          <span class="material-symbols-outlined" @click="$emit('archive', message)">delete</span>
+          <span class="material-symbols-outlined" @click="$emit('archive', message)">archive</span>
 
      </div>
-  
+
   </div>
-  
+
     </div>
 </template>
 
@@ -142,7 +142,7 @@ export default {
             const audio = event.target;
             if (!audio || !audio.duration) {
         // Gérer l'erreur ici, par exemple en affichant un message d'erreur
-                console.log("erreur audio")            
+                console.log("erreur audio")
             } else {
                 const duration = Math.floor(audio.duration);
             const minutes = Math.floor(duration / 60);
@@ -151,9 +151,9 @@ export default {
                 .toString()
                 .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
             this.chiffre = 1;
-            console.log(audio.duration); 
+            console.log(audio.duration);
             }
-          
+
         },
 
         couleur(type) {
@@ -170,7 +170,7 @@ export default {
         },
         getAudioPath(audioFile) {
           console.log(audioFile)
-        
+
             return `${window.location.origin}/audio/${audioFile}`;
         },
     },
@@ -178,7 +178,7 @@ export default {
     computed: {
         isAudio() {
           let grr;
-        
+
             return this.message.audio && this.message.audio.length > 0;
         },
         isCall() {

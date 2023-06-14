@@ -153,13 +153,13 @@ export default {
                     {{ message.content }}
                 </p>
 
-                <input
+                <textarea
                     v-else
                     type="text"
                     v-model="message.content"
-                    class="input"
-                    @keyup.enter="saveChanges"
-                />
+                    class="modiftextarea"
+                    @keyup.enter="saveChanges">
+                </textarea>
 
                 <div
                     v-if="message.status !== 10 && message.status !== 5"
@@ -181,7 +181,7 @@ export default {
                     <span
                         class="material-symbols-outlined"
                         @click="$emit('archive', message)"
-                        >archive</span
+                        >unarchive</span
                     >
                 </div>
             </div>

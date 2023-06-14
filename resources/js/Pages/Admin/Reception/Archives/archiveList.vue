@@ -27,12 +27,20 @@ export default {
             axios.get(`/emission/${this.no}/status/${this.id}`)
                 .then(response => {
                     this.messages = response.data;
-                    console.log(this.messages);
                 })
                 .catch(error => {
                     console.log(error);
                 });
-        }
+        },
+         async desarchiver(message){  
+            console.log("le message id ");
+            console.log("le message id " + message.id);
+        await axios.post(`/AdminInbox/message/${message.id}/update`, { status: 1 });
+        console.log("le message id " + message);
+
+        },
+       
+        
     },
     created() {
         this.getMessages();
@@ -42,7 +50,13 @@ export default {
 
 <template>
         <div class="admin-archives-list">
-            <div class="admin-messages-item" v-for="(content, index) in messages[5]" :key="index"><AdminMessage :message="content"/></div>
-            <div class="admin-messages-item" v-for="(content, index) in messages[10]" :key="index"><AdminMessage :message="content"/></div>
+            <div class="admin-messages-item" v-for="(content, index) in messages[5]" :key="index">
+                <AdminMessage 
+                :message="content"
+                @archive="test"/>
+            </div>
+            <div class="admin-messages-item" v-for="(content, index) in messages[10]" :key="index">
+                <AdminMessage :message="content"
+                @archive="desarchiver"/>/></div>
         </div>
 </template>
