@@ -71,6 +71,7 @@ export default {
 
         drag(event, messageId) {
             event.dataTransfer.setData('text', messageId);
+            
         },
 
         async drop(event, status) {

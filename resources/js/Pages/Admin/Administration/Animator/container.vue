@@ -61,6 +61,8 @@
       filteredMessages: [],
       chatroomId:null,
       calls: this.callChatroom,
+      draggedElement: null,
+
         categories: [
             {
                 name: 'Date de création',
@@ -197,6 +199,7 @@ console.log("pas d'id recu")            }
                                     :message="message"
                                     :calls="calls"
                                     isInAnimator
+                                    :data-message-id="message.id"
                                     @cacher="hideMessage"
                                     :audiofiles="audiofiles"
                                     @dragstart="drag($event, message.id)"
