@@ -193,7 +193,6 @@ margin-top: 50px;
     align-items: center;
     height: 30px;
     width: auto ;
-    background-color: rgba(70, 69, 69, 0.5);
     z-index: 1;
   }
   .submit-button {

@@ -21,7 +21,7 @@ class IndexRoomController extends Controller
         if ($onAirRoom) {
             return $onAirRoom;
         } else {
-            $futureRooms = $rooms->where('broadcast_date', '>', now())->sortBy('broadcast_date');
+            $futureRooms = $rooms->where('broadcast_date', '>=', now()->toDateString())->sortBy('broadcast_date');
 
             if ($futureRooms->isNotEmpty()) {
                 return $futureRooms->first();

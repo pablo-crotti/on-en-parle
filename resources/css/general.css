@@ -211,9 +211,9 @@ select:focus {
 
 .program-name {
     color: var(--white);
-    font-size: 1.2rem;
+    font-size: 2rem;
     position: absolute;
-    padding-top: 36px;
+    padding-top: 25px;
     font-weight: bold;
 }
 

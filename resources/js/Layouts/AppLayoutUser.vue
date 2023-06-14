@@ -153,8 +153,6 @@ const logout = () => {
                         >
                             À la une
                         </ResponsiveNavLink>
-                    </div>
-                    <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
                             :href="route('transmissions')"
                             :active="route().current('transmissions')"
