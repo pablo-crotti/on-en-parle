@@ -90,4 +90,15 @@ class ChatController extends Controller
 
         return $newMessage;
     }
+    
+    public function textMessages(Request $request, $roomId) {
+        $messages = ChatMessage::where('chat_room_id', $roomId)
+            ->with(['text', 'audio'])
+            ->leftJoin('phone_calls', 'chat_messages.id', '=', 'phone_calls.chat_message_id')
+            ->select('chat_messages.*')
+            ->whereNull('phone_calls.chat_message_id')
+            ->get();
+
+        return $messages;
+    }
 }

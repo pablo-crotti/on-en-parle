@@ -1,8 +1,11 @@
 <template>
     <div class="left">
         <h2 v-if="message.text[0]" class="text-message">Question</h2>
-        <h2 v-else class="transcription-message">Transcription</h2>
-        <p>{{ message.content }}</p>
+        <h2 v-else class="transcription-message">Message vocal</h2>
+        <p v-if="message.text[0]">{{ message.content }}</p>
+        <audio v-else controls>
+            <source :src="'/audio/' + message.audio[0].audio_file" type="audio/mpeg" />
+        </audio>
     </div>
     <div class="right">
         <p>{{ formatRelativeTime(message.created_at) }}</p>
