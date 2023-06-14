@@ -81,10 +81,12 @@ async deleteMessage(message) {
         }
     },
     async deleted(message) {
+      let status = 10;
         try {
-            await axios.post(`/AdminInbox/message/${message.id}/update`, { status: 10 });
+          await axios.post(`/AdminInbox/message/${message.id}/update`, { status });
             // remove the message from local messages
-            this.messages = this.messages.filter(m => m.id !== message.id);
+           this.messages = this.messages.filter(m => m.id !== message.id);
+
         } catch (error) {
             console.error(error);
         }

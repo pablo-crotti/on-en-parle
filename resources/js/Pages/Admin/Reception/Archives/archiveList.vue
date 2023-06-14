@@ -7,7 +7,7 @@ export default {
     data() {
         return {
             messages: []
-
+            
         };
     },
     components: {
@@ -23,21 +23,33 @@ export default {
         };
     },
     methods: {
-        getMessages() {
-            axios.get(`/emission/${this.no}/status/${this.id}`)
+       async getMessages() {
+            await axios.get(`/emission/${this.no}/status/${this.id}`)
                 .then(response => {
                     this.messages = response.data;
+                    this.messages = this.filterMessages(10);
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
-         async desarchiver(message){
-        await axios.post(`/AdminInbox/message/${message.id}/update`, { status: 1 });
-          this.getMessages();
+
+         async desarchiver(message){  
+            console.log("le message id ");
+            console.log("le message id " + message.status);
+            message.status = 0;
+        await axios.post(`/AdminInbox/message/${message.id}/update`, { status: message.status });
+
         },
+        filterMessages(status) {
+            console.log("le status est " + status);
+            console.log(this.messages);
 
+        return this.messages[10].filter(message => message.status === status);
+        }
 
+       
+        
     },
     created() {
         this.getMessages();
@@ -47,12 +59,8 @@ export default {
 
 <template>
         <div class="admin-archives-list">
-            <div class="admin-messages-item" v-for="(content, index) in messages[5]" :key="index">
-                <AdminMessage
-                :message="content"
-                @archive="test"/>
-            </div>
-            <div class="admin-messages-item" v-for="(content, index) in messages[10]" :key="index">
+        
+            <div class="admin-messages-item" v-for="(content, index) in messages" :key="index">
                 <AdminMessage :message="content"
                 @archive="desarchiver"/>/></div>
         </div>
