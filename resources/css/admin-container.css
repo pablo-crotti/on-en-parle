@@ -62,7 +62,6 @@ width: auto;
     grid-template-columns: 1fr 1fr;
     gap: 10px 20px;
     padding: 20px;
-    overflow-y: auto;
     height: 65vh;
     padding: 5px;
 
@@ -70,6 +69,7 @@ width: auto;
 
 .archives-wrapper {
     margin: 20px;
+    margin-top: 90px
 }
 /*  Pour l'index*/
 
