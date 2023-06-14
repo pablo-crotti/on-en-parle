@@ -7,7 +7,7 @@ export default {
     data() {
         return {
             messages: []
-            
+
         };
     },
     components: {
@@ -32,15 +32,12 @@ export default {
                     console.log(error);
                 });
         },
-         async desarchiver(message){  
-            console.log("le message id ");
-            console.log("le message id " + message.id);
+         async desarchiver(message){
         await axios.post(`/AdminInbox/message/${message.id}/update`, { status: 1 });
-        console.log("le message id " + message);
-
+          this.getMessages();
         },
-       
-        
+
+
     },
     created() {
         this.getMessages();
@@ -51,7 +48,7 @@ export default {
 <template>
         <div class="admin-archives-list">
             <div class="admin-messages-item" v-for="(content, index) in messages[5]" :key="index">
-                <AdminMessage 
+                <AdminMessage
                 :message="content"
                 @archive="test"/>
             </div>
