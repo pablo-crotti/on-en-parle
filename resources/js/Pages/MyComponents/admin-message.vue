@@ -179,7 +179,7 @@ export default {
 
                 <div v-else-if="message.status === 10">
                     <span
-                        class="material-symbols-outlined"
+                        class="material-symbols-outlined archiveIcon"
                         @click="$emit('archive', message)"
                         >unarchive</span
                     >
