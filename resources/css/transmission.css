@@ -12,8 +12,8 @@
 }
 .transmission-card-container {
     background-color: var(--light-black);
-    margin-bottom: 40px;
-    width: 70%;
+    margin-bottom: 20px;
+    width: 50%;
     border-radius: 20px;
 }
 .transmission-card-container a, .transmission-card-container .card {
@@ -23,7 +23,7 @@
     flex-direction: row;
     justify-content: flex-start;
     border-radius: 20px;
-    border: solid 1px var(--light-black);
+    border: solid 2px var(--light-black);
 }
 .transmission-card-container .on-air {
     border-color: var(--primary-color);
@@ -60,21 +60,24 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
+    word-wrap: break-word; }
 .transmission-card-container .infos h1 {
     font-weight: bold;
     font-size: 1.5em;
     color: var(--primary-color);
+    margin-bottom: 10px;
 }
 .transmission-card-container .infos p {
     color: var(--light-gray);
+    margin-bottom: 18px;
+    
 }
 .infos .det-container {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 @keyframes live {
     0% {
@@ -97,10 +100,14 @@
     .transmission-card-container .img-container {
         width: 80px;
         height: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
     }
     .transmission-card-container .img-container img {
-        height: 70px;
-        width: 70px;
+        height: auto;
+        width: auto;
+
     }
     .transmission-card-container .img-container .likes {
         height: calc(100% - 70px);

@@ -40,7 +40,8 @@ export default {
 </script>
 <template>
     <div class="message-container">
-        <h1>Vos questions</h1>
+        <div style="display: flex; flex-direction: row; width:80%;justify-content: space-between;">
+            <h1>Vos questions</h1>
         <div class="filter-buttons-container">
             <button
                 :class="{ current: filterBy === 'likes' }"
@@ -55,6 +56,8 @@ export default {
                 Date
             </button>
         </div>
+        </div>
+       
         <div
             class="message-item"
             v-for="(message, index) in filteredMessages"

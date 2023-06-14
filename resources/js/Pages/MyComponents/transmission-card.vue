@@ -67,10 +67,10 @@ export default {
                     href="https://www.rts.ch/audio-podcast/livepopup/la-1ere/"
                     target="_blank"
                 >
-                    Écouter la transmission
+                    Live
                     <span class="material-symbols-outlined"> play_circle </span>
                 </a>
-            </div>
+        </div>
             <div class="transmission-player" v-else-if="room.audio_file">
                 <button @click="playTransmission()">
                     <span class="material-symbols-outlined play-icon">
