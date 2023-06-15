@@ -144,8 +144,11 @@ export default {
             chatroomId: null,
             calls: this.callChatroom,
             draggedElement: null,
-            couleurTitre:["#F0E47F","#FC9E5A","#8239DF","#2216C2"],
-
+            couleurTitre:
+            ["#E0D100",
+            "#FC9E5A",
+            "#8239DF",
+            "#2216C2"],
             categories: [
                 {
                     name: "Date de création",

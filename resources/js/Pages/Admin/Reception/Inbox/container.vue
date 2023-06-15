@@ -22,7 +22,7 @@
                         style="width: 30vw; margin-right: 30px"
                     >
                         <div class="admin-messages-title-container">
-                            <div class="admin-messages-title">
+                            <div class="admin-messages-title" :style="{ backgroundColor: couleurtitre[status] }">
                                 {{ statu[status] }}
                             </div>
                         </div>
@@ -115,6 +115,10 @@ export default {
                     name: "Nombre de likes",
                     value: "likes",
                 },
+            ],
+            couleurtitre: [
+                "#000000",
+                "rgb(179, 23, 28,0.18)",
             ],
             messages: [],
             audiofiles: [],

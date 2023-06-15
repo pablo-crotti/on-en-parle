@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="message-body">
+        <div class="message-body" style="display: flex; flex-direction: column; ">
             <span class="message-date">{{ getFormattedDate(message) }}</span>
 
             <div v-if="message.audio.length > 0 && message.audio[0].audio_file">
@@ -69,7 +69,7 @@
                     >
                 </div>
 
-                <div v-else-if="message.status === 10">
+                <div v-else-if="message.status === 10"  style="margin-top: 8px;">
                     <span
                         class="material-symbols-outlined archiveIcon"
                         @click="$emit('archive', message)"
