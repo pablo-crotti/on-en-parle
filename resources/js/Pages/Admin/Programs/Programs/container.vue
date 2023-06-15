@@ -2,10 +2,17 @@
     <AppLayout title="On en parle | Émissions (Liste)">
         <div class="programs-header">
             <h1 id="programs-title">Émissions</h1>
-            <dropdownFilter :categories="categories" @filter-applied="handleFilterApplied"></dropdownFilter>
+            <dropdownFilter
+                :categories="categories"
+                @filter-applied="handleFilterApplied"
+            ></dropdownFilter>
         </div>
         <div class="programs-wrapper">
-            <div class="row-program" v-for="program in filteredPrograms" :key="program.id">
+            <div
+                class="row-program"
+                v-for="program in filteredPrograms"
+                :key="program.id"
+            >
                 <AdminProgram class="item-program" :program="program" />
             </div>
         </div>
@@ -13,34 +20,34 @@
 </template>
 
 <script>
-import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
-import AdminProgram from '@/Pages/MyComponents/admin-program.vue';
-import axios from 'axios';
-import dropdownFilter from '@/Pages/MyComponents/dropdownFilter.vue';
+import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
+import AdminProgram from "@/Pages/MyComponents/admin-program.vue";
+import axios from "axios";
+import dropdownFilter from "@/Pages/MyComponents/dropdownFilter.vue";
 
 export default {
     components: {
         AppLayout,
         AdminProgram,
-        dropdownFilter
+        dropdownFilter,
     },
     data() {
         return {
             programs: [],
             filteredPrograms: [],
-            filterBy: '',
+            filterBy: "",
             isSelectOpen: false,
             categories: [
                 {
-                    name: 'Date de diffusion (décroissante)',
-                    value: 'date'
+                    name: "Date de diffusion (décroissante)",
+                    value: "date",
                 },
                 {
-                    name: 'Nombre de messages',
-                    value: 'interactions'
-                }
-            ]
-        }
+                    name: "Nombre de messages",
+                    value: "interactions",
+                },
+            ],
+        };
     },
     methods: {
         handleFilterApplied(filterData) {
@@ -53,28 +60,35 @@ export default {
             this.filterBy = event.target.value;
         },
         filterPrograms() {
-            if (this.filterBy === 'interactions') {
-
+            if (this.filterBy === "interactions") {
                 this.filteredPrograms = [...this.programs].sort(
                     (a, b) => b.messages_count - a.messages_count
                 );
-            } else if (this.filterBy === 'date') {
-                this.filteredPrograms = [...this.programs]
+            } else if (this.filterBy === "date") {
+                this.filteredPrograms = [...this.programs];
             } else {
                 this.filteredPrograms = [...this.programs];
             }
+        },
+        getRooms() {
+            axios.get("/chat/rooms-list").then((response) => {
+                this.programs = response.data;
+                this.filteredPrograms = [...this.programs];
+            });
         },
     },
     watch: {
         filterBy() {
             this.filterPrograms();
-        }
+        },
     },
     created() {
-        axios.get('/chat/rooms-list').then(response => {
-            this.programs = response.data;
-            this.filteredPrograms = [...this.programs];
+        this.getRooms();
+        
+        const chatChannel = Echo.channel("rooms.update");
+        chatChannel.listen(".event.on.rooms", (e) => {
+            this.getRooms();
         });
-    }
-}
+    },
+};
 </script>

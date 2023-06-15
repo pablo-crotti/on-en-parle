@@ -183,10 +183,13 @@ export default {
             console.log("pas d'id recu");
         }
 
-        console.log(this.chatroomId)
         const chatChannel = Echo.channel("chat." + this.chatroomId);
-
         chatChannel.listen(".message.new", (e) => {
+            this.getMessages();
+        });
+
+        const likesChannel = Echo.channel("like." + this.chatroomId);
+        likesChannel.listen(".like.new", (e) => {
             this.getMessages();
         });
     },

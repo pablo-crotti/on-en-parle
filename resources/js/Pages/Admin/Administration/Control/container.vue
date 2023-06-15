@@ -1,205 +1,247 @@
-
 <script>
-    import axios from 'axios';
-    import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
-    import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
-    import dropdownFilter from '@/Pages/MyComponents/dropdownFilter.vue';
-  //  import ChatContainer from '@/Pages/MyComponents/admin-message.vue';
+import axios from "axios";
+import ChatMessage from "@/Pages/MyComponents/ChatMessages.vue";
+import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
+import dropdownFilter from "@/Pages/MyComponents/dropdownFilter.vue";
+//  import ChatContainer from '@/Pages/MyComponents/admin-message.vue';
 
+export default {
+    components: {
+        ChatMessage,
+        AppLayout,
+        dropdownFilter,
+    },
 
-    export default {
-        components: {
-            ChatMessage,
-            AppLayout,
-            dropdownFilter
+    data() {
+        return {
+            messages: [],
+            audiofiles: [],
+            callChatroom: [],
+            idroom: null,
+            filteredMessages: [],
+            statu: ["Message Audio", "", "", "", "", "A diffuser"],
+            chatroomId: null,
+            calls: this.callChatroom,
+            sortType: "creation",
+            couleurtitre: [
+                "#FF0000",
+                "red",
+                "",
+                "#FFFF00",
+                "#008000",
+                "#0000FF",
+            ],
+            categories: [
+                {
+                    name: "Date de création",
+                    value: "creation",
+                },
+                {
+                    name: "Nombre de likes",
+                    value: "likes",
+                },
+            ],
+        };
+    },
+
+    methods: {
+        handleFilterApplied(filterData) {
+            this.sortType = filterData;
         },
 
-  data() {
-    return {
-     messages: [],
-     audiofiles: [],
-     callChatroom: [],
-    idroom: null,
-      filteredMessages: [],
-      statu: ["Message Audio","","","","", "A diffusé"],
-      chatroomId:null,
-      calls: this.callChatroom,
-      sortType: 'creation',
-      couleurtitre: ["#FF0000", "red", "","#FFFF00", "#008000", "#0000FF"],
-        categories: [
-            {
-                name: 'Date de création',
-                value: 'creation'
-            },
-            {
-                name: 'Nombre de likes',
-                value: 'likes'
-            }
-        ]
-    };
-},
+        drag(event, messageId) {
+            event.dataTransfer.setData("text", messageId);
+        },
 
-  methods: {
-      handleFilterApplied(filterData) {
-          this.sortType = filterData;
-      },
+        async drop(event, status) {
+            const messageId = parseInt(event.dataTransfer.getData("text"));
+            const message = this.messages.find((m) => m.id === messageId);
 
-    drag(event, messageId) {
-    event.dataTransfer.setData('text', messageId);
-  },
-
-  async drop(event, status) {
-  const messageId = parseInt(event.dataTransfer.getData('text'));
-  const message = this.messages.find(m => m.id === messageId);
-
-  if (message) {
-    // Vérifier si le message est un audio et est déplacé de la première colonne à la seconde
-    if (message.audio && message.status === 5 && status === 0) {
-      // Modifier le status à 5
-      message.status = 3;
-    } else {
-      message.status = status;
-    }
-    await axios.post(`/AdminInbox/message/${message.id}/update`, { status: message.status });
-  }
-},
-    async modifier(message){
-    await axios.post(`/AdminInbox/message/${message.id}/content`, { content: message.content });
-},
-async deleteMessage(message) {
-        try {
-            const response = await axios.post(`/AdminInbox/message/${message.id}/delete`);
-            // remove the message from local messages
-            this.messages = this.messages.filter(m => m.id !== message.id);
-        } catch (error) {
-            console.error(error);
-        }
-    },
-    filterMessages() {  // Nouvelle fonction pour filtrer les messages
-                this.filteredMessages = this.messages.filter(message => {
-                    return !this.audiofiles.some(audiofile => audiofile.id === message.id);
+            if (message) {
+                // Vérifier si le message est un audio et est déplacé de la première colonne à la seconde
+                if (message.audio && message.status === 5 && status === 0) {
+                    // Modifier le status à 5
+                    message.status = 3;
+                } else {
+                    message.status = status;
+                }
+                await axios.post(`/AdminInbox/message/${message.id}/update`, {
+                    status: message.status,
                 });
-            },
-            sortByCreation() {
-            this.messages.sort((a, b) => {
-            return new Date(b.created_at) - new Date(a.created_at); // Trier par date de création en ordre décroissant
+            }
+        },
+        async modifier(message) {
+            await axios.post(`/AdminInbox/message/${message.id}/content`, {
+                content: message.content,
             });
-            },
-            sortByLikes() {
-                this.messages.sort((a, b) => b.nb_likes - a.nb_likes); // Trier par nombre de likes en ordre décroissant
-            },
+        },
+        async deleteMessage(message) {
+            try {
+                const response = await axios.post(
+                    `/AdminInbox/message/${message.id}/delete`
+                );
+                // remove the message from local messages
+                this.messages = this.messages.filter(
+                    (m) => m.id !== message.id
+                );
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        filterMessages() {
+            this.filteredMessages = this.messages.filter((message) => {
+                return !this.audiofiles.some(
+                    (audiofile) => audiofile.id === message.id
+                );
+            });
+        },
+        sortByCreation() {
+            this.messages.sort((a, b) => {
+                return new Date(b.created_at) - new Date(a.created_at); // Trier par date de création en ordre décroissant
+            });
+        },
+        sortByLikes() {
+            this.messages.sort((a, b) => b.nb_likes - a.nb_likes); // Trier par nombre de likes en ordre décroissant
+        },
+        getMessages() {
+            const currentUrl = window.location.pathname;
+            const idFromUrl = currentUrl.substring(
+                currentUrl.lastIndexOf("/") + 1
+            );
 
+            this.chatroomId = idFromUrl;
 
+            axios
+                .get(`/admin/reception/api/control/${idFromUrl}`)
+                .then((response) => {
+                    this.messages = response.data.initialMessages;
+                    this.audiofiles = response.data.audioChatroom;
+                    this.callChatroom = response.data.callChatroom;
+                    this.idroom = response.data.idroom;
+                });
+        },
     },
     computed: {
         audioMessages() {
-        return this.messages.filter(m => m.audio && m.audio.length > 0 && m.status === 3);
+            return this.messages.filter(
+                (m) => m.audio && m.audio.length > 0 && m.status === 3
+            );
+        },
+        statusFiveMessages() {
+            return this.messages.filter(
+                (m) => m.status === 5 && m.audio.length > 0
+            );
+        },
+        callMessages() {
+            return this.messages.filter(
+                (m) => m.call && m.call.length > 0 && m.status === 3
+            );
+        },
 
-    },
-    statusFiveMessages() {
-        return this.messages.filter(m => m.status === 5 && m.audio.length > 0);
-    },
-    callMessages() {
-        return this.messages.filter(m => m.call && m.call.length > 0 && m.status === 3);
-    },
-
-    sortedAudioMessages() {
-                let messages = [...this.audioMessages];
-                if (this.sortType === 'creation') {
-                    messages.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-                } else if (this.sortType === 'likes') {
-                    messages.sort((a, b) => b.nb_likes - a.nb_likes);
-                }
-                return messages;
-            },
-
+        sortedAudioMessages() {
+            let messages = [...this.audioMessages];
+            if (this.sortType === "creation") {
+                messages.sort(
+                    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+                );
+            } else if (this.sortType === "likes") {
+                messages.sort((a, b) => b.nb_likes - a.nb_likes);
+            }
+            return messages;
+        },
     },
     async created() {
-        const currentUrl = window.location.pathname;
-
-const idFromUrl = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
-
-
-    const { data } = await axios.get(`/admin/reception/api/control/${idFromUrl}`);
-   
-        this.messages = data.initialMessages;
-        this.audiofiles = data.audioChatroom;
-        this.callChatroom = data.callChatroom;
-        this.idroom = data.idroom;
-
+        this.getMessages();
         let convertedId = null;
 
-            if (typeof this.idroom === 'string') {
+        if (typeof this.idroom === "string") {
             const trimmedId = this.idroom.trim();
-            if (trimmedId !== '') {
+            if (trimmedId !== "") {
                 convertedId = parseInt(trimmedId);
             }
-            }
+        }
 
-            // Utilisez la variable convertie dans votre code plutôt que this.idroom
-            if (convertedId !== null) {
+        if (convertedId !== null) {
             this.chatroomId = convertedId;
-            }
-},
+        }
 
-}
+        const chatChannel = Echo.channel("chat." + this.chatroomId);
+        chatChannel.listen(".message.new", (e) => {
+            this.getMessages();
+        });
 
+        const likesChannel = Echo.channel("like." + this.chatroomId);
+        likesChannel.listen(".like.new", (e) => {
+            this.getMessages();
+        });
+    },
+};
 </script>
 
 <template>
     <AppLayout title="On en parle | Administration (Régie)">
-
         <div class="containerManagement">
-
             <div id="boutonsmangament">
                 <div id="boutonsmangamenttype">
-<!--                    <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
+                    <!--                    <button @click="sortType = 'creation'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Création</button>
             <button @click="sortType = 'likes'" style="margin-right:15px; padding:10px;background-color: rebeccapurple;">Like</button>-->
-                    <dropdownFilter :categories="categories" @filter-applied="handleFilterApplied"></dropdownFilter>
-        </div>
+                    <dropdownFilter
+                        :categories="categories"
+                        @filter-applied="handleFilterApplied"
+                    ></dropdownFilter>
+                </div>
             </div>
-        <div class="columns">
-
-            <div class="column" v-for="status in [0,5]" :key="status">
-            <div class="admin-messages-container" >
-                <div class="admin-messages-title-container" :style="{backgroundColor: couleurtitre[status]}">
-                    <div class="admin-messages-title" >{{ statu[status] }}</div>
-
-                </div>
-            <div class="admin-messages-list"
-                :id="`column-${status}`"
-                @drop="drop($event, status)"
-                @dragover.prevent>
-                <div class="admin-messages-item" v-if="status === 0" v-for="message in sortedAudioMessages">
-                    <chat-message
-                        :key="message.id"
-                        :message="message"
-                        :calls="calls"
-                        :audiofiles="audiofiles"
-                        @dragstart="drag($event, message.id)"
-                        @modify="modifier"
-                        @delete="deleteMessage"
-                    />
-                </div>
-                <div class="admin-messages-item" v-if="status === 5" v-for="message in statusFiveMessages">
-                <chat-message
-                    :key="message.id"
-                    :message="message"
-                    :calls="calls"
-                    :audiofiles="audiofiles"
-                    @dragstart="drag($event, message.id)"
-                    @modify="modifier"
-                    @delete="deleteMessage"
-                />
+            <div class="columns">
+                <div class="column" v-for="status in [0, 5]" :key="status">
+                    <div class="admin-messages-container">
+                        <div
+                            class="admin-messages-title-container"
+                            :style="{ backgroundColor: couleurtitre[status] }"
+                        >
+                            <div class="admin-messages-title">
+                                {{ statu[status] }}
+                            </div>
+                        </div>
+                        <div
+                            class="admin-messages-list"
+                            :id="`column-${status}`"
+                            @drop="drop($event, status)"
+                            @dragover.prevent
+                        >
+                            <div
+                                class="admin-messages-item"
+                                v-if="status === 0"
+                                v-for="message in sortedAudioMessages"
+                            >
+                                <chat-message
+                                    :key="message.id"
+                                    :message="message"
+                                    :calls="calls"
+                                    :audiofiles="audiofiles"
+                                    @dragstart="drag($event, message.id)"
+                                    @modify="modifier"
+                                    @delete="deleteMessage"
+                                />
+                            </div>
+                            <div
+                                class="admin-messages-item"
+                                v-if="status === 5"
+                                v-for="message in statusFiveMessages"
+                            >
+                                <chat-message
+                                    :key="message.id"
+                                    :message="message"
+                                    :calls="calls"
+                                    :audiofiles="audiofiles"
+                                    @dragstart="drag($event, message.id)"
+                                    @modify="modifier"
+                                    @delete="deleteMessage"
+                                />
+                            </div>
+                        </div>
                     </div>
+                </div>
             </div>
         </div>
-        </div>
-            </div>
-
-        </div>
-
-        </AppLayout>
-
+    </AppLayout>
 </template>
-

@@ -159,6 +159,8 @@ export default {
                 currentUrl.lastIndexOf("/") + 1
             );
 
+            this.chatroomId = idFromUrl;
+
             axios
                 .get(`/admin/reception/api/management/${idFromUrl}`)
                 .then((response) => {
@@ -206,6 +208,16 @@ export default {
         } else {
             console.log("pas d'id recu");
         }
+
+        const chatChannel = Echo.channel("chat." + this.chatroomId);
+        chatChannel.listen(".message.new", (e) => {
+            this.getMessages();
+        });
+
+        const likesChannel = Echo.channel("like." + this.chatroomId);
+        likesChannel.listen(".like.new", (e) => {
+            this.getMessages();
+        });
     },
 };
 </script>

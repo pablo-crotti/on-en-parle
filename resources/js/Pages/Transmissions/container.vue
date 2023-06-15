@@ -31,6 +31,11 @@ export default {
         liveChannel.listen('.live.status.new', (e) => {
             this.getRooms();
         });
+
+        const chatChannel = Echo.channel("rooms.update");
+        chatChannel.listen(".event.on.rooms", (e) => {
+            this.getRooms();
+        });
     },
 };
 </script>

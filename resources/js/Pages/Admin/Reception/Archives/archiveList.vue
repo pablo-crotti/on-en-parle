@@ -53,6 +53,16 @@ export default {
     },
     created() {
         this.getMessages();
+
+        const chatChannel = Echo.channel("chat." + this.no);
+        chatChannel.listen(".message.new", (e) => {
+            this.getMessages();
+        });
+
+        const likesChannel = Echo.channel("like." + this.no);
+        likesChannel.listen(".like.new", (e) => {
+            this.getMessages();
+        });
     }
 };
 </script>
