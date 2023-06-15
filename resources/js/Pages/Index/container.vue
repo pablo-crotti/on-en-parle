@@ -31,19 +31,19 @@
 /**
  * Component: AppLayout
  * Description: The layout component for the application.
- * 
+ *
  * Component: MessageContainer
  * Description: The container component for displaying messages in a chat room.
- * 
+ *
  * Component: InputMessage
  * Description: The component for inputting a message in a chat room.
  *
  * Component: ChatRoomSelection
  * Description: The component for selecting a chat room.
- * 
+ *
  * Component: TransmissionCard
  * Description: The component for displaying transmission cards.
- * 
+ *
  * Component: Player
  * Description: The component for controlling audio player.
  */
