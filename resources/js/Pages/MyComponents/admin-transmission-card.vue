@@ -35,6 +35,12 @@
 </template>
 
 <script>
+/**
+ * Component: AppLayout
+ * Description: The layout component for the application. 
+ * Component: ContactForm
+ * Description: The component for the contact form.
+ */
 import modifyProgram from "@/Pages/Admin/Programs/Programs/modifyProgram.vue";
 import moment from "moment";
 import axios from "axios";
@@ -45,20 +51,23 @@ export default {
         modifyProgram,
         modalConfirmation,
     },
-    data: function () {
+    data() {
         return {
             likes: 0,
             roomIdForEdit: window.location.href.split("/").pop(),
             isModalOpen: false,
             modalTitle: "Confirmation",
             modalMessage: "Êtes-vous sûr de vouloir supprimer cette émission?",
-            roomForComment: {
-                type: Object,
-            },
+            roomForComment: null,
         };
     },
     props: ["room"],
     methods: {
+        /**
+         * Handles the length of the text based on the window width.
+         * @param {string} text - The text to handle the length.
+         * @returns {string} - The modified text.
+         */
         handelTextLenght(text) {
             if (window.innerWidth < 768) {
                 return text.length > 70 ? text.substring(0, 70) + "..." : text;

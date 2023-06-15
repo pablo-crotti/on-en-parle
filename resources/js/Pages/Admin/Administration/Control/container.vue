@@ -76,12 +76,24 @@ import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
 import dropdownFilter from "@/Pages/MyComponents/dropdownFilter.vue";
 import adminChatContainer from "@/Pages/MyComponents/adminChatContainer.vue";
 
+/**
+ * Component for handling admin chat functionality.
+ */
 export default {
     components: {
         ChatMessage,
         AppLayout,
         dropdownFilter,
         adminChatContainer,
+    },
+
+    props: {
+        /**
+         * The user ID.
+         */
+        userId: {
+            required: true,
+        },
     },
 
     data() {
@@ -116,16 +128,29 @@ export default {
         };
     },
 
-    props: ["userId"],
     methods: {
+        /**
+         * Handles the applied filter for sorting messages.
+         * @param {string} filterData - The filter value.
+         */
         handleFilterApplied(filterData) {
             this.sortType = filterData;
         },
 
+        /**
+         * Handles the drag event for message.
+         * @param {Event} event - The drag event.
+         * @param {number} messageId - The ID of the dragged message.
+         */
         drag(event, messageId) {
             event.dataTransfer.setData("text", messageId);
         },
 
+        /**
+         * Handles the drop event for message.
+         * @param {Event} event - The drop event.
+         * @param {number} status - The status of the message.
+         */
         async drop(event, status) {
             const messageId = parseInt(event.dataTransfer.getData("text"));
             const message = this.messages.find((m) => m.id === messageId);
@@ -141,11 +166,21 @@ export default {
                 });
             }
         },
+
+        /**
+         * Modifies the content of a message.
+         * @param {object} message - The message object.
+         */
         async modifier(message) {
             await axios.post(`/AdminInbox/message/${message.id}/content`, {
                 content: message.content,
             });
         },
+
+        /**
+         * Deletes a message.
+         * @param {object} message - The message object.
+         */
         async deleteMessage(message) {
             try {
                 const response = await axios.post(
@@ -158,6 +193,10 @@ export default {
                 console.error(error);
             }
         },
+
+        /**
+         * Filters the messages based on audio files.
+         */
         filterMessages() {
             this.filteredMessages = this.messages.filter((message) => {
                 return !this.audiofiles.some(
@@ -165,14 +204,26 @@ export default {
                 );
             });
         },
+
+        /**
+         * Sorts the messages by creation date.
+         */
         sortByCreation() {
             this.messages.sort((a, b) => {
                 return new Date(b.created_at) - new Date(a.created_at);
             });
         },
+
+        /**
+         * Sorts the messages by number of likes.
+         */
         sortByLikes() {
             this.messages.sort((a, b) => b.nb_likes - a.nb_likes);
         },
+
+        /**
+         * Retrieves the messages from the server.
+         */
         getMessages() {
             const currentUrl = window.location.pathname;
             const idFromUrl = currentUrl.substring(
@@ -191,23 +242,42 @@ export default {
                 });
         },
     },
+
     computed: {
+        /**
+         * Retrieves the audio messages.
+         * @returns {Array} - The audio messages.
+         */
         audioMessages() {
             return this.messages.filter(
                 (m) => m.audio && m.audio.length > 0 && m.status === 3
             );
         },
+
+        /**
+         * Retrieves the messages with status five.
+         * @returns {Array} - The messages with status five.
+         */
         statusFiveMessages() {
             return this.messages.filter(
                 (m) => m.status === 5 && m.audio.length > 0
             );
         },
+
+        /**
+         * Retrieves the call messages.
+         * @returns {Array} - The call messages.
+         */
         callMessages() {
             return this.messages.filter(
                 (m) => m.call && m.call.length > 0 && m.status === 3
             );
         },
 
+        /**
+         * Retrieves the sorted audio messages based on the selected sort type.
+         * @returns {Array} - The sorted audio messages.
+         */
         sortedAudioMessages() {
             let messages = [...this.audioMessages];
             if (this.sortType === "creation") {
@@ -220,6 +290,7 @@ export default {
             return messages;
         },
     },
+
     async created() {
         this.getMessages();
         let convertedId = null;

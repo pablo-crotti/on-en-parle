@@ -65,6 +65,26 @@
 </template>
 
 <script>
+/**
+ * Component: ChatMessage
+ * Description: A component for displaying chat messages.
+ *
+ * Component: CallForm
+ * Description: A component for displaying a form for making a call.
+ *
+ * Component: AppLayoutAdmin
+ * Description: The main layout component for the admin section.
+ *
+ * Component: modalValidation
+ * Description: A modal component for validating user inputs.
+ *
+ * Component: dropdownFilter
+ * Description: A dropdown component for filtering data.
+ *
+ * Component: adminChatContainer
+ * Description: A container component for the admin chat interface.
+ */
+
 import axios from "axios";
 import ChatMessage from "@/Pages/MyComponents/ChatMessages.vue";
 import CallForm from "@/Pages/MyComponents/CallForm.vue";
@@ -83,6 +103,7 @@ export default {
         adminChatContainer,
     },
     props: ["userId"],
+
     data() {
         return {
             messages: [],
@@ -126,14 +147,28 @@ export default {
     },
 
     methods: {
+        /**
+         * Handles the applied filter for sorting messages.
+         * @param {string} filterData - The filter value.
+         */
         handleFilterApplied(filterData) {
             this.sortType = filterData;
         },
 
+        /**
+         * Handles the drag event for message.
+         * @param {Event} event - The drag event.
+         * @param {number} messageId - The ID of the dragged message.
+         */
         drag(event, messageId) {
             event.dataTransfer.setData("text", messageId);
         },
 
+        /**
+         * Handles the drop event for message.
+         * @param {Event} event - The drop event.
+         * @param {number} status - The status of the message.
+         */
         drop(event, status) {
             const messageId = parseInt(event.dataTransfer.getData("text"));
             const message = this.messages.find((m) => m.id === messageId);
@@ -141,7 +176,6 @@ export default {
             if (message) {
                 if (status === 3 && (!message.audio[0] || message.call[0])) {
                     event.preventDefault();
-
                     this.modalMessage =
                         "Vous ne pouvez pas mettre ce message en régie";
                     this.openModal();
@@ -171,11 +205,20 @@ export default {
             }
         },
 
+        /**
+         * Modifies the content of a message.
+         * @param {object} message - The message object.
+         */
         async modifier(message) {
             await axios.post(`/AdminInbox/message/${message.id}/content`, {
                 content: message.content,
             });
         },
+
+        /**
+         * Deletes a message.
+         * @param {object} message - The message object.
+         */
         async deleteMessage(message) {
             try {
                 const response = await axios.post(
@@ -184,8 +227,15 @@ export default {
                 this.messages = this.messages.filter(
                     (m) => m.id !== message.id
                 );
-            } catch (error) {}
+            } catch (error) {
+                console.error(error);
+            }
         },
+
+        /**
+         * Sets a message as deleted.
+         * @param {object} message - The message object.
+         */
         async deleted(message) {
             try {
                 await axios.post(`/AdminInbox/message/${message.id}/update`, {
@@ -195,6 +245,10 @@ export default {
                 console.error(error);
             }
         },
+
+        /**
+         * Filters the messages to exclude audio files.
+         */
         filterMessages() {
             this.filteredMessages = this.messages.filter((message) => {
                 return !this.audiofiles.some(
@@ -202,20 +256,40 @@ export default {
                 );
             });
         },
+
+        /**
+         * Sorts the messages by creation date.
+         */
         sortByCreation() {
             this.messages.sort((a, b) => {
                 return new Date(b.created_at) - new Date(a.created_at);
             });
         },
+
+        /**
+         * Sorts the messages by number of likes.
+         */
         sortByLikes() {
             this.messages.sort((a, b) => b.nb_likes - a.nb_likes);
         },
+
+        /**
+         * Opens the modal.
+         */
         openModal() {
             this.isModalOpen = true;
         },
+
+        /**
+         * Closes the modal.
+         */
         closeModal() {
             this.isModalOpen = false;
         },
+
+        /**
+         * Retrieves the messages from the server.
+         */
         getMessages() {
             const currentUrl = window.location.pathname;
             const idFromUrl = currentUrl.substring(
@@ -234,16 +308,30 @@ export default {
                 });
         },
     },
+
     computed: {
+        /**
+         * Returns the messages sorted by creation date.
+         * @returns {Array} - The sorted messages.
+         */
         sortedByCreation() {
-            return [...this.messages].sort((a, b) => {
-                return new Date(b.created_at) - new Date(a.created_at);
-            });
+            return [...this.messages].sort(
+                (a, b) => new Date(b.created_at) - new Date(a.created_at)
+            );
         },
+
+        /**
+         * Returns the messages sorted by number of likes.
+         * @returns {Array} - The sorted messages.
+         */
         sortedByLikes() {
             return [...this.messages].sort((a, b) => b.nb_likes - a.nb_likes);
         },
 
+        /**
+         * Returns the sorted messages based on the selected sort type.
+         * @returns {Array} - The sorted messages.
+         */
         sortedMessages() {
             if (this.sortType === "creation") {
                 return this.sortedByCreation;

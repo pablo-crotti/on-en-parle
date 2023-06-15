@@ -20,6 +20,16 @@
 </template>
 
 <script>
+/**
+ *
+ * Component: AppLayout:
+ * Description: Layout component for the admin section.
+ * Component: AdminProgram:
+ * Description: A reusable component for displaying an admin program item.
+ * Component: dropdownFilter:
+ * Description: A reusable dropdown component for selecting filter options.
+ */
+
 import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
 import AdminProgram from "@/Pages/MyComponents/admin-program.vue";
 import axios from "axios";
@@ -50,15 +60,29 @@ export default {
         };
     },
     methods: {
+        /**
+         * Handles the filter applied event.
+         * @param {string} filterData - The filter data to apply.
+         */
         handleFilterApplied(filterData) {
             this.filterBy = filterData;
         },
+        /**
+         * Toggles the select dropdown.
+         */
         toggleSelect() {
             this.isSelectOpen = !this.isSelectOpen;
         },
+        /**
+         * Handles the filter change event.
+         * @param {Event} event - The filter change event.
+         */
         handleFilterChange(event) {
             this.filterBy = event.target.value;
         },
+        /**
+         * Filters the programs based on the selected filter option.
+         */
         filterPrograms() {
             if (this.filterBy === "interactions") {
                 this.filteredPrograms = [...this.programs].sort(
@@ -70,6 +94,9 @@ export default {
                 this.filteredPrograms = [...this.programs];
             }
         },
+        /**
+         * Retrieves the list of chat rooms from the server.
+         */
         getRooms() {
             axios.get("/chat/rooms-list").then((response) => {
                 this.programs = response.data;

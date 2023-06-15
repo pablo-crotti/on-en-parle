@@ -36,19 +36,24 @@ export default {
         program: {
             type: Object,
         },
-        currentURL: "",
+        currentURL: {
+            type: String,
+            default: "",
+        },
     },
     data() {
         return {
-            room: {
-                type: Object,
-            },
+            room: null,
         };
     },
     methods: {
+        /**
+         * Sets the current program by updating the URL with the new program ID.
+         * @param {number} newId - The ID of the new program.
+         */
         setCurrentProgram(newId) {
-            let regex = /\d+$/;
-            let newURL = this.currentURL.replace(regex, newId);
+            const regex = /\d+$/;
+            const newURL = this.currentURL.replace(regex, newId);
             window.location.replace(newURL);
         },
     },

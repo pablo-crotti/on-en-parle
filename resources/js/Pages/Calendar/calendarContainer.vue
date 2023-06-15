@@ -37,6 +37,13 @@
 </template>
 
 <script>
+/**
+ * Component: DayItem
+ * Description: Component for displaying a day in the calendar.
+ * 
+ * Component: TransmissionCard
+ * Description: Component for displaying a transmission card.
+ */
 import DayItem from "@/Pages/Calendar/dayItem.vue";
 import TransmissionCard from "@/Pages/MyComponents/transmission-card.vue";
 import axios from "axios";
@@ -48,6 +55,9 @@ export default {
     },
     data() {
         return {
+            /**
+             * The list of month names.
+             */
             months: [
                 "Janvier",
                 "Février",
@@ -62,14 +72,28 @@ export default {
                 "Novembre",
                 "Décembre",
             ],
+            /**
+             * The list of transmissions.
+             */
             transmissions: [],
+            /**
+             * The ID of the selected transmission.
+             */
             selectedTransmission: null,
+            /**
+             * The selected room object.
+             */
             selectedRoom: null,
         };
     },
     emits: ["updateMonth", "update-month"],
     props: ["month", "year", "clDays"],
     methods: {
+        /**
+         * Checks if the given day is the current day.
+         * @param {number} day - The day to check.
+         * @returns {boolean} - True if the day is the current day, false otherwise.
+         */
         isCurrentDay(day) {
             const today = new Date();
             if (this.month !== today.getMonth() + 1) {
@@ -77,16 +101,28 @@ export default {
             }
             return day === today.getDate();
         },
+        /**
+         * Handles the click event for the previous month button.
+         * Emits an event to update the calendar to the previous month.
+         */
         previousMonth() {
             const newMonth = this.month === 1 ? 12 : this.month - 1;
             const newYear = this.month === 1 ? this.year - 1 : this.year;
             this.$emit("update-month", newMonth, newYear);
         },
+        /**
+         * Handles the click event for the next month button.
+         * Emits an event to update the calendar to the next month.
+         */
         nextMonth() {
             const newMonth = this.month === 12 ? 1 : this.month + 1;
             const newYear = this.month === 12 ? this.year + 1 : this.year;
             this.$emit("update-month", newMonth, newYear);
         },
+        /**
+         * Retrieves the room object for the given room ID.
+         * @param {number} id - The ID of the room.
+         */
         getRoom(id) {
             axios
                 .get("/chat/room/" + id)
@@ -97,6 +133,9 @@ export default {
                     console.log(error);
                 });
         },
+        /**
+         * Retrieves the list of transmissions.
+         */
         getRooms() {
             axios
                 .get("/transmissions/dates")
@@ -107,6 +146,11 @@ export default {
                     console.log(error);
                 });
         },
+        /**
+         * Checks if a transmission exists for the given day.
+         * @param {number} day - The day to check.
+         * @returns {boolean} - True if a transmission exists, false otherwise.
+         */
         hasTransmission(day) {
             if (day) {
                 const date = this.year + "-" + this.month + "-" + day;
@@ -124,6 +168,11 @@ export default {
                 return false;
             }
         },
+        /**
+         * Handles the click event for a transmission.
+         * Retrieves the room object and sets the selected transmission.
+         * @param {number} transmissionId - The ID of the selected transmission.
+         */
         handleTransmissionClick(transmissionId) {
             this.getRoom(transmissionId);
             this.selectedTransmission = transmissionId;

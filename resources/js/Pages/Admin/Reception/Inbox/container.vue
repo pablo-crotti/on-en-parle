@@ -1,6 +1,10 @@
 <template>
     <AppLayout title="On en parle | Réception (Inbox)">
-        <adminChatContainer v-if="chatroomId" :room="chatroomId" :user="userId" />
+        <adminChatContainer
+            v-if="chatroomId"
+            :room="chatroomId"
+            :user="userId"
+        />
         <div class="containerInbox">
             <div id="boutonsmangament">
                 <div id="boutonsmangamenttype">
@@ -52,18 +56,41 @@
 </template>
 
 <script>
+/**
+ * Component: ChatMessages
+ * Description: Displays chat messages in the admin section.
+ * 
+ * Component: AppLayoutAdmin
+ * Description: Layout component for the admin section.
+ * 
+ * Component: DropdownFilter
+ * Description: A dropdown component for filtering messages in the admin section.
+ * 
+ * Component: AdminChatContainer
+ * Description: Container component for the admin chat functionality.
+ * 
+ * Component: archiveList
+ * Description: Component for displaying the list of archived messages.
+ * 
+ * Component: ChatMessage
+ * Description: Component for rendering a single chat message.
+ * 
+ * Component: adminChatContainer
+ * Description: Container component for the admin chat functionality.
+ */
+
 import axios from "axios";
 import ChatMessage from "@/Pages/MyComponents/ChatMessages.vue";
 import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
-import dropdownFilter from "@/Pages/MyComponents/dropdownFilter.vue";
-import adminChatContainer from "@/Pages/MyComponents/adminChatContainer.vue";
+import DropdownFilter from "@/Pages/MyComponents/dropdownFilter.vue";
+import AdminChatContainer from "@/Pages/MyComponents/adminChatContainer.vue";
 
 export default {
     components: {
         ChatMessage,
         AppLayout,
-        dropdownFilter,
-        adminChatContainer,
+        DropdownFilter,
+        AdminChatContainer,
     },
 
     props: ["userId"],
@@ -91,19 +118,33 @@ export default {
             ],
             messages: [],
             audiofiles: [],
-            idroom: null,
+            chatroomId: null,
         };
     },
 
     methods: {
+        /**
+         * Handles the filter applied event and updates the sort type.
+         * @param {string} filterData - The filter data representing the sort type.
+         */
         handleFilterApplied(filterData) {
             this.sortType = filterData;
         },
 
+        /**
+         * Handles the drag event and sets the message ID to the data transfer.
+         * @param {Event} event - The drag event.
+         * @param {number} messageId - The ID of the message being dragged.
+         */
         drag(event, messageId) {
             event.dataTransfer.setData("text", messageId);
         },
 
+        /**
+         * Handles the drop event and updates the status of the dropped message.
+         * @param {Event} event - The drop event.
+         * @param {string} status - The status to update the message to.
+         */
         async drop(event, status) {
             const messageId = parseInt(event.dataTransfer.getData("text"));
             const message = this.messages.find((m) => m.id === messageId);
@@ -115,11 +156,21 @@ export default {
                 });
             }
         },
+
+        /**
+         * Updates the content of a message.
+         * @param {object} message - The message object to update.
+         */
         async modifier(message) {
             await axios.post(`/AdminInbox/message/${message.id}/content`, {
                 content: message.content,
             });
         },
+
+        /**
+         * Deletes a message.
+         * @param {object} message - The message object to delete.
+         */
         async deleteMessage(message) {
             try {
                 const response = await axios.post(
@@ -132,6 +183,11 @@ export default {
                 console.error(error);
             }
         },
+
+        /**
+         * Sets the status of a message to "deleted".
+         * @param {object} message - The message object to mark as deleted.
+         */
         async deleted(message) {
             let status = 10;
             try {
@@ -145,6 +201,10 @@ export default {
                 console.error(error);
             }
         },
+
+        /**
+         * Filters the messages based on the audio files.
+         */
         filterMessages() {
             this.filteredMessages = this.messages.filter((message) => {
                 return !this.audiofiles.some(
@@ -152,15 +212,27 @@ export default {
                 );
             });
         },
+
+        /**
+         * Sorts the messages by creation date.
+         */
         sortByCreation() {
             console.log("Création");
             this.messages.sort((a, b) => {
                 return new Date(b.created_at) - new Date(a.created_at);
             });
         },
+
+        /**
+         * Sorts the messages by number of likes.
+         */
         sortByLikes() {
             this.messages.sort((a, b) => b.nb_likes - a.nb_likes);
         },
+
+        /**
+         * Fetches the messages for the chat room.
+         */
         getMessages() {
             const currentUrl = window.location.pathname;
             const idFromUrl = currentUrl.substring(
@@ -179,16 +251,30 @@ export default {
                 });
         },
     },
+
     computed: {
+        /**
+         * Sorts the messages by creation date.
+         * @returns {Array} - The sorted messages by creation date.
+         */
         sortedByCreation() {
             return [...this.messages].sort((a, b) => {
                 return new Date(b.created_at) - new Date(a.created_at);
             });
         },
+
+        /**
+         * Sorts the messages by number of likes.
+         * @returns {Array} - The sorted messages by number of likes.
+         */
         sortedByLikes() {
             return [...this.messages].sort((a, b) => b.nb_likes - a.nb_likes);
         },
 
+        /**
+         * Returns the sorted messages based on the current sort type.
+         * @returns {Array} - The sorted messages.
+         */
         sortedMessages() {
             if (this.sortType === "creation") {
                 return this.sortedByCreation;
@@ -198,7 +284,7 @@ export default {
         },
     },
 
-    async created() {
+    created() {
         this.getMessages();
 
         const chatChannel = Echo.channel("chat." + this.chatroomId);

@@ -77,11 +77,20 @@
 </template>
 
 <script>
+/**
+ *
+ * Component: modalValidation:
+ * Description: A reusable modal component for displaying validation messages.
+ */
+
 import axios from "axios";
 import modalValidation from "@/Pages/MyComponents/modalValidation.vue";
 
 export default {
     name: "NewChatRoomForm",
+    components: {
+        modalValidation,
+    },
     data: function () {
         return {
             title: "",
@@ -95,10 +104,8 @@ export default {
             modalMessage: "L'émission a bien été créée!",
         };
     },
-    components: {
-        modalValidation,
-    },
     created() {
+        // Check if there is an ongoing live program
         axios
             .get("/is-live")
             .then((response) => {
@@ -115,13 +122,22 @@ export default {
             });
     },
     methods: {
+        /**
+         * Opens the modal dialog.
+         */
         openModal() {
             this.isModalOpen = true;
         },
+        /**
+         * Closes the modal dialog and redirects to the program list.
+         */
         closeModal() {
             this.isModalOpen = false;
             window.location.href = "/admin/programs/list";
         },
+        /**
+         * Cancels the form submission and resets the form fields.
+         */
         cancel() {
             this.title = "";
             this.date = "";
@@ -130,6 +146,9 @@ export default {
             this.audio = "";
             window.location.href = "/admin/programs/list";
         },
+        /**
+         * Submits the form for creating a new chat room.
+         */
         submitForm() {
             this.formErrors = {};
 

@@ -38,7 +38,7 @@
 
         <div class="message-body">
             <div v-if="isAudio && !isCall" class="message-content">
-                <p> 
+                <p>
                     <span v-if="!editing" class="message-text">
                         {{ message.content }}
                     </span>

@@ -12,6 +12,10 @@
 </template>
 
 <script>
+/**
+ * Component: ChatMessages
+ * Description: This component represents a chat message list.
+ */
 import axios from "axios";
 import ChatMessage from "@/Pages/MyComponents/ChatMessages.vue";
 
@@ -42,6 +46,9 @@ export default {
     },
 
     methods: {
+        /**
+     * Fetches the chat messages from the server.
+     */
         getMessages() {
             axios
                 .get(`/emission/${this.no}/status/${this.id}`)
