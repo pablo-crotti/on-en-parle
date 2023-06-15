@@ -21,7 +21,7 @@
                     :key="status"
                 >
                     <div class="admin-messages-container">
-                        <div class="admin-messages-title-container">
+                        <div class="admin-messages-title-container" :style="{ backgroundColor: couleurTitre[status] }">
                             <div class="admin-messages-title">
                                 {{
                                     [
@@ -144,6 +144,7 @@ export default {
             chatroomId: null,
             calls: this.callChatroom,
             draggedElement: null,
+            couleurTitre:["#F0E47F","#FC9E5A","#8239DF","#2216C2"],
 
             categories: [
                 {
