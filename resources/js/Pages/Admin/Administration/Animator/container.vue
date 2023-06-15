@@ -71,18 +71,25 @@
 
 <script>
 /**
- * Component for managing chat messages in the admin interface.
+ * Component: ChatMessage
+ * Description: A component for displaying chat messages.
  *
- * @component
- * @example
- * <admin-chat-container
- *     :initialMessages="messages"
- *     :audioChatroom="audiofiles"
- *     :idroom="idroom"
- *     :callChatroom="calls"
- *     :userId="userId"
- * ></admin-chat-container>
+ * Component: AppLayoutAdmin
+ * Description: The main layout component for the admin section.
+ *
+ * Component: dropdownFilter
+ * Description: A dropdown component for filtering data.
+ *
+ * Component: adminChatContainer
+ * Description: A container component for the admin chat interface.
  */
+
+import axios from "axios";
+import ChatMessage from "@/Pages/MyComponents/ChatMessages.vue";
+import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
+import dropdownFilter from "@/Pages/MyComponents/dropdownFilter.vue";
+import adminChatContainer from "@/Pages/MyComponents/adminChatContainer.vue";
+
 export default {
     components: {
         ChatMessage,

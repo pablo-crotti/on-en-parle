@@ -33,6 +33,9 @@
 export default {
     props: ["room", "status"],
     methods: {
+        /**
+         * Toggles the visibility of the player container and player displayer elements.
+         */
         playerDisplayer() {
             const playerContainer = document.querySelector(".player-container");
             const playerDisplayer = document.querySelector(".player-displayer");
@@ -44,6 +47,10 @@ export default {
                 playerDisplayer.dataset.displayPlayer = "true";
             }
         },
+
+        /**
+         * Displays or hides the player button based on the status.
+         */
         displayPlayerButton() {
             if (this.status) {
                 document.querySelector(
@@ -57,6 +64,9 @@ export default {
         },
     },
     watch: {
+        /**
+         * Watches the 'status' property for changes and updates the player button display accordingly.
+         */
         status() {
             this.displayPlayerButton();
         },

@@ -70,6 +70,19 @@
 </template>
 
 <script>
+/**
+ * Component: ChatMessage
+ * Description: A component for displaying chat messages.
+ * 
+ * Component: AppLayoutAdmin
+ * Description: The main layout component for the admin section.
+ * 
+ * Component: dropdownFilter
+ * Description: A dropdown component for filtering data.
+ *
+ * Component: adminChatContainer
+ * Description: A container component for the admin chat interface.
+ */
 import axios from "axios";
 import ChatMessage from "@/Pages/MyComponents/ChatMessages.vue";
 import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
