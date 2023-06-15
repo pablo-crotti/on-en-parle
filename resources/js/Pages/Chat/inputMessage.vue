@@ -20,9 +20,14 @@
                 <p>{{ recordingTime }} / 90 sec.</p>
             </div>
         </div>
-        <div id="delete" data-display="false" class="input-message-button">
+<!--        <div id="delete" data-display="false" class="input-message-button">
             <button class="" @click="deleteRecord()">
                 <span class="material-symbols-outlined">delete</span>
+            </button>
+        </div>-->
+        <div id="send-record" data-display="false" class="input-message-button">
+            <button @click="sendRecord()" class="">
+                <span class="material-symbols-outlined">send</span>
             </button>
         </div>
         <div
@@ -43,9 +48,14 @@
                 <span class="material-symbols-outlined">send</span>
             </button>
         </div>
-        <div id="send-record" data-display="false" class="input-message-button">
+<!--        <div id="send-record" data-display="false" class="input-message-button">
             <button @click="sendRecord()" class="">
                 <span class="material-symbols-outlined">send</span>
+            </button>
+        </div>-->
+        <div id="delete" data-display="false" class="input-message-button">
+            <button class="" @click="deleteRecord()">
+                <span class="material-symbols-outlined">delete</span>
             </button>
         </div>
         <div id="call" data-display="true" class="input-message-button">
