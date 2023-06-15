@@ -50,6 +50,13 @@
 </template>
 
 <script>
+/**
+ * Component: AppLayoutAdmin
+ * Description: The main layout component for the admin section.
+ * 
+ * Component: modalConfirmation
+ * Description: A modal component for displaying confirmation messages.
+ */
 import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
 import axios from "axios";
 import modalConfirmation from "@/Pages/MyComponents/modalConfirmation.vue";
@@ -61,21 +68,32 @@ export default {
     },
     data() {
         return {
-            program: {},
-            background: "",
-            btnCaption: "",
-            isModalOpen: false,
-            modalTitle: "Confirmation",
-            modalMessage: "Êtes-vous sûr de vouloir démarrer le Live ?",
+            program: {}, // Holds the program data
+            background: "", // Background color
+            btnCaption: "", // Caption for the button
+            isModalOpen: false, // Flag to control the modal visibility
+            modalTitle: "Confirmation", // Title of the modal
+            modalMessage: "Êtes-vous sûr de vouloir démarrer le Live ?", // Message displayed in the modal
         };
     },
     methods: {
+        /**
+         * Starts the live broadcast.
+         * Makes a POST request to start the live broadcast for the program.
+         * Updates the program data and checks if it is live.
+         */
         goLive() {
             axios.post(`/emission/${this.program.id}/live`).then((response) => {
                 this.program = response.data.chatRoom;
                 this.isLive();
             });
         },
+
+        /**
+         * Checks if the program is live.
+         * Sets the background color, button caption, and modal message based on the live status.
+         * @returns {boolean} - True if the program is live, false otherwise.
+         */
         isLive() {
             if (this.program.on_air) {
                 this.background = "#838383";
@@ -92,14 +110,28 @@ export default {
             }
         },
 
+        /**
+         * Opens the modal.
+         * Sets the isModalOpen flag to true.
+         */
         openModal() {
             this.isModalOpen = true;
         },
+
+        /**
+         * Closes the modal.
+         * Sets the isModalOpen flag to false.
+         */
         closeModal() {
             this.isModalOpen = false;
         },
     },
     created() {
+        /**
+         * Retrieves the next program data.
+         * Makes a GET request to get the details of the next program.
+         * Updates the program data and checks if it is live.
+         */
         axios.get("/prochaine-emission").then((response) => {
             this.program = response.data;
             if (this.program !== null) {

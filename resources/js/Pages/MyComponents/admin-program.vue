@@ -38,9 +38,7 @@ import axios from "axios";
 export default {
     data() {
         return {
-            room: {
-                type: Object,
-            },
+            room: null,
             status: "",
         };
     },
@@ -50,6 +48,12 @@ export default {
         },
     },
     methods: {
+        /**
+         * Truncates a paragraph to a specified word count.
+         * @param {string} paragraph - The paragraph to truncate.
+         * @param {number} wordCount - The maximum number of words to include in the truncated paragraph.
+         * @returns {string} - The truncated paragraph.
+         */
         truncateParagraph(paragraph, wordCount) {
             const words = paragraph.split(" ");
 
@@ -58,7 +62,6 @@ export default {
             }
 
             const truncatedWords = words.slice(0, wordCount);
-
             const truncatedParagraph = truncatedWords.join(" ");
             const finalParagraph = truncatedParagraph + "...";
 
@@ -71,8 +74,10 @@ export default {
                 (item) => item.id === this.program.id
             );
         });
+
         const today = new Date();
         const programDate = new Date(this.program.broadcast_date);
+
         if (programDate < today) {
             this.status = "Replay";
         } else {

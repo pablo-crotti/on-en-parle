@@ -90,8 +90,15 @@ class ChatController extends Controller
 
         return $newMessage;
     }
-    
-    public function textMessages(Request $request, $roomId) {
+    /**
+     * Retrieve text messages for a specific chat room.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  int  $roomId
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function textMessages(Request $request, $roomId)
+    {
         $messages = ChatMessage::where('chat_room_id', $roomId)
             ->with(['text', 'audio'])
             ->whereIn('status', [1, 2, 3, 4, 5])

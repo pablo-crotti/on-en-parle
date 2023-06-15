@@ -63,10 +63,17 @@
 </template>
 
 <script>
-import axios from "axios";
+/**
+ * Component: modalValidation
+ * Description: The component for displaying a validation modal.
+ */
 import modalValidation from "@/Pages/MyComponents/modalValidation.vue";
+import axios from "axios";
 
 export default {
+    components: {
+        modalValidation,
+    },
     data() {
         return {
             formData: {
@@ -83,14 +90,15 @@ export default {
             modalMessage: "Votre mail à bien été envoyé !",
         };
     },
-    components: {
-        modalValidation,
-    },
     methods: {
+        /**
+         * Method: submitForm
+         * Description: Submits the form data.
+         */
         async submitForm() {
             this.formErrors = {};
 
-            if (this.formData.avis == "") {
+            if (this.formData.avis === "") {
                 this.formErrors.avis = "L'avis est requis";
             }
 
@@ -109,7 +117,7 @@ export default {
                         captcha: this.formData.captcha,
                     });
 
-                    if (response.status == 200) {
+                    if (response.status === 200) {
                         this.openModal();
                         this.formData.nom = "";
                         this.formData.email = "";
@@ -125,16 +133,25 @@ export default {
                 }
             }
         },
+        /**
+         * Method: checkCaptcha
+         * Description: Checks if the entered captcha is correct.
+         * @returns {boolean} - Whether the captcha is correct or not.
+         */
         checkCaptcha() {
-            if (this.formData.captcha == this.num1 + this.num2) {
-                return true;
-            } else {
-                return false;
-            }
+            return this.formData.captcha == this.num1 + this.num2;
         },
+        /**
+         * Method: openModal
+         * Description: Opens the validation modal.
+         */
         openModal() {
             this.isModalOpen = true;
         },
+        /**
+         * Method: closeModal
+         * Description: Closes the validation modal.
+         */
         closeModal() {
             this.isModalOpen = false;
         },

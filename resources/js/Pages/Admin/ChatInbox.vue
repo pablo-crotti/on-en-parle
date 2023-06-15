@@ -22,6 +22,10 @@
 </template>
 
 <script>
+/**
+ * Component: ChatMessageContainer
+ * Description: Container component for managing chat messages.
+ */
 import axios from "axios";
 import ChatMessage from "@/Pages/MyComponents/ChatMessages.vue";
 
@@ -31,6 +35,9 @@ export default {
     },
 
     props: {
+        /**
+         * The initial array of chat messages.
+         */
         initialMessages: {
             type: Array,
             required: true,
@@ -39,15 +46,29 @@ export default {
 
     data() {
         return {
+            /**
+             * The array of chat messages.
+             */
             messages: this.initialMessages,
         };
     },
 
     methods: {
+        /**
+         * Handles the drag event for a chat message.
+         * @param {Event} event - The drag event.
+         * @param {number} messageId - The ID of the dragged message.
+         */
         drag(event, messageId) {
             event.dataTransfer.setData("text", messageId);
         },
 
+        /**
+         * Handles the drop event for a chat message.
+         * Updates the status of the dropped message and sends a request to the server.
+         * @param {Event} event - The drop event.
+         * @param {string} status - The status to update the message to.
+         */
         async drop(event, status) {
             const messageId = parseInt(event.dataTransfer.getData("text"));
             const message = this.messages.find((m) => m.id === messageId);

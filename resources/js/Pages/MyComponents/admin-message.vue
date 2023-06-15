@@ -89,8 +89,6 @@
 </template>
 
 <script>
-import { ref } from "vue";
-
 export default {
     props: ["message"],
     data() {
@@ -100,6 +98,11 @@ export default {
         };
     },
     methods: {
+        /**
+         * Returns a formatted date string from the message's updated_at property.
+         * @param {Object} message - The message object.
+         * @returns {string} - The formatted date string.
+         */
         getFormattedDate(message) {
             const dateString = message.updated_at;
             const date = new Date(dateString);
@@ -112,27 +115,36 @@ export default {
 
             return formattedDate;
         },
+        /**
+         * Returns the status name based on the provided status value.
+         * @param {number} status - The status value.
+         * @returns {string} - The status name.
+         */
         getStatusName(status) {
+            let airedStatusColor;
             switch (status) {
                 case 5:
-                    return "Diffusé";
                     airedStatusColor = "#999999";
-                    break;
+                    return "Diffusé";
                 case 10:
-                    return "Non diffusé";
                     airedStatusColor = "#B2171B";
-                    break;
+                    return "Non diffusé";
                 default:
-                    break;
+                    return "";
             }
         },
+        /**
+         * Checks if the message is archived based on the status value.
+         * @param {number} status - The status value.
+         * @returns {boolean} - True if the message is archived, false otherwise.
+         */
         isArchived(status) {
-            if (status === 10 || status === 5) {
-                return true;
-            } else {
-                return false;
-            }
+            return status === 10 || status === 5;
         },
+        /**
+         * Handles the "loaded" event of the audio element to set the audio duration.
+         * @param {Event} event - The "loaded" event.
+         */
         audioLoaded(event) {
             const audio = event.target;
             const duration = Math.floor(audio.duration);
@@ -142,10 +154,18 @@ export default {
                 .toString()
                 .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
         },
+        /**
+         * Saves the changes made to the message.
+         */
         saveChanges() {
             this.$emit("modify", this.message);
             this.editing = false;
         },
+        /**
+         * Returns the URL for the audio file.
+         * @param {string} audioFile - The audio file name.
+         * @returns {string} - The URL for the audio file.
+         */
         getAudioURL(audioFile) {
             return `/audio/${audioFile}`;
         },
@@ -155,6 +175,8 @@ export default {
         const message = props.message;
 
         const setStatus = (status) => {
+            let airedStatusColor;
+            let statusName;
             switch (status) {
                 case 5:
                     airedStatusColor = "#999999";
@@ -167,6 +189,7 @@ export default {
                 default:
                     return "";
             }
+            return { airedStatusColor, statusName };
         };
 
         let headerColor = "";
@@ -185,7 +208,7 @@ export default {
             headerSymbol = "call";
         }
 
-        setStatus(message.status);
+        ({ airedStatusColor, statusName } = setStatus(message.status));
 
         return {
             headerColor,

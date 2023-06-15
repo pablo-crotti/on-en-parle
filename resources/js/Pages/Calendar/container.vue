@@ -12,6 +12,12 @@
 </template>
 
 <script>
+/**
+ * Component: AppLayout
+ * Description: The layout component for the application.
+ * Component: CalendarContainer
+ * Description: The container component for the calendar.
+ */
 import AppLayout from "@/Layouts/AppLayoutUser.vue";
 import CalendarContainer from "./calendarContainer.vue";
 
@@ -45,9 +51,21 @@ export default {
         };
     },
     methods: {
+        /**
+         * Gets the number of days in the specified month and year.
+         * @param {number} month - The month.
+         * @param {number} year - The year.
+         * @returns {number} - The number of days in the month.
+         */
         getDaysInMonth(month, year) {
             return new Date(year, month, 0).getDate();
         },
+        /**
+         * Gets the day of the week for the first day of the specified month and year.
+         * @param {number} month - The month.
+         * @param {number} year - The year.
+         * @returns {number} - The day of the week (0-6, where 0 is Sunday).
+         */
         getDayOfWeek(month, year) {
             const firstDayOfMonth = new Date(year, month - 1, 1);
             let dayOfWeek = firstDayOfMonth.getDay();
@@ -57,15 +75,27 @@ export default {
             }
             return dayOfWeek - 1;
         },
+        /**
+         * Updates the current month and year.
+         * @param {number} newMonth - The new month.
+         * @param {number} newYear - The new year.
+         */
         updateMonth(newMonth, newYear) {
             this.month = newMonth;
             this.year = newYear;
         },
+        /**
+         * Updates the total number of days in the current month.
+         */
         updateTotalDays() {
             this.totalDays = this.getDaysInMonth(this.month, this.year);
         },
     },
     computed: {
+        /**
+         * Generates an array of calendar days for display.
+         * @returns {Array} - The array of calendar days.
+         */
         calendarDays() {
             const emptyBefore = new Array(this.startOffset).fill(null);
             const days = Array.from(

@@ -79,7 +79,7 @@ import axios from "axios";
 
 export default {
     name: "ModifyChatRoomForm",
-    data: function () {
+    data() {
         return {
             program: {
                 title: "",
@@ -93,9 +93,16 @@ export default {
         };
     },
     methods: {
+        /**
+         * Cancel button handler to navigate back in history.
+         */
         cancel() {
             window.history.back();
         },
+        /**
+         * Fetches the chat room details for editing.
+         * @param {string} roomId - The ID of the chat room to fetch.
+         */
         fetchEmission(roomId) {
             axios
                 .get("/chat/room/" + roomId)
@@ -107,6 +114,9 @@ export default {
                     console.log(error);
                 });
         },
+        /**
+         * Submits the form data for editing the chat room.
+         */
         submitForm() {
             this.formErrors = {};
 
@@ -124,6 +134,7 @@ export default {
             }
 
             if (Object.keys(this.formErrors).length > 0) {
+                // Validation errors exist
                 return;
             } else {
                 axios
@@ -135,7 +146,8 @@ export default {
                         audio: this.program.audio_file,
                     })
                     .then((response) => {
-                        if (response.status == 200) {
+                        if (response.status === 200) {
+                            // Form submitted successfully
                             this.$emit("messagesent");
                             window.location.href =
                                 "/admin/programs/program/" + this.roomIdForEdit;
@@ -148,6 +160,7 @@ export default {
         },
     },
     created() {
+        // Fetch the chat room details on component creation
         this.fetchEmission(this.roomIdForEdit);
     },
 };
