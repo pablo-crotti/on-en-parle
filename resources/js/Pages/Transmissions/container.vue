@@ -37,13 +37,14 @@ export default {
 
 <template>
     <AppLayout title="On en parle | Émissions">
+
     <div class="transmissions-wrapper">
         <div class="transmission-card-container" v-for="(chatRoom, index) in chatRooms" :key="index">
             <a :href="'questions/' + chatRoom.id" v-if="chatRoom.on_air" class="on-air">
                 <transmission-card :room="chatRoom" />
             </a>
 
-            <a :href="'questions/' + chatRoom.id" v-else>
+            <a :href="'questions/' + chatRoom.id" v-else class="emissionspasser">
                 <transmission-card :room="chatRoom" />
             </a>
 

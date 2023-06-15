@@ -50,8 +50,8 @@ export default {
             <p>{{ new Date(room.broadcast_date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }) }}</p>
 
 
-            <div v-if="room.on_air" class="live">
-                <span class="material-symbols-outlined"> album </span>
+            <div v-if="room.on_air" class="live" style="display: flex; flex-direction: row;">
+              <p style="margin-right:5px; font-weight: bold;">LIVE</p>  <span class="material-symbols-outlined"> album </span>
             </div>
             <div v-else-if="new Date(room.broadcast_date) > new Date()" class="upcoming">
                 <p>Prochainement</p>

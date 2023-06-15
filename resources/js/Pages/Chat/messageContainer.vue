@@ -40,7 +40,7 @@ export default {
 </script>
 <template>
     <div class="message-container">
-        <div style="display: flex; flex-direction: row; width:80%;justify-content: space-between;">
+        <div class="titremessage">
             <h1>Vos questions</h1>
         <div class="filter-buttons-container">
             <button

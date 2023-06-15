@@ -1,128 +1,166 @@
 .transmission-card-container .infos h1 {
     text-align: left;
 }
+
 .transmissions-wrapper, .calendar-transmission-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
 }
+
 .calendar-transmission-wrapper {
-    margin-top: 50px;
+    margin-top: 5%;
 }
+
 .transmission-card-container {
     background-color: var(--light-black);
-    margin-bottom: 20px;
-    width: 50%;
+    margin-bottom: 2%;
+    margin-right: 2%;
+    width: 45%;
+    border-radius: 20px;
+    max-height: 35vh;
+}
+
+.transmission-card-container .emissionspasser:hover{
+   scale:1.03;
+    transition: 0.5s;
+    border: 2px solid whitesmoke;
+    border-radius: 20px;
+} 
+.transmission-card-container a {
+    width: auto;
+    padding: 1%;
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
     border-radius: 20px;
 }
-.transmission-card-container a, .transmission-card-container .card {
+
+.transmission-card-container .card {
     width: 100%;
     padding: 1rem;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     border-radius: 20px;
-    border: solid 2px var(--light-black);
+    border: solid 0.2vw var(--light-black);
 }
+
 .transmission-card-container .on-air {
     border-color: var(--primary-color);
+    border: 0.2vw solid var(--primary-color);
+    margin-bottom: 10vh;
 }
 
 .transmission-card-container .img-container {
-    width: 200px;
-    height: 250px;
-    /* background-color: red; */
+    width: 15vw;
+    height: 25vh;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
 }
+
 .transmission-card-container .img-container img {
     width: 100%;
-    height: 200px;
+    height: 20vh;
     background-color: var(--primary-color);
     object-fit: cover;
 }
+
 .transmission-card-container .img-container .likes {
     width: 100%;
-    height: calc(100% - 200px);
+    height: calc(100% - 20vh);
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    padding-top: 15px;
+    gap: 1vw;
+    padding-top: 1.5vh;
 }
+
 .transmission-card-container .img-container .likes p,
 .transmission-card-container .img-container .likes span {
     color: var(--light-gray);
 }
+
 .transmission-card-container .infos {
-    width: calc(100% - 250px);
-    margin-left: 50px;
+    width: calc(100% - 15vw);
+    margin-left: 5vw;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    padding: 1vw;
+    margin-bottom: 1vh;
+}
+
 .transmission-card-container .infos h1 {
     font-weight: bold;
     font-size: 1.5em;
     color: var(--primary-color);
-    margin-bottom: 10px;
+    margin-bottom: 1vh;
 }
+
 .transmission-card-container .infos p {
     color: var(--light-gray);
-    margin-bottom: 18px;
-    
+    margin-bottom: 1.8vh;
 }
+
 .infos .det-container {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 1vh;
 }
-@keyframes live {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
+
 .infos .det-container .live span {
     color: var(--primary-color);
     animation: live 2s infinite;
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1268px) {
     .transmission-card-container {
-        width: 100%;
-    }
-    .transmission-card-container .img-container {
-        width: 80px;
-        height: 100px;
+        width: 85%;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+       
     }
+
+    .transmission-card-container .img-container {
+        width: 40vw;
+        height: 10vh;
+    }
+
     .transmission-card-container .img-container img {
         height: auto;
         width: auto;
-
     }
+
     .transmission-card-container .img-container .likes {
-        height: calc(100% - 70px);
+        height: calc(100% - 7vh);
         font-size: 0.8em;
     }
+
     .transmission-card-container .infos {
-        width: calc(100% - 80px);
-        margin-left: 20px;
+        width: calc(100% - 8vw);
+        margin-left: 2vw;
     }
+
     .transmission-card-container .infos h1 {
         font-size: 1.1em;
-        
     }
+
+    
+  .infos .det-container p {
+        font-size: 0.8em;
+            }
+
     .infos .det-container {
         font-size: 0.8em;
+        width: 80%;
     }
     
 }
