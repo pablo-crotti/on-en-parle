@@ -75,3 +75,56 @@ export default {
     },
 };
 </script>
+<template>
+    <div class="img-container">
+        <img :src="room.image" alt="" />
+        
+    </div>
+    <div class="infos">
+        <div class="det-container">
+            <p>{{ new Date(room.broadcast_date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }) }}</p>
+
+
+            <div v-if="room.on_air" class="live" style="display: flex; flex-direction: row;">
+              <p style="margin-right:5px; font-weight: bold;">LIVE</p>  <span class="material-symbols-outlined"> album </span>
+            </div>
+            <div v-else-if="new Date(room.broadcast_date) > new Date()" class="upcoming">
+                <p>Prochainement</p>
+            </div>
+            <div v-else class="upcoming">
+                <p style="font-weight:bold;">Rediffusion</p>
+            </div>
+        </div>
+
+        <h1>{{ room.title }}</h1>
+        <p>
+            {{ handelTextLenght(room.description) }}
+        </p>
+        <div class="bottompart">
+        <div class="likes">
+            <span class="material-symbols-outlined">favorite</span>
+            <p>{{ likes }}</p>
+        </div>
+        <div class="transmission-link" v-if="room.on_air">
+                <a
+                    href="https://www.rts.ch/audio-podcast/livepopup/la-1ere/"
+                    target="_blank"
+                >
+                    Live
+                    <span class="material-symbols-outlined"> play_circle </span>
+                </a>
+        </div>
+          
+        <div class="transmission-player" v-else-if="room.audio_file">
+                <button @click="playTransmission()">
+                    <span class="material-symbols-outlined play-icon">
+                        play_circle
+                    </span>
+                </button>
+                <audio controls>
+                    <source :src="room.audio_file" type="audio/mp3" />
+                </audio>
+            </div>
+        </div>
+    </div>
+</template>

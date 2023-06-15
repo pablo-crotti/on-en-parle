@@ -164,3 +164,36 @@ export default {
     },
 };
 </script>
+
+<template>
+    <AppLayout
+        :title="room ? `On en parle | Questions ${room.name}` : 'On en parle'"
+    >
+        <div v-if="room" class="chat-wrapper">
+            <div class="chat-transmission">
+                <div class="transmission-card-container">
+                    <div class="on-air card" v-if="room.on_air">
+                        <transmission-card :room="room" />
+                    </div>
+                    <div class="card" v-else>
+                        <transmission-card :room="room" />
+                    </div>
+                </div>
+            </div>
+        
+
+            <Player
+                v-if="room.audio_file"
+                :room="room"
+                :status="playerStatus"
+            />
+            <div class="chat-container">
+                <message-container :messages="messages" />
+                <input-message
+                    :room="roomIdLink"
+                    v-on:messagesent="getMessages"
+                />
+            </div>
+        </div>
+    </AppLayout>
+</template>

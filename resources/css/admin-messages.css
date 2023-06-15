@@ -43,11 +43,14 @@
 }
 
 audio {
-    padding-right: 5px;
-    min-width: 160px;
+    padding : 3px;
+    min-width: 170px;
     width: 95%;
     height: 30px;
     margin: 10px 0 10px 0;
+    background-color: var(--dark-gray);
+    color: var(--primary-color);
+    border-radius: 20px;
 }
 .message-date {
     color: #616061;
