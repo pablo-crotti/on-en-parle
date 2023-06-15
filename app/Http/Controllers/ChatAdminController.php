@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewChatMessage;
 use Illuminate\Http\Request;
 use App\Models\ChatMessage;
 use Inertia\Inertia;
 use App\Models\VoiceMessage;
-use App\Events\NewMessageManipulation;
+// use App\Events\NewMessageManipulation;
 
 class ChatAdminController extends Controller
 {
@@ -212,7 +213,7 @@ class ChatAdminController extends Controller
         $message->status = $request->input('status');
         $message->save();
 
-        event(new NewMessageManipulation($message));
+        event(new NewChatMessage($message));
 
         return response()->json(['message' => 'Message updated successfully']);
     }
@@ -230,7 +231,7 @@ class ChatAdminController extends Controller
         $message->content = $request->input('content');
         $message->save();
 
-        event(new NewMessageManipulation($message));
+        event(new NewChatMessage($message));
 
         return response()->json(['message' => 'Message content updated successfully']);
     }
@@ -246,7 +247,7 @@ class ChatAdminController extends Controller
         $message->status = 10;
         $message->save();
 
-        event(new NewMessageManipulation($message));
+        event(new NewChatMessage($message));
 
         return response()->json(['message' => 'Message deleted successfully']);
     }

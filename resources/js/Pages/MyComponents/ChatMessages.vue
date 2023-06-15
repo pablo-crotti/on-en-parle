@@ -123,7 +123,6 @@ export default {
             editing: false,
             audioDuration: "",
             chiffre: 0,
-                    audioLoaded: false,
 
         };
     },
