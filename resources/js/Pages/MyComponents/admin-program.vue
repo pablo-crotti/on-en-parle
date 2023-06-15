@@ -38,7 +38,7 @@ import axios from "axios";
 export default {
     data() {
         return {
-            room: null,
+            room: '',
             status: "",
         };
     },
