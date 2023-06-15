@@ -94,9 +94,11 @@ class ChatController extends Controller
     public function textMessages(Request $request, $roomId) {
         $messages = ChatMessage::where('chat_room_id', $roomId)
             ->with(['text', 'audio'])
+            ->whereIn('status', [1, 2, 3, 4, 5])
             ->leftJoin('phone_calls', 'chat_messages.id', '=', 'phone_calls.chat_message_id')
             ->select('chat_messages.*')
             ->whereNull('phone_calls.chat_message_id')
+            ->orderBy('created_at', 'DESC')
             ->get();
 
         return $messages;
