@@ -23,8 +23,8 @@
             :style="{ backgroundColor: '#FBEF85' }"
         >
             <span class="symbol-header material-symbols-outlined">mic</span>
-            <span v-if="message.duration" class="audio-duration"
-                >0.03{{ message.duration }}</span
+            <span v-if="audioDuration" class="audio-duration"
+                >{{ audioDuration }} s.</span
             >
         </div>
 
@@ -39,10 +39,6 @@
         <div class="message-body">
             <div v-if="isAudio && !isCall" class="message-content">
                 <p>
-                    <span v-if="audioDuration" class="audio-duration">{{
-                        audioDuration
-                    }}</span>
-                    <br />
                     <span v-if="!editing" class="message-text">
                         {{ message.content }}
                     </span>
@@ -202,15 +198,19 @@ export default {
 
         audioLoaded(event, message) {
             const audio = event.target;
-            if (!audio || !audio.duration) {
-            } else {
-                const duration = Math.floor(audio.duration);
-                const minutes = Math.floor(duration / 60);
-                const seconds = duration % 60;
-                message.duration = `${minutes
-                    .toString()
-                    .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+            if (audio) {
+                this.audioDuration = Math.floor(audio.duration);
             }
+            // console.log(audio.duration);
+            // if (!audio || !audio.duration) {
+            // } else {
+            //     const duration = Math.floor(audio.duration);
+            //     const minutes = Math.floor(duration / 60);
+            //     const seconds = duration % 60;
+            //     message.duration = `${minutes
+            //         .toString()
+            //         .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+            // }
         },
 
         couleur(type) {
