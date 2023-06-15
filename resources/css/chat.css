@@ -241,7 +241,7 @@ input[type="text"] {
     justify-content: flex-end;
     align-items: right;
     padding: 0 10px;
-    flex-direction: column;
+    align-items: center;
 }
 .transmission-player span {
     color: var(--white);
