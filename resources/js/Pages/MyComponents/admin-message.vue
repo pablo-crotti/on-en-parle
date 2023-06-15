@@ -1,3 +1,93 @@
+<template>
+    <div
+        class="message-wrapper"
+        :id="`message-${message.id}`"
+        draggable="true"
+        @dragstart="$emit('dragstart', $event, message.id)"
+    >
+        <div class="message-header" :style="{ backgroundColor: headerColor }">
+            <div>
+                <span class="symbol-header material-symbols-outlined">{{
+                    headerSymbol
+                }}</span>
+                <span v-if="message.audio.length > 0" class="audio-duration">{{
+                    this.audioDuration
+                }}</span>
+                <span v-if="message.call.length > 0" class="message-caller">{{
+                    message.call[0].caller
+                }}</span>
+            </div>
+
+            <div
+                v-show="isArchived(message.status)"
+                class="aired-status"
+                :style="{ backgroundColor: airedStatusColor }"
+            >
+                {{ statusName }}
+            </div>
+        </div>
+
+        <div class="message-body">
+            <span class="message-date">{{ getFormattedDate(message) }}</span>
+
+            <div v-if="message.audio.length > 0 && message.audio[0].audio_file">
+                <audio controls @loadedmetadata="audioLoaded">
+                    <source
+                        :src="getAudioURL(message.audio[0].audio_file)"
+                        type="audio/webm"
+                    />
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+            <div class="message-content">
+                <p v-if="!editing" class="message-text">
+                    {{ message.content }}
+                </p>
+
+                <textarea
+                    v-else
+                    type="text"
+                    v-model="message.content"
+                    class="modiftextarea"
+                    @keyup.enter="saveChanges"
+                >
+                </textarea>
+
+                <div
+                    v-if="message.status !== 10 && message.status !== 5"
+                    class="message-actions"
+                >
+                    <span
+                        class="material-symbols-outlined"
+                        @click="editing = !editing"
+                        >edit {{ message.status }}</span
+                    >
+                    <span
+                        class="material-symbols-outlined"
+                        @click="$emit('delete', message)"
+                        >delete</span
+                    >
+                </div>
+
+                <div v-else-if="message.status === 10">
+                    <span
+                        class="material-symbols-outlined archiveIcon"
+                        @click="$emit('archive', message)"
+                        >unarchive</span
+                    >
+                </div>
+            </div>
+
+            <div v-if="message.nb_likes > 0" class="message-likes">
+                <span class="nb-likes">{{ message.nb_likes }}</span>
+                <span class="message-like-symbol material-symbols-outlined"
+                    >favorite</span
+                >
+            </div>
+        </div>
+    </div>
+</template>
+
 <script>
 import { ref } from "vue";
 
@@ -11,7 +101,7 @@ export default {
     },
     methods: {
         getFormattedDate(message) {
-            const dateString = message.updated_at; // Utilisez ici votre propre chaîne de date
+            const dateString = message.updated_at;
             const date = new Date(dateString);
 
             const day = String(date.getDate()).padStart(2, "0");
@@ -106,95 +196,6 @@ export default {
     },
 };
 </script>
-
-<template>
-    <div
-        class="message-wrapper"
-        :id="`message-${message.id}`"
-        draggable="true"
-        @dragstart="$emit('dragstart', $event, message.id)"
-    >
-        <div class="message-header" :style="{ backgroundColor: headerColor }">
-            <div>
-                <span class="symbol-header material-symbols-outlined">{{
-                    headerSymbol
-                }}</span>
-                <span v-if="message.audio.length > 0" class="audio-duration">{{
-                    this.audioDuration
-                }}</span>
-                <span v-if="message.call.length > 0" class="message-caller">{{
-                    message.call[0].caller
-                }}</span>
-            </div>
-
-            <div
-                v-show="isArchived(message.status)"
-                class="aired-status"
-                :style="{ backgroundColor: airedStatusColor }"
-            >
-                {{ statusName }}
-            </div>
-        </div>
-
-        <div class="message-body">
-            <span class="message-date">{{ getFormattedDate(message) }}</span>
-
-            <div v-if="message.audio.length > 0 && message.audio[0].audio_file">
-                <audio controls @loadedmetadata="audioLoaded">
-                    <source
-                        :src="getAudioURL(message.audio[0].audio_file)"
-                        type="audio/webm"
-                    />
-                    Your browser does not support the audio element.
-                </audio>
-            </div>
-            <div class="message-content">
-                <p v-if="!editing" class="message-text">
-                    {{ message.content }}
-                </p>
-
-                <textarea
-                    v-else
-                    type="text"
-                    v-model="message.content"
-                    class="modiftextarea"
-                    @keyup.enter="saveChanges">
-                </textarea>
-
-                <div
-                    v-if="message.status !== 10 && message.status !== 5"
-                    class="message-actions"
-                >
-                    <span
-                        class="material-symbols-outlined"
-                        @click="editing = !editing"
-                        >edit {{ message.status }}</span
-                    >
-                    <span
-                        class="material-symbols-outlined"
-                        @click="$emit('delete', message)"
-                        >delete</span
-                    >
-                </div>
-
-                <div v-else-if="message.status === 10">
-                    <span
-                        class="material-symbols-outlined archiveIcon"
-                        @click="$emit('archive', message)"
-                        >unarchive</span
-                    >
-                </div>
-            </div>
-
-            <div v-if="message.nb_likes > 0" class="message-likes">
-                <span class="nb-likes">{{ message.nb_likes }}</span>
-                <span class="message-like-symbol material-symbols-outlined"
-                    >favorite</span
-                >
-            </div>
-        </div>
-    </div>
-</template>
 
 <style>
 .container {

@@ -1,15 +1,72 @@
+<template>
+    <AppLayout title="On en parle | Réception (Inbox)">
+        <adminChatContainer v-if="chatroomId" :room="chatroomId" :user="userId" />
+        <div class="containerInbox">
+            <div id="boutonsmangament">
+                <div id="boutonsmangamenttype">
+                    <dropdownFilter
+                        :categories="categories"
+                        @filter-applied="handleFilterApplied"
+                    ></dropdownFilter>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column" v-for="status in [0, 1]" :key="status">
+                    <div
+                        class="admin-messages-container"
+                        style="width: 30vw; margin-right: 30px"
+                    >
+                        <div class="admin-messages-title-container">
+                            <div class="admin-messages-title">
+                                {{ statu[status] }}
+                            </div>
+                        </div>
+                        <div
+                            class="admin-messages-list"
+                            :id="`column-${status}`"
+                            @drop="drop($event, status)"
+                            @dragover.prevent
+                        >
+                            <div
+                                class="admin-messages-item"
+                                v-for="message in sortedMessages.filter(
+                                    (m) => m.status === status
+                                )"
+                            >
+                                <chat-message
+                                    :key="message.id"
+                                    :message="message"
+                                    :audiofiles="audiofiles"
+                                    @dragstart="drag($event, message.id)"
+                                    @modify="modifier"
+                                    @delete="deleted"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </AppLayout>
+</template>
+
 <script>
 import axios from "axios";
 import ChatMessage from "@/Pages/MyComponents/ChatMessages.vue";
 import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
 import dropdownFilter from "@/Pages/MyComponents/dropdownFilter.vue";
+import adminChatContainer from "@/Pages/MyComponents/adminChatContainer.vue";
 
 export default {
     components: {
         ChatMessage,
         AppLayout,
         dropdownFilter,
+        adminChatContainer,
     },
+
+    props: ["userId"],
 
     data() {
         return {
@@ -68,7 +125,6 @@ export default {
                 const response = await axios.post(
                     `/AdminInbox/message/${message.id}/delete`
                 );
-                // remove the message from local messages
                 this.messages = this.messages.filter(
                     (m) => m.id !== message.id
                 );
@@ -82,7 +138,6 @@ export default {
                 await axios.post(`/AdminInbox/message/${message.id}/update`, {
                     status,
                 });
-                // remove the message from local messages
                 this.messages = this.messages.filter(
                     (m) => m.id !== message.id
                 );
@@ -91,7 +146,6 @@ export default {
             }
         },
         filterMessages() {
-            // Nouvelle fonction pour filtrer les messages
             this.filteredMessages = this.messages.filter((message) => {
                 return !this.audiofiles.some(
                     (audiofile) => audiofile.id === message.id
@@ -101,11 +155,11 @@ export default {
         sortByCreation() {
             console.log("Création");
             this.messages.sort((a, b) => {
-                return new Date(b.created_at) - new Date(a.created_at); // Trier par date de création en ordre décroissant
+                return new Date(b.created_at) - new Date(a.created_at);
             });
         },
         sortByLikes() {
-            this.messages.sort((a, b) => b.nb_likes - a.nb_likes); // Trier par nombre de likes en ordre décroissant
+            this.messages.sort((a, b) => b.nb_likes - a.nb_likes);
         },
         getMessages() {
             const currentUrl = window.location.pathname;
@@ -128,11 +182,11 @@ export default {
     computed: {
         sortedByCreation() {
             return [...this.messages].sort((a, b) => {
-                return new Date(b.created_at) - new Date(a.created_at); // Trier par date de création en ordre décroissant
+                return new Date(b.created_at) - new Date(a.created_at);
             });
         },
         sortedByLikes() {
-            return [...this.messages].sort((a, b) => b.nb_likes - a.nb_likes); // Trier par nombre de likes en ordre décroissant
+            return [...this.messages].sort((a, b) => b.nb_likes - a.nb_likes);
         },
 
         sortedMessages() {
@@ -159,55 +213,3 @@ export default {
     },
 };
 </script>
-
-<template>
-    <AppLayout title="On en parle | Réception (Inbox)">
-        <div class="containerInbox">
-            <div id="boutonsmangament">
-                <div id="boutonsmangamenttype">
-                    <dropdownFilter
-                        :categories="categories"
-                        @filter-applied="handleFilterApplied"
-                    ></dropdownFilter>
-                </div>
-            </div>
-
-            <div class="columns">
-                <div class="column" v-for="status in [0, 1]" :key="status">
-                    <div
-                        class="admin-messages-container"
-                        style="width: 30vw; margin-right: 30px"
-                    >
-                        <div class="admin-messages-title-container">
-                            <div class="admin-messages-title">
-                                {{ statu[status] }}
-                            </div>
-                        </div>
-                        <div
-                            class="admin-messages-list"
-                            :id="`column-${status}`"
-                            @drop="drop($event, status)"
-                            @dragover.prevent
-                        >
-                            <div
-                                class="admin-messages-item"
-                                v-for="message in sortedMessages.filter(
-                                    (m) => m.status === status
-                                )"
-                            >
-                                <chat-message
-                                    :key="message.id"
-                                    :message="message"
-                                    :audiofiles="audiofiles"
-                                    @dragstart="drag($event, message.id)"
-                                    @modify="modifier"
-                                    @delete="deleted"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </AppLayout>
-</template>

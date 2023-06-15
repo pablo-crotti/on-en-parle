@@ -118,7 +118,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     return  Inertia::render('Admin/Programs/Programs/container');
 })->name('listPrograms');
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/admin', function() {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->get('/admin', function () {
     return redirect()->route('listPrograms');
 });
 
@@ -158,7 +158,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',]) //event done
     ->post('/chat/room/new', [ProgramController::class, 'newRoom']);
 
- Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
     ->post('/chat/room/delete/{roomId}', [ProgramController::class, 'destroy'])->name('deleteRoom'); //event done
 
 
@@ -171,10 +171,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 //Inbox
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
     ->get('/admin/reception/inbox/{id}', function () {
-        return Inertia::render('Admin/Reception/Inbox/container');
+        $userId = auth()->user()->id;
+        return Inertia::render(
+            'Admin/Reception/Inbox/container',
+            ['userId' => $userId]
+        );
     })->name('inbox');
 
-    Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
     ->get('/admin/reception/api/inbox/{id}', [ChatAdminController::class, 'showChatRoom'])
     ->name('api.inbox');
 
@@ -187,7 +191,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
             'Admin/Reception/Archives/container',
             ['userId' => $userId, 'id' => $id]
         );
-})->name('archives');
+    })->name('archives');
 
 // *************** ======= DATA GET
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
@@ -199,35 +203,47 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 // *************** ======= PAGE GENERATING ROUTES
 
 //control
-    Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
     ->get('/admin/administration/control/{id}', function () {
-        return Inertia::render('Admin/Administration/Control/container');
+        $userId = auth()->user()->id;
+        return Inertia::render(
+            'Admin/Administration/Control/container',
+            ['userId' => $userId]
+        );
     })->name('control');
 
-    Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
     ->get('/admin/reception/api/control/{id}', [ChatAdminController::class, 'dataControlChatRoom'])
     ->name('api.control');
 
 //animator
 
 
-    Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
     ->get('/admin/administration/animator/{id}', function () {
-        return Inertia::render('Admin/Administration/Animator/container');
+        $userId = auth()->user()->id;
+        return Inertia::render(
+            'Admin/Administration/Animator/container',
+            ['userId' => $userId]
+        );
     })->name('animator');
 
-    Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
     ->get('/admin/reception/api/animator/{id}', [ChatAdminController::class, 'dataAnimatorChatRoom'])
     ->name('api.animator');
 
 //management
 
-    Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
     ->get('/admin/administration/management/{id}', function () {
-        return Inertia::render('Admin/Administration/Management/container');
+        $userId = auth()->user()->id;
+        return Inertia::render(
+            'Admin/Administration/Management/container',
+            ['userId' => $userId]
+        );
     })->name('management');
 
-    Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
     ->get('/admin/reception/api/management/{id}', [ChatAdminController::class, 'dataManagementChatRoom'])
     ->name('api.management');
 

@@ -1,3 +1,69 @@
+<template>
+    <AppLayout title="On en parle | Administration (Gestion)">
+        <adminChatContainer
+            v-if="chatroomId"
+            :room="chatroomId"
+            :user="userId"
+        />
+        <modalValidation
+            :title="modalTitle"
+            :message="modalMessage"
+            :is-open="isModalOpen"
+            @close="closeModal"
+        />
+        <div class="containerManagement">
+            <div id="boutonsmangament">
+                <dropdownFilter
+                    :categories="categories"
+                    @filter-applied="handleFilterApplied"
+                ></dropdownFilter>
+                <call-form :room="chatroomId"></call-form>
+            </div>
+            <div class="columns">
+                <div
+                    class="column"
+                    v-for="status in [0, 1, 2, 3, 5]"
+                    :key="status"
+                >
+                    <div class="admin-messages-container">
+                        <div
+                            class="admin-messages-title-container"
+                            :style="{ backgroundColor: couleurtitre[status] }"
+                        >
+                            <div class="admin-messages-title">
+                                {{ statu[status] }}
+                            </div>
+                        </div>
+                        <div
+                            class="admin-messages-list"
+                            :id="`column-${status}`"
+                            @drop="drop($event, status)"
+                            @dragover.prevent
+                        >
+                            <div
+                                class="admin-messages-item"
+                                v-for="message in sortedMessages.filter(
+                                    (m) => m.status === status
+                                )"
+                            >
+                                <chat-message
+                                    :key="message.id"
+                                    :message="message"
+                                    :calls="calls"
+                                    :audiofiles="audiofiles"
+                                    @dragstart="drag($event, message.id)"
+                                    @modify="modifier"
+                                    @delete="deleted"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </AppLayout>
+</template>
+
 <script>
 import axios from "axios";
 import ChatMessage from "@/Pages/MyComponents/ChatMessages.vue";
@@ -5,7 +71,7 @@ import CallForm from "@/Pages/MyComponents/CallForm.vue";
 import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
 import modalValidation from "@/Pages/MyComponents/modalValidation.vue";
 import dropdownFilter from "@/Pages/MyComponents/dropdownFilter.vue";
-//  import ChatContainer from '@/Pages/MyComponents/admin-message.vue';
+import adminChatContainer from "@/Pages/MyComponents/adminChatContainer.vue";
 
 export default {
     components: {
@@ -14,9 +80,9 @@ export default {
         AppLayout,
         modalValidation,
         dropdownFilter,
-        //  ChatContainer
+        adminChatContainer,
     },
-
+    props: ["userId"],
     data() {
         return {
             messages: [],
@@ -125,14 +191,11 @@ export default {
                 await axios.post(`/AdminInbox/message/${message.id}/update`, {
                     status: 10,
                 });
-                // remove the message from local messages
-                // this.messages = this.messages.filter(m => m.id !== message.id);
             } catch (error) {
                 console.error(error);
             }
         },
         filterMessages() {
-            // Nouvelle fonction pour filtrer les messages
             this.filteredMessages = this.messages.filter((message) => {
                 return !this.audiofiles.some(
                     (audiofile) => audiofile.id === message.id
@@ -141,11 +204,11 @@ export default {
         },
         sortByCreation() {
             this.messages.sort((a, b) => {
-                return new Date(b.created_at) - new Date(a.created_at); // Trier par date de création en ordre décroissant
+                return new Date(b.created_at) - new Date(a.created_at);
             });
         },
         sortByLikes() {
-            this.messages.sort((a, b) => b.nb_likes - a.nb_likes); // Trier par nombre de likes en ordre décroissant
+            this.messages.sort((a, b) => b.nb_likes - a.nb_likes);
         },
         openModal() {
             this.isModalOpen = true;
@@ -174,11 +237,11 @@ export default {
     computed: {
         sortedByCreation() {
             return [...this.messages].sort((a, b) => {
-                return new Date(b.created_at) - new Date(a.created_at); // Trier par date de création en ordre décroissant
+                return new Date(b.created_at) - new Date(a.created_at);
             });
         },
         sortedByLikes() {
-            return [...this.messages].sort((a, b) => b.nb_likes - a.nb_likes); // Trier par nombre de likes en ordre décroissant
+            return [...this.messages].sort((a, b) => b.nb_likes - a.nb_likes);
         },
 
         sortedMessages() {
@@ -202,7 +265,6 @@ export default {
             }
         }
 
-        // Utilisez la variable convertie dans votre code plutôt que this.idroom
         if (convertedId !== null) {
             this.chatroomId = convertedId;
         } else {
@@ -221,69 +283,3 @@ export default {
     },
 };
 </script>
-
-<template>
-    <AppLayout title="On en parle | Administration (Gestion)">
-        <modalValidation
-            :title="modalTitle"
-            :message="modalMessage"
-            :is-open="isModalOpen"
-            @close="closeModal"
-        />
-        <div class="containerManagement">
-            <div id="boutonsmangament">
-                <!--                <div id="boutonsmangamenttype">
-                    <p style="color: aliceblue; margin-right: 10px; display:flex;align-items:center ;">Trier par</p>
-                    <button @click="sortType = 'creation'">Création</button>
-                    <button @click="sortType = 'likes'">Like</button>
-                </div>-->
-                <dropdownFilter
-                    :categories="categories"
-                    @filter-applied="handleFilterApplied"
-                ></dropdownFilter>
-                <call-form :room="chatroomId"></call-form>
-            </div>
-            <div class="columns">
-                <div
-                    class="column"
-                    v-for="status in [0, 1, 2, 3, 5]"
-                    :key="status"
-                >
-                    <div class="admin-messages-container">
-                        <div
-                            class="admin-messages-title-container"
-                            :style="{ backgroundColor: couleurtitre[status] }"
-                        >
-                            <div class="admin-messages-title">
-                                {{ statu[status] }}
-                            </div>
-                        </div>
-                        <div
-                            class="admin-messages-list"
-                            :id="`column-${status}`"
-                            @drop="drop($event, status)"
-                            @dragover.prevent
-                        >
-                            <div
-                                class="admin-messages-item"
-                                v-for="message in sortedMessages.filter(
-                                    (m) => m.status === status
-                                )"
-                            >
-                                <chat-message
-                                    :key="message.id"
-                                    :message="message"
-                                    :calls="calls"
-                                    :audiofiles="audiofiles"
-                                    @dragstart="drag($event, message.id)"
-                                    @modify="modifier"
-                                    @delete="deleted"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </AppLayout>
-</template>

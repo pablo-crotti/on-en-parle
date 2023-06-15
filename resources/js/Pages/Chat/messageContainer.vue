@@ -1,3 +1,40 @@
+<template>
+    <div class="message-container">
+        <div
+            style="
+                display: flex;
+                flex-direction: row;
+                width: 80%;
+                justify-content: space-between;
+            "
+        >
+            <h1>Vos questions</h1>
+            <div class="filter-buttons-container">
+                <button
+                    :class="{ current: filterBy === 'likes' }"
+                    @click="filterBy = 'likes'"
+                >
+                    Likes
+                </button>
+                <button
+                    :class="{ current: filterBy === 'date' || filterBy === '' }"
+                    @click="filterBy = 'date'"
+                >
+                    Date
+                </button>
+            </div>
+        </div>
+
+        <div
+            class="message-item"
+            v-for="(message, index) in filteredMessages"
+            :key="index"
+        >
+            <message-item :message="message" />
+        </div>
+    </div>
+</template>
+
 <script>
 import MessageItem from "./messageItem.vue";
 
@@ -38,32 +75,3 @@ export default {
     },
 };
 </script>
-<template>
-    <div class="message-container">
-        <div style="display: flex; flex-direction: row; width:80%;justify-content: space-between;">
-            <h1>Vos questions</h1>
-        <div class="filter-buttons-container">
-            <button
-                :class="{ current: filterBy === 'likes' }"
-                @click="filterBy = 'likes'"
-            >
-                Likes
-            </button>
-            <button
-                :class="{ current: filterBy === 'date' || filterBy === '' }"
-                @click="filterBy = 'date'"
-            >
-                Date
-            </button>
-        </div>
-        </div>
-       
-        <div
-            class="message-item"
-            v-for="(message, index) in filteredMessages"
-            :key="index"
-        >
-            <message-item :message="message" />
-        </div>
-    </div>
-</template>

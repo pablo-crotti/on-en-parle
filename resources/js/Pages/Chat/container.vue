@@ -1,3 +1,55 @@
+<template>
+    <AppLayout
+        :title="room ? `On en parle | Questions ${room.name}` : 'On en parle'"
+    >
+        <div v-if="room" class="chat-wrapper">
+            <div class="chat-transmission">
+                <div class="transmission-card-container">
+                    <div class="on-air card" v-if="room.on_air">
+                        <transmission-card :room="room" />
+                    </div>
+                    <div class="card" v-else>
+                        <transmission-card :room="room" />
+                    </div>
+                </div>
+            </div>
+            <div class="transmission-link" v-if="room.on_air">
+                <a
+                    href="https://www.rts.ch/audio-podcast/livepopup/la-1ere/"
+                    target="_blank"
+                >
+                    Live
+                    <span class="material-symbols-outlined"> play_circle </span>
+                </a>
+            </div>
+
+            <div class="transmission-player" v-else-if="room.audio_file">
+                <button @click="playTransmission()">
+                    <span class="material-symbols-outlined play-icon">
+                        play_circle
+                    </span>
+                </button>
+                <audio controls>
+                    <source :src="room.audio_file" type="audio/mp3" />
+                </audio>
+            </div>
+
+            <Player
+                v-if="room.audio_file"
+                :room="room"
+                :status="playerStatus"
+            />
+            <div class="chat-container">
+                <message-container :messages="messages" />
+                <input-message
+                    :room="roomIdLink"
+                    v-on:messagesent="getMessages"
+                />
+            </div>
+        </div>
+    </AppLayout>
+</template>
+
 <script>
 import AppLayout from "@/Layouts/AppLayoutUser.vue";
 import MessageContainer from "@/Pages/Chat/messageContainer.vue";
@@ -112,54 +164,3 @@ export default {
     },
 };
 </script>
-
-<template>
-    <AppLayout
-        :title="room ? `On en parle | Questions ${room.name}` : 'On en parle'"
-    >
-        <div v-if="room" class="chat-wrapper">
-            <div class="chat-transmission">
-                <div class="transmission-card-container">
-                    <div class="on-air card" v-if="room.on_air">
-                        <transmission-card :room="room" />
-                    </div>
-                    <div class="card" v-else>
-                        <transmission-card :room="room" />
-                    </div>
-                </div>
-            </div>
-            <div class="transmission-link" v-if="room.on_air">
-                <a
-                    href="https://www.rts.ch/audio-podcast/livepopup/la-1ere/"
-                    target="_blank"
-                >
-                    Live
-                    <span class="material-symbols-outlined"> play_circle </span>
-                </a>
-            </div>
-            <div class="transmission-player" v-else-if="room.audio_file">
-                <button @click="playTransmission()">
-                    <span class="material-symbols-outlined play-icon">
-                        play_circle
-                    </span>
-                </button>
-                <audio controls>
-                    <source :src="room.audio_file" type="audio/mp3" />
-                </audio>
-            </div>
-
-            <Player
-                v-if="room.audio_file"
-                :room="room"
-                :status="playerStatus"
-            />
-            <div class="chat-container">
-                <message-container :messages="messages" />
-                <input-message
-                    :room="roomIdLink"
-                    v-on:messagesent="getMessages"
-                />
-            </div>
-        </div>
-    </AppLayout>
-</template>

@@ -84,7 +84,7 @@ export default {
     },
     created() {
         this.getRooms();
-        
+
         const chatChannel = Echo.channel("rooms.update");
         chatChannel.listen(".event.on.rooms", (e) => {
             this.getRooms();

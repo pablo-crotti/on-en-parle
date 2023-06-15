@@ -7,13 +7,13 @@
 </template>
 
 <script>
-import AppLayout from '@/Layouts/AppLayoutAdmin.vue';
+import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
 import modifyProgram from "@/Pages/Admin/Programs/Programs/modifyProgram.vue";
 
 export default {
     components: {
         AppLayout,
-        modifyProgram
+        modifyProgram,
     },
-}
+};
 </script>
