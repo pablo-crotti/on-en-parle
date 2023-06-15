@@ -60,7 +60,7 @@ export default {
             isModalOpen: false,
             modalTitle: "Confirmation",
             modalMessage: "Êtes-vous sûr de vouloir supprimer cette émission?",
-            roomForComment: null,
+            roomForComment: '',
         };
     },
     props: ["room"],

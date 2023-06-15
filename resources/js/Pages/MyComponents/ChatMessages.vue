@@ -198,9 +198,16 @@ export default {
 
         audioLoaded(event, message) {
             const audio = event.target;
-            if (audio) {
-                this.audioDuration = Math.floor(audio.duration);
+            if (audio.duration === Infinity) {
+                audio.currentTime = 10000000;
+            setTimeout(() => {
+                audio.currentTime = 0; // to reset the time, so it starts at the beginning
+            }, 1000);
             }
+            //arrondi à l'entier inférieur
+
+
+            this.audioDuration = Math.floor(audio.duration);
         },
 
         couleur(type) {
