@@ -48,7 +48,14 @@ export default {
          * Fetches the list of chat rooms from the server.
          */
         getRooms() {
-            // ...
+            axios
+                .get("/chat/rooms")
+                .then((response) => {
+                    this.chatRooms = response.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
     },
     created() {
