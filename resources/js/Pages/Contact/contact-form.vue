@@ -39,7 +39,7 @@
                 id="avis"
                 name="avis"
                 placeholder="Votre avis"
-                style="height: 200px"
+                style="height: 150px"
                 v-model="formData.avis"
             ></textarea>
             <div class="error-message">{{ formErrors.avis }}</div>

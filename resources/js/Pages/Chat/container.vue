@@ -180,6 +180,18 @@ export default {
                     </div>
                 </div>
             </div>
+
+                   
+        <div class="transmission-player" v-if="room.audio_file && !room.on_air">
+                <button @click="playTransmission()">
+                    <span class="material-symbols-outlined play-icon">
+                        play_circle
+                    </span>
+                </button>
+                <audio controls>
+                    <source :src="room.audio_file" type="audio/mp3" />
+                </audio>
+            </div>
         
 
             <Player

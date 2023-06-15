@@ -76,17 +76,7 @@ export default {
                     <span class="material-symbols-outlined"> play_circle </span>
                 </a>
         </div>
-          
-        <div class="transmission-player" v-else-if="room.audio_file">
-                <button @click="playTransmission()">
-                    <span class="material-symbols-outlined play-icon">
-                        play_circle
-                    </span>
-                </button>
-                <audio controls>
-                    <source :src="room.audio_file" type="audio/mp3" />
-                </audio>
-            </div>
+   
         </div>
     </div>
 </template>

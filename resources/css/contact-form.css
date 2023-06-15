@@ -1,9 +1,10 @@
 .contactform-container {
     display: flex;
     flex-direction: column;
-    margin: 0 auto 100px auto;
-    width: 40%;
-    margin-top: 5%;
+
+    margin: 0px auto 100px auto;
+    width: 50%;
+    margin-top: 1%;
 }
 
 .contactform-container .form-title {
@@ -47,11 +48,12 @@
     position: relative;
     top: 100px;
     background-color: var(--primary-color);
-    height: 60px;
+    height: 50px;
     color: var(--white);
-    border-radius: 9px;
+    border-radius: 10px;
     top: 100px;
     font-weight: bold;
+    margin-bottom: 25px;
 }
 
 .form-required {
@@ -59,7 +61,13 @@
     font-weight: bold;
 }
 
+.form-desc {
+    margin-bottom: 2%;
+}
 
+#nom, #avis, #email {
+    margin-bottom: 3%;
+}
 
 @media screen and (max-width: 768px) {
     .contactform-container {
@@ -69,5 +77,6 @@
     .form-desc {
         font-size: 12px;
         padding-bottom: 5%;
+        
     }
 }
