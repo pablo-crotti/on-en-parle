@@ -31,10 +31,32 @@ export default {
         };
     },
     methods: {
+        /**
+         * Sets an item in local storage.
+         * @param {string} key - The key of the item.
+         * @param {any} value - The value of the item.
+         */
         setItem,
+        /**
+         * Retrieves an item from local storage.
+         * @param {string} key - The key of the item.
+         * @returns {any} The value of the item.
+         */
         getItem,
+        /**
+         * Removes an item from local storage.
+         * @param {string} key - The key of the item.
+         */
         unsetItem,
+        /**
+         * Formats a relative time based on the current time.
+         * @param {Date} time - The time to format.
+         * @returns {string} The formatted relative time.
+         */
         formatRelativeTime,
+        /**
+         * Handles the like action on the message.
+         */
         like() {
             if (window.location.href.includes("/admin/programs/program/")) {
                 return;
@@ -68,6 +90,10 @@ export default {
                 }
             }
         },
+        /**
+         * Checks if the message is liked.
+         * @returns {boolean} True if the message is liked, false otherwise.
+         */
         isLiked() {
             if (getItem(this.message.id)) {
                 return true;
