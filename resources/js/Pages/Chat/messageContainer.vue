@@ -75,7 +75,7 @@ export default {
     },
 };
 </script>
-<template>
+<!-- <template>
     <div class="message-container">
         <div class="titremessage">
             <h1>Vos questions</h1>
@@ -103,4 +103,4 @@ export default {
             <message-item :message="message" />
         </div>
     </div>
-</template>
+</template> -->

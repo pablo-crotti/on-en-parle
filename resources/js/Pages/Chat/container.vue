@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <AppLayout
         :title="room ? `On en parle | Questions ${room.name}` : 'On en parle'"
     >
@@ -48,7 +48,7 @@
             </div>
         </div>
     </AppLayout>
-</template>
+</template> -->
 
 <script>
 import AppLayout from "@/Layouts/AppLayoutUser.vue";

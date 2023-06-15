@@ -127,29 +127,9 @@ export default {
                 </div>
             </div>
 
-            <div class="transmission-link" v-if="room.on_air">
-                <a
-                    href="https://www.rts.ch/audio-podcast/livepopup/la-1ere/"
-                    target="_blank"
-                >
-                    Live
-                    <span class="material-symbols-outlined"> play_circle </span>
-                </a>
-            </div>
-            
-            <div class="transmission-player" v-else-if="room.audio_file">
-                <button @click="playTransmission()">
-                    <span class="material-symbols-outlined play-icon">
-                        play_circle
-                    </span>
-                </button>
-                <audio controls>
-                    <source :src="room.audio_file" type="audio/mp3" />
-                </audio>
-            </div>
-
+          
             <Player
-                v-if="room.audio_file"
+                v-if="room.audio_file && !room.on_air"
                 :room="room"
                 :status="playerStatus"
             />
