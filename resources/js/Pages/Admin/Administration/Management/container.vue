@@ -17,7 +17,7 @@
                     :categories="categories"
                     @filter-applied="handleFilterApplied"
                 ></dropdownFilter>
-                <call-form :room="chatroomId"></call-form>
+                <call-form v-if="chatroomId" :room="chatroomId"></call-form>
             </div>
             <div class="columns">
                 <div

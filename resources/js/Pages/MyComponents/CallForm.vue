@@ -233,7 +233,6 @@ export default {
 }
 
 .submit-button:hover {
-    darken: 70%;
     cursor: pointer;
 }
 
