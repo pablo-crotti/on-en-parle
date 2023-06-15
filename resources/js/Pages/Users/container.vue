@@ -85,6 +85,10 @@
 </template>
 
 <script>
+/**
+ * Component: AppLayout
+ * Description: This component provides the layout structure for admin pages.
+ */
 import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
 import axios from "axios";
 
@@ -94,11 +98,14 @@ export default {
     },
     data() {
         return {
-            users: [],
-            userToDelete: null,
+            users: [], // Holds the list of users
+            userToDelete: null, // Stores the ID of the user to be deleted
         };
     },
     methods: {
+        /**
+         * Fetches the list of users from the server
+         */
         getUsers() {
             axios
                 .get("/admin/users")
@@ -109,6 +116,11 @@ export default {
                     console.log(error);
                 });
         },
+
+        /**
+         * Displays the confirmation dialog for deleting a user
+         * @param {number} id - The ID of the user to be deleted
+         */
         askConfirm(id) {
             const container = document.querySelector(
                 ".user-delete-confirmation-wrapper"
@@ -119,6 +131,10 @@ export default {
             ).name;
             this.userToDelete = id;
         },
+
+        /**
+         * Cancels the user deletion and hides the confirmation dialog
+         */
         cancelDelete() {
             const container = document.querySelector(
                 ".user-delete-confirmation-wrapper"
@@ -126,6 +142,10 @@ export default {
             container.setAttribute("data-display-confirm", "false");
             this.userToDelete = null;
         },
+
+        /**
+         * Deletes the selected user from the server
+         */
         deleteUser() {
             const container = document.querySelector(
                 ".user-delete-confirmation-wrapper"
@@ -143,12 +163,22 @@ export default {
                     console.log(error);
                 });
         },
+
+        /**
+         * Toggles the display of the new user form
+         */
         userFormChangeStatus() {
             const container = document.querySelector(".new-user-wrapper");
-            container.getAttribute("data-display-user") === "true"
-                ? container.setAttribute("data-display-user", "false")
-                : container.setAttribute("data-display-user", "true");
+            const displayStatus =
+                container.getAttribute("data-display-user") === "true"
+                    ? "false"
+                    : "true";
+            container.setAttribute("data-display-user", displayStatus);
         },
+
+        /**
+         * Creates a new user with the provided name and email
+         */
         createUser() {
             const container = document.querySelector(".new-user-wrapper");
             const name = container.querySelector("#name").value;
@@ -175,7 +205,7 @@ export default {
         },
     },
     created() {
-        this.getUsers();
+        this.getUsers(); // Fetch the users when the component is created
     },
 };
 </script>
