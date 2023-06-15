@@ -43,7 +43,7 @@ export default {
     },
     data() {
         return {
-            room: null,
+            room: '',
         };
     },
     methods: {
