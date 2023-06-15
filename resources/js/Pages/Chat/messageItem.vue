@@ -66,7 +66,7 @@ export default {
                             console.log(error);
                         });
                 }
-            }   
+            }
         },
         isLiked() {
             if (getItem(this.message.id)) {

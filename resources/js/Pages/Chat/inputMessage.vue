@@ -1,5 +1,10 @@
 <template>
-    <modalValidation :title="modalTitle" :message="modalMessage" :is-open="isModalOpen" @close="closeModal" />
+    <modalValidation
+        :title="modalTitle"
+        :message="modalMessage"
+        :is-open="isModalOpen"
+        @close="closeModal"
+    />
     <div class="input-message-container">
         <input
             id="input-message"
@@ -73,7 +78,7 @@ export default {
         };
     },
     components: {
-        modalValidation
+        modalValidation,
     },
     methods: {
         handleKeyUp() {
@@ -105,7 +110,7 @@ export default {
                     if (response.status == 201) {
                         this.message = "";
                         this.$emit("messagesent");
-                        this.openModal()
+                        this.openModal();
                     }
                 })
                 .catch((error) => {
@@ -209,8 +214,8 @@ export default {
                                 axios
                                     .post("/store-audio/" + this.room, formData)
                                     .then((response) => {
-                                        this.openModal()
-                                    })  
+                                        this.openModal();
+                                    })
                                     .catch((error) => {
                                         console.log(error);
                                     });

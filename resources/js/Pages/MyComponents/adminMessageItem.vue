@@ -9,15 +9,15 @@
         <div class="admin-message-time">
             <p>{{ formatRelativeTime(message.created_at) }}</p>
         </div>
-       
     </div>
 </template>
+
 <script>
-    import { formatRelativeTime } from "../../utils/timeFormat";
-    export default {
-        props: ['message', 'user'],
-        methods: {
-            formatRelativeTime
-        }
-    }
+import { formatRelativeTime } from "../../utils/timeFormat";
+export default {
+    props: ["message", "user"],
+    methods: {
+        formatRelativeTime,
+    },
+};
 </script>

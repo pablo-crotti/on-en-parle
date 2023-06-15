@@ -1,61 +1,66 @@
 <template>
     <div class="container">
-      <h1>ChatRecu</h1>
-      <div class="column" v-for="status in [0, 1]" :key="status">
-        <div 
-            class="dropzone" :id="`column-${status}`"
-            @drop="drop($event, status)"
-            @dragover.prevent
-        >
-            <chat-message
-            v-for="message in messages.filter(m => m.status === status)"
-            :key="message.id"
-            :message="message"
-            @dragstart="drag($event, message.id)"
-            />
+        <h1>ChatRecu</h1>
+        <div class="column" v-for="status in [0, 1]" :key="status">
+            <div
+                class="dropzone"
+                :id="`column-${status}`"
+                @drop="drop($event, status)"
+                @dragover.prevent
+            >
+                <chat-message
+                    v-for="message in messages.filter(
+                        (m) => m.status === status
+                    )"
+                    :key="message.id"
+                    :message="message"
+                    @dragstart="drag($event, message.id)"
+                />
+            </div>
         </div>
-      </div>
     </div>
 </template>
-  
+
 <script>
-import axios from 'axios';
-import ChatMessage from '@/Pages/MyComponents/ChatMessages.vue';
+import axios from "axios";
+import ChatMessage from "@/Pages/MyComponents/ChatMessages.vue";
 
 export default {
-  components: {
-    ChatMessage
-  },
-
-  props: {
-    initialMessages:{
-      type: Array,
-      required: true
-    } 
-  },
-
-  data() {
-    return {
-      messages: this.initialMessages
-    };
-  },
-
-  methods: {
-    drag(event, messageId) {
-      event.dataTransfer.setData('text', messageId);
+    components: {
+        ChatMessage,
     },
 
-    async drop(event, status) {
-      const messageId = parseInt(event.dataTransfer.getData('text'));
-      const message = this.messages.find(m => m.id === messageId);
-
-      if (message) {
-        message.status = status;
-        await axios.post(`/chatroom/message/${message.id}/update`, { status });
-      }
+    props: {
+        initialMessages: {
+            type: Array,
+            required: true,
+        },
     },
-  }
-}
+
+    data() {
+        return {
+            messages: this.initialMessages,
+        };
+    },
+
+    methods: {
+        drag(event, messageId) {
+            event.dataTransfer.setData("text", messageId);
+        },
+
+        async drop(event, status) {
+            const messageId = parseInt(event.dataTransfer.getData("text"));
+            const message = this.messages.find((m) => m.id === messageId);
+
+            if (message) {
+                message.status = status;
+                await axios.post(`/chatroom/message/${message.id}/update`, {
+                    status,
+                });
+            }
+        },
+    },
+};
 </script>
 
 <style>

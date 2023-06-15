@@ -1,4 +1,3 @@
-<!-- composant enfant ChatMessage -->
 <template>
     <div
         draggable="true"
@@ -11,9 +10,11 @@
             :style="{ backgroundColor: '#FC9E5A' }"
         >
             <span class="symbol-header material-symbols-outlined">call</span>
-            <span class="message-caller" style="font-weight:bold; color: white">{{
-                this.message.call[0].caller
-            }}</span>
+            <span
+                class="message-caller"
+                style="font-weight: bold; color: white"
+                >{{ this.message.call[0].caller }}</span
+            >
         </div>
 
         <div
@@ -22,24 +23,22 @@
             :style="{ backgroundColor: '#FBEF85' }"
         >
             <span class="symbol-header material-symbols-outlined">mic</span>
-            <span v-if="message.duration" class="audio-duration">0.03{{ message.duration }}</span>
+            <span v-if="audioDuration" class="audio-duration"
+                >{{ audioDuration }} s.</span
+            >
         </div>
 
+        <div
+            v-else-if="isText"
+            class="message-header"
+            :style="{ backgroundColor: '#8239DF' }"
+        >
+            <span class="symbol-header material-symbols-outlined">textsms</span>
+        </div>
 
-
-    <div v-else-if="isText" class="message-header" :style="{ backgroundColor:'#8239DF'}">
-    <span class="symbol-header material-symbols-outlined">textsms</span>
-  </div>
-
-
- <div class="message-body">
-
-     <div v-if="isAudio && !isCall" class="message-content">
-                <p>
-                    <span v-if="audioDuration" class="audio-duration">{{
-                        audioDuration
-                    }}</span>
-                    <br />
+        <div class="message-body">
+            <div v-if="isAudio && !isCall" class="message-content">
+                <p> 
                     <span v-if="!editing" class="message-text">
                         {{ message.content }}
                     </span>
@@ -48,49 +47,107 @@
                         type="text"
                         v-model="message.content"
                         class="modiftextarea"
-                        @keyup.enter="saveChanges">
+                        @keyup.enter="saveChanges"
+                    >
                     </textarea>
                 </p>
-                <audio v-if="chiffre==0" controls @canplaythrough="audioLoaded($event, message)">
-                <source
-                    :src="getAudioPath(message.audio[0].audio_file)"
-                    type="audio/mpeg"
-                />
-            </audio>
-
+                <audio
+                    v-if="chiffre == 0"
+                    controls
+                    @canplaythrough="audioLoaded($event, message)"
+                >
+                    <source
+                        :src="getAudioPath(message.audio[0].audio_file)"
+                        type="audio/mpeg"
+                    />
+                </audio>
             </div>
 
             <div v-else class="message-content">
                 <p v-if="!editing" class="message-text">
                     {{ message.content }}
                 </p>
-                <textarea v-else type="text" v-model="message.content" class="modiftextarea" @keyup.enter="saveChanges"></textarea>
-                <div style="display:flex; flex-direction:row ; margin-top:5px;">
-                    <span v-if="isText" class="material-symbols-outlined" style="color: brown; display: flex; justify-content: center;" title="Nombre de like">Favorite</span> 
-                    <p v-if="isText" style="font-size: 13px; display: flex; align-items: center;">
-                        {{ message.nb_likes}}
+                <textarea
+                    v-else
+                    type="text"
+                    v-model="message.content"
+                    class="modiftextarea"
+                    @keyup.enter="saveChanges"
+                ></textarea>
+                <div
+                    style="display: flex; flex-direction: row; margin-top: 5px"
+                >
+                    <span
+                        v-if="isText"
+                        class="material-symbols-outlined"
+                        style="
+                            color: brown;
+                            display: flex;
+                            justify-content: center;
+                        "
+                        title="Nombre de like"
+                        >Favorite</span
+                    >
+                    <p
+                        v-if="isText"
+                        style="
+                            font-size: 13px;
+                            display: flex;
+                            align-items: center;
+                        "
+                    >
+                        {{ message.nb_likes }}
                     </p>
                 </div>
             </div>
 
+            <div
+                v-if="message.status !== 10 && message.status !== 5"
+                class="message-actions"
+            >
+                <div style="display: flex; flex-direction: column">
+                    <span
+                        v-if="editing == false"
+                        class="material-symbols-outlined"
+                        style="margin-right: 3px"
+                        @click="editing = !editing"
+                        title="Modifier"
+                        >edit</span
+                    >
+                    <span
+                        v-else
+                        class="material-symbols-outlined"
+                        @click="saveChanges"
+                        title="Sauvegarder"
+                        >save</span
+                    >
 
-    <div v-if="message.status !== 10 && message.status !== 5" class="message-actions">
-     
-    <div  style="display:flex; flex-direction:column ;">
-      <span v-if="editing ==false" class="material-symbols-outlined"  style="margin-right: 3px;" @click="editing = !editing" title="Modifier">edit</span>
-      <span v-else class="material-symbols-outlined" @click="saveChanges" title="Sauvegarder">save</span>
+                    <span
+                        class="material-symbols-outlined"
+                        @click="$emit('delete', message)"
+                        title="Archiver"
+                        >archive</span
+                    >
+                </div>
+            </div>
 
-          <span class="material-symbols-outlined" @click="$emit('delete', message)" title="Archiver">archive</span>
-    </div>
+            <div v-else-if="message.status === 10">
+                <span
+                    class="material-symbols-outlined"
+                    @click="$emit('archive', message)"
+                    title="Désarchiver à inbox"
+                    >unarchive</span
+                >
+                <button
+                    v-if="isInAnimator"
+                    class="material-symbols-outlined"
+                    @click="$emit('cacher', message)"
+                    title="Cacher le message"
+                >
+                    hide
+                </button>
+            </div>
         </div>
-
-    <div v-else-if="message.status === 10 ">
-          <span class="material-symbols-outlined" @click="$emit('archive', message)" title="Désarchiver à inbox">unarchive</span>
-          <button v-if="isInAnimator" class="material-symbols-outlined"  @click="$emit('cacher', message)" title="Cacher le message">hide</button>
-     </div>
-
-  </div>
-
     </div>
 </template>
 
@@ -111,9 +168,9 @@ export default {
             default: () => [],
         },
         isInAnimator: {
-        type: Boolean,
-        default: false
-    },
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -123,7 +180,6 @@ export default {
             editing: false,
             audioDuration: "",
             chiffre: 0,
-
         };
     },
 
@@ -141,16 +197,11 @@ export default {
         },
 
         audioLoaded(event, message) {
-        const audio = event.target;
-        if (!audio || !audio.duration) {
-            // Handle error here, such as displaying an error message
-        } else {
-            const duration = Math.floor(audio.duration);
-            const minutes = Math.floor(duration / 60);
-            const seconds = duration % 60;
-            message.duration = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-        }
-    },
+            const audio = event.target;
+            if (audio) {
+                this.audioDuration = Math.floor(audio.duration);
+            }
+        },
 
         couleur(type) {
             if (type === "message") {
@@ -163,14 +214,13 @@ export default {
             }
         },
         getAudioPath(audioFile) {
-
             return `${window.location.origin}/audio/${audioFile}`;
         },
     },
 
     computed: {
         isAudio() {
-          let grr;
+            let grr;
 
             return this.message.audio && this.message.audio.length > 0;
         },
