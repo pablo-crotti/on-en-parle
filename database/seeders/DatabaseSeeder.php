@@ -12,11 +12,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-
-            ChatRoomSeeder::class,
-            ChatMessageSeeder::class,
-            VoiceMessageSeeder::class,
-            ArchiveSeeder::class,
             UserSeeder::class,
         ]);
        

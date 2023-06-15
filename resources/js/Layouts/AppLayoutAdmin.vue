@@ -33,10 +33,8 @@ export default {
             currentURL: window.location.href,
             showProgramSelection: false,
             showProgramSelectionButton: false,
-            showProgramTitle: false,
-            firstProgramId: 1,
+            currentProgramId: 1,
             lastProgramId: 1,
-            currentProgram: "",
         }
     },
     methods: {
@@ -53,7 +51,7 @@ export default {
             axios.get('/prochaines-emissions')
                 .then(response => {
                     this.upcomingPrograms = response.data;
-                    this.firstProgramId = this.upcomingPrograms[0].id;
+                    this.lastProgramId = this.upcomingPrograms[0].id;
                 })
                 .catch(error => {
                     console.log(error);
@@ -65,8 +63,7 @@ export default {
         getRoute(routeName){
             if(routeName === "inbox" || routeName === "archives" || routeName === "control" || routeName === "animator" || routeName === "management"){
                 this.showProgramSelectionButton = true;
-                this.showProgramTitle = true;
-                return route(routeName, { id: this.lastProgramId });
+                return route(routeName, { id: this.currentProgramId });
             } else {
                 this.showProgramSelectionButton = false;
                 return route(routeName);
@@ -77,7 +74,8 @@ export default {
         },
         logout() {
             router.post(route('logout'));
-        },
+        }
+        
     },
     created() {
         this.setMenu();
@@ -91,19 +89,13 @@ export default {
             }
         });
         if(!isNaN(this.currentURL.split('/').pop())){
+            this.currentProgramId = this.currentURL.split('/').pop();
             this.lastProgramId = this.currentURL.split('/').pop();
-            
-            axios.get('/chat/room/' + this.currentURL.split('/').pop())
-                .then(response => {
-                    this.currentProgram = response.data;
-                })
-                .catch(error => {
-                    console.log(error);
-                });
         } else {
-            this.lastProgramId = this.firstProgramId;
+            this.currentProgramId = this.lastProgramId;
         }
-    }
+        
+    },
 }
 
 
@@ -148,18 +140,20 @@ const switchToTeam = (team) => {
                                 <NavLink :href="getRoute('users')" :active="isNavLinkActive('users')">
                                     Utilisateurs
                                 </NavLink>
+                            </div> 
+
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink v-for="item in menuList" :key="item" :href="getRoute(item[0])" :active="route().current(item[0])">
+                                    {{ item[1] }}
+                                </NavLink>
                             </div>
                             
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 
                             </div>
                         </div>
+
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <div class="submenu">
-                                <NavLink class="submenu-item" v-for="item in menuList" :key="item" :href="getRoute(item[0])" :active="route().current(item[0])">
-                                    {{ item[1] }}
-                                </NavLink>
-                            </div>
                             <button class="selection-programs-button inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150" @click="toggleProgramSelection" v-if="showProgramSelectionButton">
                                 Séléctionner une émission
                                 <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -296,9 +290,7 @@ const switchToTeam = (team) => {
                     <slot name="header" />
                 </div>
             </header>
-            <div class="program-name-container" v-if="showProgramTitle">
-                <div class="program-name" v-if="showProgramSelectionButton">{{ this.currentProgram.title }}</div>
-            </div>
+
             <!-- Page Content -->
             <main>
                 <slot />
