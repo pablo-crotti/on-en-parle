@@ -22,6 +22,10 @@
 </template>
 
 <script>
+/**
+ * Component: AdminChat
+ * Description: Represents the admin chat component.
+ */
 import adminChat from "@/Pages/MyComponents/adminChat.vue";
 export default {
     components: {
@@ -35,6 +39,9 @@ export default {
         };
     },
     methods: {
+        /**
+         * Toggles the chat window between open and closed states.
+         */
         toggleChat() {
             const wrapper = document.querySelector(".admin-chat-wrapper");
             const buttonClosed = document.querySelector(
@@ -52,6 +59,9 @@ export default {
                 this.chatStatus = false;
             }
         },
+        /**
+         * Increases the chat notifications count if the chat window is closed.
+         */
         showNotification() {
             if (!this.chatStatus) {
                 this.chatNotifications++;
