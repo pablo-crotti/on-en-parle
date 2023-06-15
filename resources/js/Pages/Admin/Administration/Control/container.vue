@@ -121,12 +121,12 @@ export default {
             calls: this.callChatroom,
             sortType: "creation",
             couleurtitre: [
-                "#FF0000",
-                "red",
+                "#E0D100",
+                "",
                 "",
                 "#FFFF00",
                 "#008000",
-                "#0000FF",
+                "#2216C2",
             ],
             categories: [
                 {

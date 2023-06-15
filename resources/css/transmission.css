@@ -393,5 +393,115 @@
     transition: all 0.3s ease;
 }
 
+    }
+
+
+
+
+
+
+
+/* Upcoming emmissions */
+    
+
+
+
+
+
+@media screen and (max-width: 858px) {
+  
+    .transmission-card-container .card{
+        border-color: var(--primary-color);
+        border: 0.2vw solid var(--primary-color);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: start;
+
+    }
+
+    .transmission-card-container .card .infos{
+        display: flex;
+        flex-direction: column;
+        max-height:70%;
+        max-width: 100%;
+        margin-bottom: 10px;
+        }  
+    
+        .transmission-card-container .card .img-container{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        max-height: 40%;          
+        justify-content: center;  
+        padding-left: 5%;
+        padding-right: 5%;
+        align-items: center;
+    }
+
+.transmission-card-container .card .img-container img{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        max-height: 100%;        
+     }
+
+            .transmission-card-container .card .img-container .likes{
+                display: flex;
+                flex-direction: row;
+                width: auto;
+                align-items: center;
+                align-content:center;           }
+
+
+                .transmission-card-container .infos {
+                    width: calc(100%);
+                    margin-left: 2vw;
+                    padding: 5%;
+                }
+            
+                .transmission-card-container .infos h1 {
+                    font-size: 1.15em;
+                }
+            
+
+                .transmission-card-container .infos p {
+                    color: var(--light-gray);
+                    font-size:13px;
+                    max-width: 100%;
+
+                }
+
+                    
+  .infos .det-container p {
+    font-size: 0.85em;
+        }
+
+.infos .det-container {
+    font-size: 0.95em;
+    width: 100%;
+    padding: 0% 5% 0% 0%;
+}
+
+.transmission-link span {
+   width: 100%;
+
+}
+.transmission-link {
+    width: 100%;
+    min-width: 50px;
+
+    height: auto;
+    max-height: 150px;
+    background-color: var(--primary-color);
+    border-radius: 15px;
+    margin-left: 50%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
+    align-items: center;
+    transition: all 0.3s ease;
+}
 
     }
