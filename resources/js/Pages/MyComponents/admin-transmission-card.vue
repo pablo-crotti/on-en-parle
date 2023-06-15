@@ -19,7 +19,10 @@
         <h1>{{ room.title }}</h1>
         <p>{{ handelTextLenght(room.description) }}</p>
         <p class="dateDiffusion">
-            {{ this.formatDate(this.room.broadcast_date) }}
+            {{ new Date(this.room.broadcast_date).toLocaleDateString(
+                "fr-FR",
+                { day: "2-digit", month: "long", year: "numeric" }
+            ) }}
         </p>
     </div>
     <div class="btn-modify">
@@ -42,7 +45,6 @@
  * Description: The component for the contact form.
  */
 import modifyProgram from "@/Pages/Admin/Programs/Programs/modifyProgram.vue";
-import moment from "moment";
 import axios from "axios";
 import modalConfirmation from "@/Pages/MyComponents/modalConfirmation.vue";
 
@@ -107,25 +109,6 @@ export default {
                 .then((response) => {
                     window.location.href = "/admin/programs/list";
                 });
-        },
-        formatDate(date) {
-            moment.updateLocale("en", {
-                months: [
-                    "Janvier",
-                    "Février",
-                    "Mars",
-                    "Avril",
-                    "Mai",
-                    "Juin",
-                    "Juillet",
-                    "Août",
-                    "Septembre",
-                    "Octobre",
-                    "Novembre",
-                    "Décembre",
-                ],
-            });
-            return moment(date).format("D MMMM YYYY");
         },
     },
     created() {

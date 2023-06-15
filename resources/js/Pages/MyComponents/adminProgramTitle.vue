@@ -6,8 +6,6 @@
 
 <script>
 import axios from "axios";
-import moment from "moment";
-import "moment/dist/locale/fr";
 
 export default {
     data() {
@@ -22,10 +20,7 @@ export default {
             axios
                 .get("/chat/room/" + programId)
                 .then((response) => {
-                    moment.locale("fr");
-                    this.programTitle = `(${moment(
-                        response.data.broadcast_date
-                    ).format("D.MM.YYYY")}) ${response.data.title}`;
+                    this.programTitle = response.data.title;
                     return this.programTitle;
                 })
                 .catch((error) => {
