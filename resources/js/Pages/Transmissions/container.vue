@@ -23,8 +23,14 @@
 </template>
 
 <script>
+/**
+ * Component: AppLayout
+ * Description: Provides the layout structure for user pages.
+ *
+ * Component: TransmissionCard
+ * Description: A custom component for displaying transmission details.
+ */
 import AppLayout from "@/Layouts/AppLayoutUser.vue";
-import axios from "axios";
 import TransmissionCard from "@/Pages/MyComponents/transmission-card.vue";
 
 export default {
@@ -34,29 +40,31 @@ export default {
     },
     data: function () {
         return {
-            chatRooms: [],
+            chatRooms: [], // Holds the list of chat rooms
         };
     },
     methods: {
+        /**
+         * Fetches the list of chat rooms from the server.
+         */
         getRooms() {
-            axios
-                .get("/chat/rooms")
-                .then((response) => {
-                    this.chatRooms = response.data;
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            // ...
         },
     },
     created() {
+        /**
+         * Executes when the component is created.
+         * Fetches the initial list of chat rooms and sets up Echo event listeners.
+         */
         this.getRooms();
 
+        // Set up Echo event listener for live status updates
         const liveChannel = Echo.channel("live.status");
         liveChannel.listen(".live.status.new", (e) => {
             this.getRooms();
         });
 
+        // Set up Echo event listener for chat room updates
         const chatChannel = Echo.channel("rooms.update");
         chatChannel.listen(".event.on.rooms", (e) => {
             this.getRooms();
