@@ -15,30 +15,32 @@ export default {
         title: String,
     },
     components: {
-    Head,
-    Link,
-    ApplicationMark,
-    Banner,
-    Dropdown,
-    DropdownLink,
-    NavLink,
-    ResponsiveNavLink,
-    AdminProgramItem
-},
+        Head,
+        Link,
+        ApplicationMark,
+        Banner,
+        Dropdown,
+        DropdownLink,
+        NavLink,
+        ResponsiveNavLink,
+        AdminProgramItem
+    },
     data() {
         return {
             showingNavigationDropdown: false,
             menuList: [],
-            upcomingPrograms: [],
+            programsList: [],
             currentURL: window.location.href,
             showProgramSelection: false,
             showProgramSelectionButton: false,
-            currentProgramId: 1,
+            showProgramTitle: false,
+            firstProgramId: 1,
             lastProgramId: 1,
+            currentProgram: "",
         }
     },
     methods: {
-        setMenu(){
+        setMenu() {
             if (this.currentURL.includes('admin/reception')) {
                 this.menuList = [["inbox", "Inbox"], ["archives", "Archives"]];
             } else if (this.currentURL.includes('admin/administration')) {
@@ -47,11 +49,11 @@ export default {
                 this.menuList = [["listPrograms", "Émissions"], ["newProgramm", "Ajouter une émission"], ["live", "Live"]];
             }
         },
-        getUpcomingPrograms(){
-            axios.get('/prochaines-emissions')
+        getPrograms() {
+            axios.get('/chat/rooms-list')
                 .then(response => {
-                    this.upcomingPrograms = response.data;
-                    this.lastProgramId = this.upcomingPrograms[0].id;
+                    this.programsList = response.data;
+                    this.firstProgramId = this.programsList[0].id;
                 })
                 .catch(error => {
                     console.log(error);
@@ -60,10 +62,11 @@ export default {
         isNavLinkActive(url) {
             return this.currentURL.includes(url);
         },
-        getRoute(routeName){
-            if(routeName === "inbox" || routeName === "archives" || routeName === "control" || routeName === "animator" || routeName === "management"){
+        getRoute(routeName) {
+            if (routeName === "inbox" || routeName === "archives" || routeName === "control" || routeName === "animator" || routeName === "management") {
                 this.showProgramSelectionButton = true;
-                return route(routeName, { id: this.currentProgramId });
+                this.showProgramTitle = true;
+                return route(routeName, { id: this.lastProgramId });
             } else {
                 this.showProgramSelectionButton = false;
                 return route(routeName);
@@ -74,12 +77,11 @@ export default {
         },
         logout() {
             router.post(route('logout'));
-        }
-        
+        },
     },
     created() {
         this.setMenu();
-        this.getUpcomingPrograms();
+        this.getPrograms();
         document.addEventListener('click', (event) => {
             const target = event.target;
             const programButton = document.querySelector('.selection-programs-button');
@@ -88,14 +90,20 @@ export default {
                 this.showProgramSelection = false;
             }
         });
-        if(!isNaN(this.currentURL.split('/').pop())){
-            this.currentProgramId = this.currentURL.split('/').pop();
+        if (!isNaN(this.currentURL.split('/').pop())) {
             this.lastProgramId = this.currentURL.split('/').pop();
+
+            axios.get('/chat/room/' + this.currentURL.split('/').pop())
+                .then(response => {
+                    this.currentProgram = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         } else {
-            this.currentProgramId = this.lastProgramId;
+            this.lastProgramId = this.firstProgramId;
         }
-        
-    },
+    }
 }
 
 
@@ -113,12 +121,13 @@ const switchToTeam = (team) => {
 
 <template>
     <div>
+
         <Head :title="title" />
 
         <Banner />
 
         <div class="header-logo">
-                <img src="https://www.rts.ch/2021/01/05/11/09/10321771.image?&w=6000&h=600" alt="">
+            <img src="https://www.rts.ch/2021/01/05/11/09/10321771.image?&w=6000&h=600" alt="">
         </div>
 
         <div class="bg-gray-100">
@@ -140,23 +149,25 @@ const switchToTeam = (team) => {
                                 <NavLink :href="getRoute('users')" :active="isNavLinkActive('users')">
                                     Utilisateurs
                                 </NavLink>
-                            </div> 
+                            </div>
 
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink v-for="item in menuList" :key="item" :href="getRoute(item[0])" :active="route().current(item[0])">
+
+                            </div>
+                        </div>
+                        <div class="hidden sm:flex sm:items-center sm:ml-6">
+                            <div class="submenu">
+                                <NavLink class="submenu-item" v-for="item in menuList" :key="item" :href="getRoute(item[0])"
+                                    :active="route().current(item[0])">
                                     {{ item[1] }}
                                 </NavLink>
                             </div>
-                            
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                
-                            </div>
-                        </div>
-
-                        <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <button class="selection-programs-button inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150" @click="toggleProgramSelection" v-if="showProgramSelectionButton">
+                            <button
+                                class="selection-programs-button inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150"
+                                @click="toggleProgramSelection" v-if="showProgramSelectionButton">
                                 Séléctionner une émission
-                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                 </svg>
                             </button>
@@ -164,16 +175,23 @@ const switchToTeam = (team) => {
                             <div class="ml-3 relative">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
-                                        <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                            <img class="h-8 w-8 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
+                                        <button v-if="$page.props.jetstream.managesProfilePhotos"
+                                            class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                            <img class="h-8 w-8 rounded-full object-cover"
+                                                :src="$page.props.auth.user.profile_photo_url"
+                                                :alt="$page.props.auth.user.name">
                                         </button>
 
                                         <span v-else class="inline-flex rounded-md">
-                                            <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                            <button type="button"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
                                                 {{ $page.props.auth.user.name }}
 
-                                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                                    stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                                 </svg>
                                             </button>
                                         </span>
@@ -206,53 +224,46 @@ const switchToTeam = (team) => {
                         <div class="-mr-2 flex items-center sm:hidden">
                             <div class="mobile-menu-container">
                                 <div class="mobile-calendar">
-                                    
+
                                 </div>
-                                
-                                <button class="hamb-button inline-flex items-center justify-center p-2 rounded-md text-white hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" @click="showingNavigationDropdown = ! showingNavigationDropdown">
-                                    <svg
-                                        class="h-6 w-6"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                    >
+
+                                <button
+                                    class="hamb-button inline-flex items-center justify-center p-2 rounded-md text-white hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                                    @click="showingNavigationDropdown = !showingNavigationDropdown">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24">
                                         <path
-                                            :class="{'hidden': showingNavigationDropdown, 'inline-flex': ! showingNavigationDropdown }"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M4 6h16M4 12h16M4 18h16"
-                                        />
+                                            :class="{ 'hidden': showingNavigationDropdown, 'inline-flex': !showingNavigationDropdown }"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 6h16M4 12h16M4 18h16" />
                                         <path
-                                            :class="{'hidden': ! showingNavigationDropdown, 'inline-flex': showingNavigationDropdown }"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M6 18L18 6M6 6l12 12"
-                                        />
+                                            :class="{ 'hidden': !showingNavigationDropdown, 'inline-flex': showingNavigationDropdown }"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                                 </button>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
 
                 <!-- Responsive Navigation Menu -->
-                <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
+                <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
                     <div class="pt-2 pb-3 space-y-1">
-                        
+
                     </div>
 
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200">
                         <div class="flex items-center px-4">
                             <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 mr-3">
-                                <img class="h-10 w-10 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
+                                <img class="h-10 w-10 rounded-full object-cover"
+                                    :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
                             </div>
 
                             <div>
@@ -279,8 +290,8 @@ const switchToTeam = (team) => {
                 </div>
             </nav>
             <div class="program-selection" v-if="showProgramSelection">
-                <div v-for="(program, index) in upcomingPrograms" :key="index">
-                    <AdminProgramItem :program="program" :currentURL="this.currentURL"/>
+                <div v-for="(program, index) in programsList" :key="index">
+                    <AdminProgramItem :program="program" :currentURL="this.currentURL" />
                 </div>
             </div>
 
@@ -290,11 +301,12 @@ const switchToTeam = (team) => {
                     <slot name="header" />
                 </div>
             </header>
-
+            <div class="program-name-container" v-if="showProgramTitle">
+                <div class="program-name" v-if="showProgramSelectionButton">{{ this.currentProgram.title }}</div>
+            </div>
             <!-- Page Content -->
             <main>
                 <slot />
-            </main>
-        </div>
+        </main>
     </div>
-</template>
+</div></template>
