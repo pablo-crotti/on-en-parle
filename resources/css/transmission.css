@@ -412,7 +412,7 @@
   
     .transmission-card-container .card{
         border-color: var(--primary-color);
-        border: 0.2vw solid var(--primary-color);
+        border: 0.2vw solid var(--light-gray);
         display: flex;
         flex-direction: column;
         height: 100%;
