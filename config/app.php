@@ -160,6 +160,7 @@ return [
          * Package Service Providers...
          */
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
+        BeyondCode\LaravelWebSockets\WebSocketsServiceProvider::class, // Add the WebSocketsServiceProvider
         /*
          * Application Service Providers...
          */
@@ -187,4 +188,31 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Broadcasting Connections
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define all of the broadcast connections that will be used
+    | to broadcast events to other systems or over WebSocket or HTTP channels.
+    |
+    */
+
+    'broadcasting' => [
+        'default' => 'pusher',
+        'connections' => [
+            'pusher' => [
+                'driver' => 'pusher',
+                'key' => env('PUSHER_APP_KEY'),
+                'secret' => env('PUSHER_APP_SECRET'),
+                'app_id' => env('PUSHER_APP_ID'),
+                'options' => [
+                    'cluster' => env('PUSHER_APP_CLUSTER'),
+                    'useTLS' => true,
+                ],
+            ],
+        ],
+    ],
+
 ];
+
