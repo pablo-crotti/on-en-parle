@@ -1,21 +1,35 @@
-# On En Parle - Interface d'Interaction Auditeur
+# On-En-Parle
 
-## Aperçu
+## Overview
 
-Ce projet développe une interface web innovante pour l'émission de radio "On en parle". Conçue pour améliorer l'interaction avec les auditeurs, cette application facilite la collecte et la diffusion de leurs contributions pendant l'émission. Elle est construite avec Laravel, Vue.js, et Inertia, offrant une expérience utilisateur fluide et réactive. Ce projet a été réalisé dans le cadre du projet d'intégration à la HEIG-VD.
+On-En-Parle is a dynamic web application designed to facilitate interactive communication and engagement. It features a robust chat system, live broadcasting capabilities, and user management, making it ideal for hosting online discussions and events.
 
-## Fonctionnalités
+## Features
 
-### Interface Administrateur
-- **Collecte de Messages** : Réception des messages textuels et audio des auditeurs.
-- **Filtrage et Marquage** : Outils pour trier, filtrer, et marquer les messages pour la diffusion.
-- **Gestion de l'Émission** : Interface intuitive pour organiser et préparer les contenus à diffuser.
+### Chat System
 
-### Interface Utilisateur
-- **Envoi de Messages** : Permet aux auditeurs de soumettre facilement des messages textuels et audio.
-- **Interface Réactive** : Conçue pour offrir une expérience utilisateur agréable et intuitive.
+- **Chat Rooms**: Users can join various chat rooms, each with its own topic and broadcast date.
+- **Messages**: The application supports sending and receiving text and audio messages within chat rooms.
+- **Live Updates**: Real-time updates for new messages using event broadcasting.
 
-## Technologies Utilisées
-- **Laravel** : Pour une fondation robuste et sécurisée du backend.
-- **Vue.js** : Framework frontend pour une interface utilisateur dynamique.
-- **Inertia** : Pour intégrer de manière transparente le backend de Laravel avec Vue.js.
+### Live Broadcasting
+
+- **Broadcast Management**: Admins can create and manage live broadcast rooms.
+- **Live Status**: Functionality to check if a chat room is currently live.
+- **Upcoming Broadcasts**: Users can view upcoming broadcasts.
+
+### User Management
+
+- **User Registration**: New users can register with their email and receive login credentials.
+- **User Profiles**: Each user has a profile with customizable options.
+- **Admin Functions**: Admins can create, update, and delete user profiles.
+
+### Contact Form
+
+- **Feedback and Queries**: A contact form is available for users to send feedback or queries directly to the admin.
+
+## Technical Details
+
+- Built with Laravel (PHP framework).
+- Utilizes Eloquent ORM for database interactions.
+- Implements Laravel Sanctum for API token-based authentication.
